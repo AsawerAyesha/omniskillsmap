@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import {
   House,
   User,
@@ -8,10 +8,13 @@ import {
   Bell,
   PanelLeftClose,
   PanelLeftOpen,
+  ArrowLeftRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
 import { SwitchContextButton } from "./context-config/switch-context-button";
+import { useContextConfig } from "./context-config/context-config-store";
+import { useUnmappedMode } from "./mode-context";
 
 const TABS = [
   { to: "/", label: "Home", icon: House },
@@ -22,6 +25,9 @@ const TABS = [
 
 export function YouthShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+  const { openDrawer, active } = useContextConfig();
+  const { mode, setMode } = useUnmappedMode();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = React.useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem("u.sidebar.collapsed") === "1";
