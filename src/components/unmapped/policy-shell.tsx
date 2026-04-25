@@ -4,6 +4,8 @@ import { Compass, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
 import { useContextConfig } from "./context-config/context-config-store";
+import { ThemeSwitcher } from "./theme-switcher";
+import { useTheme } from "./theme-context";
 
 const LINKS = [
   { to: "/policy", label: "Overview" },
@@ -16,23 +18,21 @@ const LINKS = [
 export function PolicyShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const { active, openDrawer } = useContextConfig();
+  const { theme, setTheme } = useTheme();
 
-  /* Force dark theme while the policy shell is mounted (analytical context).
-   * Snapshot the previous classes and restore on unmount so toggling back to
-   * the youth shell never leaves a stray .dark on <html>. Living here — not
-   * inside the route component — guarantees the class lifetime exactly
-   * matches the shell that needs it, eliminating the youth-shell-in-dark
-   * flash users were seeing. */
+  /* Policy is an analytical context that wants a dark-family palette by
+   * default — but we now respect the user's explicit choice. If the user
+   * has selected "light" (only meaningful in the youth shell), we promote
+   * them to "dark" while the policy shell is mounted, then restore their
+   * preference on unmount so toggling back to youth never leaves them
+   * stranded in a dark theme they didn't ask for. Onyx is honored as-is. */
   React.useEffect(() => {
-    const root = document.documentElement;
-    const hadDark = root.classList.contains("dark");
-    const hadLight = root.classList.contains("light");
-    root.classList.add("dark");
-    root.classList.remove("light");
+    const previous = theme;
+    if (theme === "light") setTheme("dark");
     return () => {
-      if (!hadDark) root.classList.remove("dark");
-      if (hadLight) root.classList.add("light");
+      if (previous === "light") setTheme("light");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -84,6 +84,8 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
            * duplicate SwitchContextButton so the country pill is the single
            * affordance for context switching. */}
           <div className="ml-auto flex items-center gap-2 lg:gap-3 shrink-0">
+            <ThemeSwitcher variant="compact" />
+
             <button
               type="button"
               onClick={openDrawer}
