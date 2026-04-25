@@ -492,6 +492,55 @@
   }
   .u-skip-link:focus { transform: translateY(0); outline: none; }
 
+  /* Custom range input — earth-tinted track + thumb */
+  .u-range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 18px;
+    cursor: pointer;
+  }
+  .u-range::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--earth) 0,
+      var(--earth) var(--u-range-pct, 0%),
+      var(--surface-sunken) var(--u-range-pct, 0%),
+      var(--surface-sunken) 100%
+    );
+  }
+  .u-range::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--surface-sunken);
+  }
+  .u-range::-moz-range-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--earth);
+  }
+  .u-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 999px;
+    background: var(--earth-dark);
+    border: 2px solid var(--surface-raised);
+    box-shadow: 0 1px 4px rgba(26,24,20,0.25);
+    margin-top: -6px;
+  }
+  .u-range::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 999px;
+    background: var(--earth-dark);
+    border: 2px solid var(--surface-raised);
+    box-shadow: 0 1px 4px rgba(26,24,20,0.25);
+  }
+
   /* Universal focus ring */
   .u-focus,
   button:focus-visible,
