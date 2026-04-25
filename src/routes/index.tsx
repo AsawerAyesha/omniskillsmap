@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Compass, TrendingUp, AlertTriangle, BarChart3 } from "lucide-react";
+import { TrendingUp, AlertTriangle, BarChart3, BellRing } from "lucide-react";
+import { toast } from "sonner";
 import {
   UCard,
   UBadge,
@@ -10,38 +11,55 @@ import {
 } from "@/components/unmapped/primitives";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Home — UNMAPPED" },
+      { name: "description", content: "Skills infrastructure for youth in low-income countries." },
+      { property: "og:title", content: "UNMAPPED" },
+      { property: "og:description", content: "Skills infrastructure for youth in low-income countries." },
+    ],
+  }),
   component: Index,
 });
 
 function Index() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="border-b border-border-subtle">
-        <div className="u-container flex items-center justify-between py-6">
-          <div className="flex items-center gap-2">
-            <Compass size={20} strokeWidth={1.5} className="text-[var(--earth-dark)]" />
-            <span className="font-display text-lg tracking-tight">UNMAPPED</span>
-          </div>
-          <UBadge variant="neutral">Civic Precision · v0.1</UBadge>
-        </div>
-      </header>
-
+    <div>
       {/* Hero */}
-      <section className="u-container py-16">
+      <section className="u-container py-10 md:py-16">
         <div className="max-w-3xl u-stagger">
           <UBadge variant="blue">
             <BarChart3 size={12} strokeWidth={1.5} /> World Bank · ILO data
           </UBadge>
-          <h1 className="mt-6 font-display text-5xl md:text-6xl leading-[1.05] tracking-tight text-ink">
+          <h1 className="mt-6 font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
             Skills infrastructure for the next generation, mapped with{" "}
             <span className="italic text-[var(--earth-dark)]">precision</span>.
           </h1>
-          <p className="mt-6 text-lg text-ink-secondary max-w-2xl">
+          <p className="mt-6 text-lg text-[var(--ink-secondary)] max-w-2xl">
             UNMAPPED translates global labour data into clear, durable pathways for
             youth in low-income countries — pairing institutional rigor with human
             empathy.
           </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <button
+              onClick={() => toast.success("Profile saved", { description: "Last sync just now" })}
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--earth-dark)] text-[var(--earth-light)] px-4 py-2 text-sm font-medium"
+            >
+              <BellRing size={14} strokeWidth={1.5} /> Success toast
+            </button>
+            <button
+              onClick={() => toast.error("Sync failed", { description: "Check your connection" })}
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-4 py-2 text-sm"
+            >
+              Error
+            </button>
+            <button
+              onClick={() => toast.info("New cohort opens 5 May")}
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-4 py-2 text-sm"
+            >
+              Info
+            </button>
+          </div>
         </div>
 
         {/* Stat row */}
@@ -164,6 +182,6 @@ function Index() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
