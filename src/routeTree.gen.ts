@@ -19,7 +19,6 @@ import { Route as PolicyIndexRouteImport } from './routes/policy.index'
 import { Route as PolicySkillsRouteImport } from './routes/policy.skills'
 import { Route as PolicyRiskRouteImport } from './routes/policy.risk'
 import { Route as PolicyProjectionsRouteImport } from './routes/policy.projections'
-import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
 
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
@@ -71,11 +70,6 @@ const PolicyProjectionsRoute = PolicyProjectionsRouteImport.update({
   path: '/projections',
   getParentRoute: () => PolicyRoute,
 } as any)
-const PolicyOpportunitiesRoute = PolicyOpportunitiesRouteImport.update({
-  id: '/opportunities',
-  path: '/opportunities',
-  getParentRoute: () => PolicyRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -84,7 +78,6 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
-  '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
   '/policy/skills': typeof PolicySkillsRoute
@@ -96,7 +89,6 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
   '/profile': typeof ProfileRoute
-  '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
   '/policy/skills': typeof PolicySkillsRoute
@@ -110,7 +102,6 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
-  '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
   '/policy/skills': typeof PolicySkillsRoute
@@ -125,7 +116,6 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
-    | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
     | '/policy/skills'
@@ -137,7 +127,6 @@ export interface FileRouteTypes {
     | '/learn'
     | '/opportunities'
     | '/profile'
-    | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
     | '/policy/skills'
@@ -150,7 +139,6 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
-    | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
     | '/policy/skills'
@@ -238,18 +226,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicyProjectionsRouteImport
       parentRoute: typeof PolicyRoute
     }
-    '/policy/opportunities': {
-      id: '/policy/opportunities'
-      path: '/opportunities'
-      fullPath: '/policy/opportunities'
-      preLoaderRoute: typeof PolicyOpportunitiesRouteImport
-      parentRoute: typeof PolicyRoute
-    }
   }
 }
 
 interface PolicyRouteChildren {
-  PolicyOpportunitiesRoute: typeof PolicyOpportunitiesRoute
   PolicyProjectionsRoute: typeof PolicyProjectionsRoute
   PolicyRiskRoute: typeof PolicyRiskRoute
   PolicySkillsRoute: typeof PolicySkillsRoute
@@ -257,7 +237,6 @@ interface PolicyRouteChildren {
 }
 
 const PolicyRouteChildren: PolicyRouteChildren = {
-  PolicyOpportunitiesRoute: PolicyOpportunitiesRoute,
   PolicyProjectionsRoute: PolicyProjectionsRoute,
   PolicyRiskRoute: PolicyRiskRoute,
   PolicySkillsRoute: PolicySkillsRoute,
