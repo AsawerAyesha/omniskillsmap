@@ -130,8 +130,31 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           )}
           {collapsed ? (
             <div className="flex flex-col items-center gap-2">
-              <SwitchContextButton iconOnly title="Switch context" />
-              <ModeSwitcher iconOnly />
+              <button
+                type="button"
+                onClick={openDrawer}
+                title={`Switch context — ${active.country}`}
+                aria-label={`Switch context. Active: ${active.country}`}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border-subtle bg-[var(--surface-raised)] text-[var(--ink-secondary)] hover:bg-[var(--surface-sunken)] hover:text-[var(--ink)] transition-colors"
+              >
+                <span aria-hidden className="text-[14px] leading-none">
+                  {active.flag}
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const next = mode === "youth" ? "policy" : "youth";
+                  setMode(next);
+                  if (next === "policy") navigate({ to: "/policy" });
+                  else navigate({ to: "/" });
+                }}
+                title={`Switch to ${mode === "youth" ? "Policy" : "Youth"} view`}
+                aria-label={`Switch to ${mode === "youth" ? "Policy" : "Youth"} view`}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border-subtle bg-[var(--surface-sunken)] text-[var(--ink-tertiary)] hover:text-[var(--ink)] transition-colors"
+              >
+                <ArrowLeftRight size={14} strokeWidth={1.5} />
+              </button>
             </div>
           ) : (
             <>
