@@ -583,16 +583,19 @@
     100% { background-position: 150% 0; }
   }
 
-  /* Route transitions — forward/back */
-  .u-route-fwd  { animation: u-route-in-fwd 200ms var(--ease-precision); }
-  .u-route-back { animation: u-route-in-back 200ms var(--ease-precision); }
+  /* Route transitions — forward/back. Kept short (90ms, opacity-only) so
+   * tab clicks feel instantaneous. Translating the layer was triggering a
+   * paint of the entire dashboard subtree on every navigation, which added
+   * noticeable lag on heavier routes like /policy. */
+  .u-route-fwd  { animation: u-route-in-fwd 90ms var(--ease-precision); }
+  .u-route-back { animation: u-route-in-back 90ms var(--ease-precision); }
   @keyframes u-route-in-fwd {
-    from { opacity: 0; transform: translateX(8px); }
-    to   { opacity: 1; transform: translateX(0); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
   @keyframes u-route-in-back {
-    from { opacity: 0; transform: translateX(-8px); }
-    to   { opacity: 1; transform: translateX(0); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
   /* Offline banner */
