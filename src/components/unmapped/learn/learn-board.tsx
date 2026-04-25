@@ -20,6 +20,9 @@ import {
   type PathwayModule,
   type Lesson,
 } from "./learn-data";
+import { ConstraintBanner } from "../constraint-banner";
+import { useContextConfig } from "../context-config/context-config-store";
+import { DEFAULT_ADVANCED_SIGNALS } from "../context-config/types";
 
 /* -----------------------------------------------------------
  * LearnBoard — the personalised learning hub for Youth mode.
@@ -33,6 +36,9 @@ export function LearnBoard() {
   const [openId, setOpenId] = React.useState<string>(d.modules[0].id);
   const [downloaded, setDownloaded] = React.useState<Set<string>>(new Set());
   const [online, setOnline] = React.useState(true);
+  const { active } = useContextConfig();
+  const signals = active.advanced_signals ?? DEFAULT_ADVANCED_SIGNALS;
+  const offlineMode = signals.connectivity === "offline_first";
 
   React.useEffect(() => {
     if (typeof navigator === "undefined") return;
@@ -123,6 +129,9 @@ export function LearnBoard() {
           </div>
         </div>
       </section>
+
+      {/* ============== ADAPTED-FOR BANNER ============== */}
+      <ConstraintBanner />
 
       {/* ============== PATHWAY ============== */}
       <section
