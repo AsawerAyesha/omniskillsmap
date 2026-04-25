@@ -1,6 +1,14 @@
 import * as React from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { House, User, Briefcase, BookOpen, Bell } from "lucide-react";
+import {
+  House,
+  User,
+  Briefcase,
+  BookOpen,
+  Bell,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
 import { SwitchContextButton } from "./context-config/switch-context-button";
@@ -14,15 +22,61 @@ const TABS = [
 
 export function YouthShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+  const [collapsed, setCollapsed] = React.useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("u.sidebar.collapsed") === "1";
+  });
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("u.sidebar.collapsed", collapsed ? "1" : "0");
+  }, [collapsed]);
 
   return (
     <div className="min-h-screen flex bg-[var(--surface)] text-[var(--ink)]">
-      {/* Desktop sidebar */}
-      <aside className="hidden md:flex flex-col w-[240px] border-r border-border-subtle bg-[var(--surface-raised)]">
-        <div className="px-6 py-5 border-b border-border-subtle">
-          <span className="font-display text-lg tracking-tight">UNMAPPED</span>
+      {/* Desktop sidebar — fixed to viewport, collapsible to icon rail */}
+      <aside
+        aria-label="Primary navigation"
+        data-collapsed={collapsed}
+        className={cn(
+          "hidden md:flex flex-col shrink-0 sticky top-0 self-start h-screen",
+          "border-r border-border-subtle bg-[var(--surface-raised)]",
+          "transition-[width] duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+          collapsed ? "w-[64px]" : "w-[240px]",
+        )}
+      >
+        <div
+          className={cn(
+            "h-[68px] border-b border-border-subtle flex items-center",
+            collapsed ? "justify-center px-2" : "justify-between px-5",
+          )}
+        >
+          {!collapsed && (
+            <span className="font-display text-lg tracking-tight">UNMAPPED</span>
+          )}
+          <button
+            type="button"
+            onClick={() => setCollapsed((v) => !v)}
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-pressed={collapsed}
+            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-[var(--ink-tertiary)] hover:text-[var(--ink)] hover:bg-[var(--surface-sunken)] transition-colors"
+          >
+            {collapsed ? (
+              <PanelLeftOpen size={16} strokeWidth={1.5} />
+            ) : (
+              <PanelLeftClose size={16} strokeWidth={1.5} />
+            )}
+          </button>
         </div>
-        <nav aria-label="Primary" className="flex-1 px-3 py-4 space-y-1">
+
+        <nav
+          aria-label="Primary"
+          className={cn(
+            "flex-1 overflow-y-auto py-4 space-y-1",
+            collapsed ? "px-2" : "px-3",
+          )}
+        >
           {TABS.map((t) => {
             const active = pathname === t.to;
             const Icon = t.icon;
@@ -30,8 +84,13 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={t.to}
                 to={t.to}
+                title={collapsed ? t.label : undefined}
+                aria-label={t.label}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors",
+                  "flex items-center rounded-lg text-sm transition-colors",
+                  collapsed
+                    ? "h-10 w-10 mx-auto justify-center"
+                    : "gap-3 px-3 py-2.5",
                   active
                     ? "bg-[var(--earth-light)] text-[var(--earth-dark)] font-medium"
                     : "text-[var(--ink-secondary)] hover:bg-[var(--surface-sunken)]",
@@ -40,19 +99,40 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
                 <Icon
                   size={20}
                   strokeWidth={1.5}
-                  className={active ? "text-[var(--earth-dark)]" : "text-[var(--ink-tertiary)]"}
+                  className={
+                    active
+                      ? "text-[var(--earth-dark)] shrink-0"
+                      : "text-[var(--ink-tertiary)] shrink-0"
+                  }
                 />
-                <span>{t.label}</span>
+                {!collapsed && <span className="truncate">{t.label}</span>}
               </Link>
             );
           })}
         </nav>
-        <div className="px-4 py-4 border-t border-border-subtle space-y-3">
-          <div className="text-[11px] uppercase tracking-wider text-[var(--ink-tertiary)]">
-            Context
-          </div>
-          <SwitchContextButton className="w-full justify-start" />
-          <ModeSwitcher className="w-full justify-stretch" />
+
+        <div
+          className={cn(
+            "border-t border-border-subtle",
+            collapsed ? "px-2 py-3 space-y-2" : "px-4 py-4 space-y-3",
+          )}
+        >
+          {!collapsed && (
+            <div className="text-[11px] uppercase tracking-wider text-[var(--ink-tertiary)]">
+              Context
+            </div>
+          )}
+          {collapsed ? (
+            <div className="flex flex-col items-center gap-2">
+              <SwitchContextButton iconOnly title="Switch context" />
+              <ModeSwitcher iconOnly />
+            </div>
+          ) : (
+            <>
+              <SwitchContextButton className="w-full justify-start" />
+              <ModeSwitcher className="w-full justify-stretch" />
+            </>
+          )}
         </div>
       </aside>
 
