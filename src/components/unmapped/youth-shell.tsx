@@ -2,8 +2,8 @@ import * as React from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { House, User, Briefcase, BookOpen, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CountryChip } from "./country-chip";
 import { ModeSwitcher } from "./mode-switcher";
+import { SwitchContextButton } from "./context-config/switch-context-button";
 
 const TABS = [
   { to: "/", label: "Home", icon: House },
@@ -51,7 +51,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           <div className="text-[11px] uppercase tracking-wider text-[var(--ink-tertiary)]">
             Context
           </div>
-          <CountryChip />
+          <SwitchContextButton className="w-full justify-start" />
           <ModeSwitcher className="w-full justify-stretch" />
         </div>
       </aside>
@@ -62,7 +62,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-subtle bg-[var(--surface-raised)]">
           <span className="font-display text-base tracking-tight">UNMAPPED</span>
           <div className="flex items-center gap-2">
-            <CountryChip />
+            <SwitchContextButton />
             <button
               aria-label="Notifications"
               className="p-2 rounded-full hover:bg-[var(--surface-sunken)] transition-colors"
