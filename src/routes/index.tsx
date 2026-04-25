@@ -1,187 +1,156 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TrendingUp, AlertTriangle, BarChart3, BellRing } from "lucide-react";
-import { toast } from "sonner";
-import {
-  UCard,
-  UBadge,
-  UChip,
-  UProgress,
-  UOccupation,
-  UStat,
-} from "@/components/unmapped/primitives";
+import { ArrowRight } from "lucide-react";
+import { SkillsConstellation } from "../components/unmapped/landing/skills-constellation";
+import { RegionPills } from "../components/unmapped/landing/region-pills";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Home — UNMAPPED" },
-      { name: "description", content: "Skills infrastructure for youth in low-income countries." },
-      { property: "og:title", content: "UNMAPPED" },
-      { property: "og:description", content: "Skills infrastructure for youth in low-income countries." },
+      { title: "UNMAPPED — Your skills. Mapped." },
+      {
+        name: "description",
+        content:
+          "An open infrastructure for youth to discover, own, and connect their skills to real economic opportunity. Powered by ILO and World Bank data.",
+      },
+      { property: "og:title", content: "UNMAPPED — Your skills. Mapped." },
+      {
+        property: "og:description",
+        content:
+          "Open skills infrastructure for youth in low-income countries, built on ILO and World Bank data.",
+      },
     ],
   }),
-  component: Index,
+  component: Landing,
 });
 
-function Index() {
+const STATS = [
+  "600M+ youth unmapped",
+  "190+ countries",
+  "Real ILO + World Bank data",
+];
+
+const SOURCES = [
+  "ILO ILOSTAT",
+  "World Bank WDI",
+  "ESCO",
+  "O*NET",
+  "Wittgenstein Centre",
+];
+
+function Landing() {
   return (
-    <div>
-      {/* Hero */}
-      <section className="u-container py-10 md:py-16">
-        <div className="max-w-3xl u-stagger">
-          <UBadge variant="blue">
-            <BarChart3 size={12} strokeWidth={1.5} /> World Bank · ILO data
-          </UBadge>
-          <h1 className="mt-6 font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
-            Skills infrastructure for the next generation, mapped with{" "}
-            <span className="italic text-[var(--earth-dark)]">precision</span>.
-          </h1>
-          <p className="mt-6 text-lg text-[var(--ink-secondary)] max-w-2xl">
-            UNMAPPED translates global labour data into clear, durable pathways for
-            youth in low-income countries — pairing institutional rigor with human
-            empathy.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <button
-              onClick={() => toast.success("Profile saved", { description: "Last sync just now" })}
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--earth-dark)] text-[var(--earth-light)] px-4 py-2 text-sm font-medium"
+    <div className="relative min-h-[calc(100vh-0px)] bg-[var(--surface)]">
+      {/* Paper grain overlay */}
+      <div className="u-grain" aria-hidden />
+
+      <div className="u-container relative pt-12 md:pt-20 pb-40 md:pb-32">
+        {/* Hero grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-12 items-center">
+          {/* Left: text + CTAs + stats */}
+          <div>
+            <h1
+              className="u-rise-in font-display text-[var(--ink)]"
+              style={{
+                fontSize: "clamp(40px, 8vw, 72px)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.02em",
+                fontVariationSettings: '"opsz" 144, "wght" 400',
+                animationDelay: "0ms",
+              }}
             >
-              <BellRing size={14} strokeWidth={1.5} /> Success toast
-            </button>
-            <button
-              onClick={() => toast.error("Sync failed", { description: "Check your connection" })}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-4 py-2 text-sm"
+              Your skills<span className="text-[var(--earth-dark)]">.</span>{" "}
+              Mapped<span className="text-[var(--earth-dark)]">.</span>
+            </h1>
+
+            <p
+              className="u-rise-in mt-6 text-[18px] leading-[1.55] text-[var(--ink-secondary)]"
+              style={{ maxWidth: "42ch", animationDelay: "120ms" }}
             >
-              Error
-            </button>
-            <button
-              onClick={() => toast.info("New cohort opens 5 May")}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] px-4 py-2 text-sm"
+              An open infrastructure for youth to discover, own, and connect
+              their skills to real economic opportunity.
+            </p>
+
+            {/* CTAs */}
+            <div
+              className="u-rise-in mt-8 flex flex-wrap items-center gap-3"
+              style={{ animationDelay: "240ms" }}
             >
-              Info
-            </button>
-          </div>
-        </div>
-
-        {/* Stat row */}
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 u-stagger">
-          <div>
-            <UStat size="lg">2,471</UStat>
-            <div className="mt-2 text-sm text-ink-tertiary uppercase tracking-wider">
-              Occupations mapped
-            </div>
-          </div>
-          <div>
-            <UStat size="lg">61<span className="text-[var(--ink-tertiary)]">%</span></UStat>
-            <div className="mt-2 text-sm text-ink-tertiary uppercase tracking-wider">
-              Durable to 2035
-            </div>
-          </div>
-          <div>
-            <UStat size="lg">14</UStat>
-            <div className="mt-2 text-sm text-ink-tertiary uppercase tracking-wider">
-              Partner countries
-            </div>
-          </div>
-          <div>
-            <UStat size="lg">128k</UStat>
-            <div className="mt-2 text-sm text-ink-tertiary uppercase tracking-wider">
-              Learners onboarded
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Component showcase */}
-      <section className="u-container pb-24">
-        <div className="mb-8 flex items-baseline justify-between">
-          <h2 className="font-display text-3xl tracking-tight">Design system</h2>
-          <span className="font-mono text-xs text-ink-tertiary">v0.1.0</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 u-stagger">
-          {/* Badges */}
-          <UCard>
-            <h3 className="font-display text-xl mb-4">Badges</h3>
-            <div className="flex flex-wrap gap-2">
-              <UBadge>Neutral</UBadge>
-              <UBadge variant="green">
-                <TrendingUp size={12} strokeWidth={1.5} /> Durable
-              </UBadge>
-              <UBadge variant="amber">Transition</UBadge>
-              <UBadge variant="red">
-                <AlertTriangle size={12} strokeWidth={1.5} /> High risk
-              </UBadge>
-              <UBadge variant="blue">Informational</UBadge>
-            </div>
-          </UCard>
-
-          {/* Data chips */}
-          <UCard>
-            <h3 className="font-display text-xl mb-4">Data chips</h3>
-            <div className="flex flex-wrap gap-2">
-              <UChip value="84.2%" label="Adoption" />
-              <UChip value="1,204" label="Learners" />
-              <UChip value="ISCO-7212" label="Code" />
-            </div>
-          </UCard>
-
-          {/* Progress */}
-          <UCard>
-            <h3 className="font-display text-xl mb-2">Skill mastery</h3>
-            <p className="text-sm text-ink-tertiary mb-4">Welding fabrication · cohort 04</p>
-            <UProgress value={72} />
-            <div className="mt-3 flex justify-between font-mono text-xs text-ink-secondary">
-              <span>72%</span>
-              <span>target 85%</span>
-            </div>
-          </UCard>
-
-          {/* Occupation tags */}
-          <UCard className="md:col-span-2">
-            <h3 className="font-display text-xl mb-4">Occupation tags</h3>
-            <div className="flex flex-wrap gap-2">
-              <UOccupation code="7212" name="Welders & flame cutters" />
-              <UOccupation code="2512" name="Software developers" />
-              <UOccupation code="3212" name="Medical lab technicians" />
-              <UOccupation code="6111" name="Field crop growers" />
-              <UOccupation code="5223" name="Shop sales assistants" />
-            </div>
-          </UCard>
-
-          {/* Typography sample */}
-          <UCard>
-            <h3 className="font-display text-xl mb-4">Typography</h3>
-            <p className="font-display text-2xl">Fraunces — display</p>
-            <p className="text-base text-ink-secondary mt-1">DM Sans — body copy</p>
-            <p className="font-mono text-sm text-ink-tertiary mt-1">JetBrains — 0123.456</p>
-          </UCard>
-        </div>
-
-        {/* Palette */}
-        <div className="mt-10">
-          <h3 className="font-display text-xl mb-4">Palette</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {[
-              ["earth", "var(--earth)"],
-              ["earth-light", "var(--earth-light)"],
-              ["earth-dark", "var(--earth-dark)"],
-              ["ink", "var(--ink)"],
-              ["surface-sunken", "var(--surface-sunken)"],
-              ["signal-green", "var(--signal-green)"],
-              ["signal-amber", "var(--signal-amber)"],
-              ["signal-red", "var(--signal-red)"],
-            ].map(([name, val]) => (
-              <div key={name} className="u-card !p-3">
-                <div
-                  className="h-12 w-full rounded-md border border-border-subtle"
-                  style={{ backgroundColor: val }}
+              <button
+                type="button"
+                className="group inline-flex h-12 items-center gap-2 rounded-full bg-[var(--earth)] px-6 text-[15px] font-medium text-[var(--ink)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:translate-y-[-1px] transition-all"
+                style={{ transitionTimingFunction: "var(--ease-precision)" }}
+              >
+                Map my skills
+                <ArrowRight
+                  size={16}
+                  strokeWidth={1.75}
+                  className="transition-transform group-hover:translate-x-0.5"
                 />
-                <div className="mt-2 font-mono text-[11px] text-ink-secondary">{name}</div>
-              </div>
-            ))}
+              </button>
+
+              <button
+                type="button"
+                className="inline-flex h-12 items-center rounded-full border border-[var(--border-strong)] bg-transparent px-6 text-[15px] font-medium text-[var(--ink)] hover:bg-[var(--surface-sunken)] transition-colors"
+              >
+                View for policymakers
+              </button>
+            </div>
+
+            {/* Stat chips */}
+            <div className="mt-7 flex flex-wrap gap-2">
+              {STATS.map((s, i) => (
+                <span
+                  key={s}
+                  className="u-rise-in inline-flex items-center rounded-full border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-3 py-1.5 font-mono text-[12px] text-[var(--ink-secondary)]"
+                  style={{ animationDelay: `${360 + i * 60}ms` }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: constellation */}
+          <div
+            className="u-rise-in mx-auto w-full"
+            style={{
+              maxWidth: "560px",
+              aspectRatio: "4 / 3",
+              animationDelay: "600ms",
+            }}
+          >
+            <SkillsConstellation className="h-full w-full" />
           </div>
         </div>
-      </section>
+
+        {/* Country/region selector row */}
+        <div
+          className="u-rise-in mt-16 md:mt-20 border-t border-[var(--border-subtle)] pt-8"
+          style={{ animationDelay: "720ms" }}
+        >
+          <RegionPills />
+        </div>
+      </div>
+
+      {/* Footer data-source strip */}
+      <footer
+        className="u-rise-in relative z-10 border-t border-[var(--border-subtle)] bg-[var(--surface)]/80 backdrop-blur-sm lg:absolute lg:bottom-0 lg:left-0 lg:right-0"
+        style={{ animationDelay: "840ms" }}
+      >
+        <div className="u-container flex flex-wrap items-center gap-x-2 gap-y-1 py-4 text-[12px] text-[var(--ink-tertiary)]">
+          <span>Powered by real data from:</span>
+          {SOURCES.map((s, i) => (
+            <span key={s} className="inline-flex items-center gap-2">
+              <span className="font-mono tracking-wide">{s}</span>
+              {i < SOURCES.length - 1 && (
+                <span aria-hidden className="text-[var(--ink-tertiary)]/60">
+                  ·
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+      </footer>
     </div>
   );
 }
