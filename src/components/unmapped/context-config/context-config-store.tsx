@@ -128,20 +128,44 @@ export function ContextConfigProvider({ children }: { children: React.ReactNode 
     [],
   );
 
-  const value: Store = {
-    open,
-    openDrawer: () => setOpen(true),
-    closeDrawer: () => setOpen(false),
-    configs,
-    active,
-    setActiveById,
-    removeConfig,
-    addConfig,
-    updateConfig,
-    isReconfiguring,
-    reconfiguringFor,
-    applyContext,
-  };
+  const openDrawer = React.useCallback(() => setOpen(true), []);
+  const closeDrawer = React.useCallback(() => setOpen(false), []);
+
+  /* Memoise the context value so consumers (drawer, shells, dashboard) only
+   * re-render when something they actually read changes. Without this, every
+   * keystroke or transient state change in the provider would create a new
+   * Store object and re-render the entire app — a major contributor to the
+   * tab-click lag. */
+  const value = React.useMemo<Store>(
+    () => ({
+      open,
+      openDrawer,
+      closeDrawer,
+      configs,
+      active,
+      setActiveById,
+      removeConfig,
+      addConfig,
+      updateConfig,
+      isReconfiguring,
+      reconfiguringFor,
+      applyContext,
+    }),
+    [
+      open,
+      openDrawer,
+      closeDrawer,
+      configs,
+      active,
+      setActiveById,
+      removeConfig,
+      addConfig,
+      updateConfig,
+      isReconfiguring,
+      reconfiguringFor,
+      applyContext,
+    ],
+  );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
