@@ -4,6 +4,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import appCss from "../styles.css?url";
 import { UnmappedModeProvider } from "../components/unmapped/mode-context";
 import { AppShell } from "../components/unmapped/app-shell";
+import { ThemeProvider } from "../components/unmapped/theme-context";
 
 function NotFoundComponent() {
   return (
@@ -73,10 +74,12 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   return (
-    <UnmappedModeProvider>
-      <AppShell>
-        <Outlet />
-      </AppShell>
-    </UnmappedModeProvider>
+    <ThemeProvider>
+      <UnmappedModeProvider>
+        <AppShell>
+          <Outlet />
+        </AppShell>
+      </UnmappedModeProvider>
+    </ThemeProvider>
   );
 }

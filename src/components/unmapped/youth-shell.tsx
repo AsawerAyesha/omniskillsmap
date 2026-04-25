@@ -15,6 +15,7 @@ import { ModeSwitcher } from "./mode-switcher";
 import { SwitchContextButton } from "./context-config/switch-context-button";
 import { useContextConfig } from "./context-config/context-config-store";
 import { useUnmappedMode } from "./mode-context";
+import { ThemeSwitcher } from "./theme-switcher";
 
 const TABS = [
   { to: "/", label: "Home", icon: House },
@@ -155,11 +156,18 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
               >
                 <ArrowLeftRight size={14} strokeWidth={1.5} />
               </button>
+              <ThemeSwitcher variant="stacked" />
             </div>
           ) : (
             <>
               <SwitchContextButton className="w-full justify-start" />
               <ModeSwitcher className="w-full justify-stretch" />
+              <div className="pt-1">
+                <div className="text-[11px] uppercase tracking-wider text-[var(--ink-tertiary)] mb-1.5">
+                  Theme
+                </div>
+                <ThemeSwitcher variant="full" />
+              </div>
             </>
           )}
         </div>
@@ -171,6 +179,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-subtle bg-[var(--surface-raised)]">
           <span className="font-display text-base tracking-tight">UNMAPPED</span>
           <div className="flex items-center gap-2">
+            <ThemeSwitcher variant="compact" />
             <SwitchContextButton />
             <button
               aria-label="Notifications"
