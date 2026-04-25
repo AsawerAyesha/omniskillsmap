@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { UnmappedModeProvider } from "@/components/unmapped/mode-context";
-import { AppShell } from "@/components/unmapped/app-shell";
+import { UnmappedModeProvider } from "../components/unmapped/mode-context";
+import { AppShell } from "../components/unmapped/app-shell";
 
 function NotFoundComponent() {
   return (
@@ -52,7 +53,7 @@ export const Route = createRootRoute({
   notFoundComponent: NotFoundComponent,
 });
 
-function RootShell({ children }: { children: React.ReactNode }) {
+function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
