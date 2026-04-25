@@ -120,7 +120,7 @@ export function SkillsConstellation({ className }: { className?: string }) {
           return (
             <circle
               key={i}
-              className="u-dot"
+              className="animate-pulse-dot motion-reduce:animate-none [transform-box:fill-box]"
               cx={d.x}
               cy={d.y}
               r={d.r}
@@ -128,8 +128,7 @@ export function SkillsConstellation({ className }: { className?: string }) {
               style={
                 {
                   transformOrigin: `${d.x}px ${d.y}px`,
-                  transformBox: "fill-box",
-                  ["--dur" as string]: `${d.duration}s`,
+                  ["--dot-dur" as string]: `${d.duration}s`,
                   animationDelay: `${d.delay}s`,
                   transition: "opacity 280ms cubic-bezier(0.16,1,0.3,1)",
                   cursor: "pointer",
