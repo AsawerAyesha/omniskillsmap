@@ -1,8 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Compass, Download, ChevronDown } from "lucide-react";
+import { Compass, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
-import { useUnmappedMode } from "./mode-context";
+import { SwitchContextButton } from "./context-config/switch-context-button";
+import { useContextConfig } from "./context-config/context-config-store";
 
 const LINKS = [
   { to: "/policy", label: "Overview" },
@@ -12,11 +13,9 @@ const LINKS = [
   { to: "/policy/projections", label: "Projections" },
 ] as const;
 
-const COUNTRIES = ["Ghana", "Kenya", "Bangladesh", "Peru", "Vietnam"];
-
 export function PolicyShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
-  const { country, setCountry } = useUnmappedMode();
+  const { active, openDrawer } = useContextConfig();
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--surface)] text-[var(--ink)]">
@@ -60,29 +59,23 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
           </nav>
 
           <div className="ml-auto flex items-center gap-3 shrink-0">
-            <label
-              className="relative inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium cursor-pointer"
+            <button
+              type="button"
+              onClick={openDrawer}
+              className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-xs font-medium"
               style={{
                 background: "rgba(255,255,255,0.06)",
                 color: "#F0EDE8",
                 border: "1px solid rgba(255,255,255,0.12)",
               }}
             >
-              <span>{country}</span>
-              <ChevronDown size={14} strokeWidth={1.5} />
-              <select
-                aria-label="Select country context"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              >
-                {COUNTRIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </label>
+              <span aria-hidden>{active.flag}</span>
+              <span>{active.country}</span>
+              <span className="opacity-60">·</span>
+              <span className="opacity-70">Switch</span>
+            </button>
+
+            <SwitchContextButton variant="dark" className="hidden md:inline-flex" />
 
             <button
               className="hidden sm:inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium"
