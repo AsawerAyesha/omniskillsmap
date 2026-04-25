@@ -608,6 +608,11 @@
     border-bottom: 1px solid color-mix(in oklab, var(--earth-dark) 20%, transparent);
   }
 
+  /* Hide the horizontal scrollbar on overflow rows (e.g. the policy nav
+   * when space is tight) without disabling scrolling itself. */
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
   /* Brand toast variants (sonner) */
   [data-sonner-toast] {
     font-family: var(--font-sans);
