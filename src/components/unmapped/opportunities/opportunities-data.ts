@@ -24,6 +24,12 @@ export interface Opportunity {
   skillsTotal: number;
   skillsToAcquire: string[];
   trainingAvailable: boolean;
+  /* Constraint signals — used by evaluateFit() to add chips and nudge
+   * the displayed match score by ±8 pts. Optional: missing values are
+   * treated as neutral. */
+  offlineFriendly?: boolean;
+  walkableRadiusKm?: number;
+  refugeeAccessible?: boolean;
 }
 
 export interface SectorSignal {
