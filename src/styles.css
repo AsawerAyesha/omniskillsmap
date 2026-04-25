@@ -594,3 +594,49 @@
 /* Landing/intake animations and the paper-grain overlay are now expressed
    as Tailwind utilities (animate-rise-in, animate-step-fwd, animate-step-back,
    animate-tag-pop, animate-pulse-dot) defined in @theme above. */
+
+/* ==========================================================================
+   Print — Skills Profile Card should look like a credential on paper.
+   ========================================================================== */
+@media print {
+  /* Hide app shell chrome */
+  aside,
+  header[role="banner"],
+  nav[aria-label="Primary"],
+  .no-print {
+    display: none !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000 !important;
+  }
+
+  /* Force print colors so brand earth/parchment surfaces survive */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Stop any entrance animations from delaying print rendering */
+  *, *::before, *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Page margins */
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Avoid awkward breaks inside cards */
+  .print-card,
+  .print-keep {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
