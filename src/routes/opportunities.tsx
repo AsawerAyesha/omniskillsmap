@@ -289,3 +289,16 @@ function EmptyState({ onReset }: { onReset: () => void }) {
     </div>
   );
 }
+
+function humaniseReasons(reasons: string[]): string {
+  if (reasons.length === 0) return "constraint";
+  const map: Record<string, string> = {
+    connectivity: "connectivity",
+    mobility: "mobility",
+    displacement: "displacement",
+  };
+  const labels = reasons.map((r) => map[r] ?? r);
+  if (labels.length === 1) return labels[0];
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
+  return `${labels.slice(0, -1).join(", ")} and ${labels[labels.length - 1]}`;
+}
