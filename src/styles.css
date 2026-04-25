@@ -106,6 +106,7 @@
   --animate-step-back: step-back 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-tag-pop: tag-pop 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-pulse-dot: pulse-dot var(--dot-dur, 4s) ease-in-out infinite;
+  --animate-shimmer: shimmer 1.4s linear infinite;
 
   @keyframes rise-in {
     from { opacity: 0; transform: translateY(12px); }
@@ -126,6 +127,10 @@
   @keyframes pulse-dot {
     0%, 100% { transform: scale(1); }
     50%      { transform: scale(1.15); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
 }
 
@@ -589,3 +594,49 @@
 /* Landing/intake animations and the paper-grain overlay are now expressed
    as Tailwind utilities (animate-rise-in, animate-step-fwd, animate-step-back,
    animate-tag-pop, animate-pulse-dot) defined in @theme above. */
+
+/* ==========================================================================
+   Print — Skills Profile Card should look like a credential on paper.
+   ========================================================================== */
+@media print {
+  /* Hide app shell chrome */
+  aside,
+  header[role="banner"],
+  nav[aria-label="Primary"],
+  .no-print {
+    display: none !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000 !important;
+  }
+
+  /* Force print colors so brand earth/parchment surfaces survive */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Stop any entrance animations from delaying print rendering */
+  *, *::before, *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Page margins */
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Avoid awkward breaks inside cards */
+  .print-card,
+  .print-keep {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
