@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { OpportunityCard } from "@/components/unmapped/opportunities/opportunity-card";
+import { useContextConfig } from "@/components/unmapped/context-config/context-config-store";
 import {
   opportunities,
   sectorSignals,
@@ -40,6 +41,7 @@ type Filter = OpportunityCategory | "all";
 
 function OpportunitiesPage() {
   const [filter, setFilter] = React.useState<Filter>("all");
+  const { openDrawer, active } = useContextConfig();
 
   const filtered = React.useMemo(
     () =>
@@ -77,10 +79,12 @@ function OpportunitiesPage() {
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-border-subtle bg-earth-light/60 px-2.5 py-1 text-[12px] text-earth-dark">
               <MapPin size={12} />
-              Accra, Ghana · Electronics &amp; Repair
+              <span aria-hidden>{active.flag}</span>
+              {active.country} · {active.region_label.split("·").pop()?.trim() ?? "Electronics & Repair"}
             </span>
             <button
               type="button"
+              onClick={openDrawer}
               className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] text-ink-secondary hover:bg-surface-sunken transition-colors"
             >
               <Settings2 size={12} />
