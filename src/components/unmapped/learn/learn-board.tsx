@@ -288,13 +288,22 @@ export function LearnBoard() {
                     <p className="text-[13px] font-medium text-ink leading-snug truncate">
                       {b.title}
                     </p>
-                    <p className="mt-0.5 text-[11px] text-ink-tertiary font-mono inline-flex items-center gap-2">
+                    <p className="mt-0.5 text-[11px] text-ink-tertiary font-mono inline-flex items-center gap-2 flex-wrap">
                       <span className="inline-flex items-center gap-1">
                         <Timer size={10} />
                         {b.minutes} min
                       </span>
                       <span aria-hidden>·</span>
                       <span>{b.tag}</span>
+                      {offlineMode && (
+                        <span
+                          title="Available without daily data"
+                          className="inline-flex items-center gap-1 rounded-full border border-signal-green/30 bg-signal-green/10 px-1.5 py-0.5 text-[10px] font-medium text-signal-green normal-case tracking-normal"
+                        >
+                          <WifiOff size={9} strokeWidth={1.7} />
+                          Offline-ready
+                        </span>
+                      )}
                     </p>
                   </div>
                   <Play
