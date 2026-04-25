@@ -583,15 +583,6 @@
     100% { background-position: 150% 0; }
   }
 
-  /* Mode cross-fade */
-  .u-mode-fade {
-    animation: u-mode-fade 400ms var(--ease-precision);
-  }
-  @keyframes u-mode-fade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
   /* Route transitions — forward/back */
   .u-route-fwd  { animation: u-route-in-fwd 200ms var(--ease-precision); }
   .u-route-back { animation: u-route-in-back 200ms var(--ease-precision); }
@@ -630,7 +621,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .u-mode-fade,
     .u-route-fwd,
     .u-route-back,
     .u-skeleton,

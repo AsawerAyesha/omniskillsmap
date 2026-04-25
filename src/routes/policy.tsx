@@ -32,41 +32,22 @@ export const Route = createFileRoute("/policy")({
 });
 
 function PolicyDashboard() {
-  const { country, mode } = useUnmappedMode();
+  const { country } = useUnmappedMode();
   const data = React.useMemo(() => getCountryDataset(country), [country]);
 
-  /* Force dark theme on the policy dashboard for the analytical context.
-   * Restores the previous theme class on unmount so the youth view stays warm. */
-  React.useEffect(() => {
-    const root = document.documentElement;
-    const hadDark = root.classList.contains("dark");
-    const hadLight = root.classList.contains("light");
-    root.classList.add("dark");
-    root.classList.remove("light");
-    return () => {
-      if (!hadDark) root.classList.remove("dark");
-      if (hadLight) root.classList.add("light");
-    };
-  }, []);
-
-  /* Re-mount the data layer when country changes so charts re-animate.
-   * Also fire a brief loading toast — the live demo of country-agnostic arch. */
+  /* Brief toast on country change — the dashboard re-renders automatically
+   * because `data` is memoised on `country`, and chart entrance animations
+   * re-fire from the `key={country}` wrapper below. The dark-theme class is
+   * owned by PolicyShell, so we no longer need to touch <html> from here. */
   const prevCountry = React.useRef(country);
-  const [phase, setPhase] = React.useState<"in" | "out">("in");
   React.useEffect(() => {
     if (prevCountry.current === country) return;
-    setPhase("out");
+    prevCountry.current = country;
     toast(`Loading data for ${country}…`, {
       duration: 600,
       id: "policy-context-switch",
     });
-    const t1 = setTimeout(() => setPhase("in"), 220);
-    prevCountry.current = country;
-    return () => clearTimeout(t1);
   }, [country]);
-
-  // Suppress lint: mode is read for type-safety / future gating.
-  void mode;
 
   return (
     <div
@@ -108,15 +89,7 @@ function PolicyDashboard() {
       </div>
 
       <div className="u-container py-6 space-y-6">
-        <div
-          className={`transition-all duration-200 ease-precision ${
-            phase === "out"
-              ? "opacity-0 translate-y-1"
-              : "opacity-100 translate-y-0"
-          }`}
-          // Re-mount children on country change for fresh chart animations
-          key={`${country}-${phase}`}
-        >
+        <div key={country} className="animate-rise-in">
           {/* Top 12-col grid: cohort | signals (×2) */}
           <div className="grid gap-6 lg:grid-cols-12">
             {/* Column 1 — Cohort Overview (4 cols on desktop, full on mobile) */}
