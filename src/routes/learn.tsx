@@ -29,7 +29,7 @@ function LearnPage() {
           <p className="text-[12px] font-mono uppercase tracking-[0.08em] text-ink-tertiary">
             Learn
           </p>
-          <h1 className="mt-1 font-display text-[34px] md:text-[42px] leading-[1.05] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]">
+          <h1 className="mt-1 text-[34px] md:text-[42px] leading-[1.05] tracking-tight text-ink">
             Your pathway<span className="text-earth-dark">.</span>
           </h1>
           <p className="mt-2 max-w-[60ch] text-[14px] text-ink-secondary">

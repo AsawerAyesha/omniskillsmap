@@ -81,13 +81,13 @@ function ProfilePage() {
           <div className="flex items-start gap-4">
             <span
               aria-hidden
-              className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-earth-light font-display text-[24px] text-earth-dark [font-variation-settings:'opsz'_144,'wght'_400]"
+              className="inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-earth-light text-[24px] text-earth-dark"
             >
               {p.initials}
             </span>
             <div className="min-w-0">
               <h1
-                className="font-display text-[26px] leading-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]"
+                className="text-[26px] leading-tight text-ink"
               >
                 {p.name}
               </h1>
@@ -410,7 +410,7 @@ function SignalCard({ signal }: { signal: Signal }) {
         {signal.label}
       </p>
       <p
-        className="mt-1 font-display text-[36px] leading-none text-ink [font-variation-settings:'opsz'_144,'wght'_400] tabular-nums"
+        className="mt-1 text-[36px] leading-none text-ink tabular-nums"
       >
         {signal.value}
       </p>

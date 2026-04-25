@@ -31,7 +31,7 @@ export function SignalCards({ signals }: { signals: SignalCard[] }) {
               {s.label}
             </div>
             <div
-              className="mt-2 font-display [font-variation-settings:'opsz'_144,'wght'_400] tracking-tight leading-none"
+              className="mt-2 tracking-tight leading-none"
               style={{ color: "#F0EDE8", fontSize: "36px" }}
             >
               {s.value}

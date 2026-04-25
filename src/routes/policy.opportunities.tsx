@@ -67,7 +67,7 @@ function PolicyOpportunitiesPage() {
       >
         <div className="u-container py-5 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="font-display text-[28px] tracking-tight leading-tight">
+            <h1 className="text-[28px] tracking-tight leading-tight">
               Opportunities
             </h1>
             <p
@@ -115,7 +115,7 @@ function PolicyOpportunitiesPage() {
                 >
                   {s.label}
                 </div>
-                <div className="font-display text-[20px] leading-none mt-0.5 tabular-nums">
+                <div className="text-[20px] leading-none mt-0.5 tabular-nums">
                   {s.value}
                 </div>
                 <div

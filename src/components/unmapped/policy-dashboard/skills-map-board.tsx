@@ -201,7 +201,7 @@ function ClusterCard({
       {/* Top: cluster + tier */}
       <header className="flex items-start justify-between gap-3 mb-3">
         <div className="min-w-0">
-          <h3 className="font-display text-[15px] leading-tight tracking-tight truncate">
+          <h3 className="text-[15px] leading-tight tracking-tight truncate">
             {cluster.cluster}
           </h3>
           <p

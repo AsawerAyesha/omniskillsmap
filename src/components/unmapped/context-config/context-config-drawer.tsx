@@ -40,7 +40,7 @@ export function ContextConfigDrawer() {
         {/* Header */}
         <header className="px-5 pt-5 pb-4 flex items-start justify-between gap-3 border-b border-border-subtle">
           <div>
-            <h2 className="font-display text-[22px] tracking-tight text-ink leading-tight">
+            <h2 className="text-[22px] tracking-tight text-ink leading-tight">
               Configure context
             </h2>
             <p className="mt-1 text-[13px] text-ink-secondary leading-snug">
@@ -147,7 +147,7 @@ function ReconfigurationOverlay() {
             className="absolute inset-0 rounded-full ring-2 ring-earth/40 animate-ping"
           />
         </span>
-        <p className="font-display text-[20px] italic tracking-tight text-ink">
+        <p className="text-[20px] italic tracking-tight text-ink">
           Reconfiguring for {reconfiguringFor}…
         </p>
       </div>

@@ -145,7 +145,7 @@ function IntakePage() {
       <main className="flex-1 mx-auto w-full max-w-[560px] px-4 pt-6 pb-32 overflow-x-hidden">
         <h1
           key={`title-${step}`}
-          className="font-display text-[28px] sm:text-[32px] leading-[1.1] tracking-tight text-ink mb-6 [font-variation-settings:'opsz'_144,'wght'_400]"
+          className="text-[28px] sm:text-[32px] leading-[1.1] tracking-tight text-ink mb-6"
         >
           {STEP_TITLES[step]}
         </h1>
@@ -201,7 +201,7 @@ function IntakeComplete({ data }: { data: IntakeData }) {
           <Check size={22} strokeWidth={2} />
         </span>
         <h1
-          className="mt-6 font-display text-[32px] leading-[1.1] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]"
+          className="mt-6 text-[32px] leading-[1.1] tracking-tight text-ink"
         >
           Profile saved
         </h1>

@@ -52,7 +52,7 @@ function Landing() {
           {/* Left: text + CTAs + stats */}
           <div>
             <h1
-              className="font-display text-ink text-[clamp(40px,8vw,72px)] leading-[0.95] tracking-[-0.02em] animate-rise-in opacity-0 [font-variation-settings:'opsz'_144,'wght'_400]"
+              className="text-ink text-[clamp(40px,8vw,72px)] leading-[0.95] tracking-[-0.02em] animate-rise-in opacity-0"
               style={{ animationDelay: "0ms" }}
             >
               Your skills<span className="text-earth-dark">.</span>{" "}
