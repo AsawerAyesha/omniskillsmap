@@ -7,7 +7,7 @@ import { Check } from "lucide-react";
    secondary signal (check icon) for accessibility.
    ============================================================ */
 export interface SelectCardProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange"> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onChange" | "title"> {
   selected: boolean;
   icon?: React.ReactNode;
   title: React.ReactNode;
