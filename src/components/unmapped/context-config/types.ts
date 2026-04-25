@@ -117,3 +117,63 @@ export function regionLabelFor(country: string, region: RegionType): string {
 }
 
 export const PROJECTIONS_SOURCE = "wittgenstein_2025";
+
+/* ============================================================
+ * Advanced signals — optional matching modifiers tied to a
+ * context. These behave like ranking signals (not onboarding
+ * questions) and live inside Configure Context, collapsed by
+ * default.
+ * ============================================================ */
+
+export type ConnectivityTier = "offline_first" | "intermittent" | "broadband";
+export type MobilityTier = "walking" | "local_transit" | "regional";
+export type DisplacementContext =
+  | "none"
+  | "internally_displaced"
+  | "refugee"
+  | "returnee"
+  | "host_community";
+
+export interface AdvancedSignals {
+  connectivity: ConnectivityTier;
+  mobility: MobilityTier;
+  displacement: DisplacementContext;
+}
+
+export const CONNECTIVITY_LABELS: Record<ConnectivityTier, string> = {
+  offline_first: "Offline-first",
+  intermittent: "Intermittent",
+  broadband: "Broadband",
+};
+
+export const CONNECTIVITY_HINTS: Record<ConnectivityTier, string> = {
+  offline_first: "<2G or no daily data — prioritise SMS / downloadable lessons",
+  intermittent: "3G, capped data — favour low-bandwidth pathways",
+  broadband: "Stable 4G/wifi — full media unlocked",
+};
+
+export const MOBILITY_LABELS: Record<MobilityTier, string> = {
+  walking: "Walking distance",
+  local_transit: "Local transit",
+  regional: "Regional travel",
+};
+
+export const MOBILITY_HINTS: Record<MobilityTier, string> = {
+  walking: "Match within ~5 km — neighbourhood employers only",
+  local_transit: "Match within commute range of city transit",
+  regional: "Open to relocation across districts / countries",
+};
+
+export const DISPLACEMENT_LABELS: Record<DisplacementContext, string> = {
+  none: "Not applicable",
+  internally_displaced: "Internally displaced",
+  refugee: "Refugee",
+  returnee: "Returnee",
+  host_community: "Host community",
+};
+
+export const DEFAULT_ADVANCED_SIGNALS: AdvancedSignals = {
+  connectivity: "intermittent",
+  mobility: "local_transit",
+  displacement: "none",
+};
