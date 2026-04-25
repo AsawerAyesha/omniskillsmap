@@ -6,6 +6,7 @@ import {
   buildContextId,
   regionLabelFor,
   PROJECTIONS_SOURCE,
+  DEFAULT_ADVANCED_SIGNALS,
 } from "./types";
 
 interface Store {
@@ -49,6 +50,7 @@ function makeDefault(country: string, region: RegionType): ContextConfig {
     opportunity_types: ["formal_employment", "self_employment", "gig", "training"],
     wage_vintage: 2024,
     flag: entry.flag,
+    advanced_signals: { ...DEFAULT_ADVANCED_SIGNALS },
   };
 }
 

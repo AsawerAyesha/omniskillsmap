@@ -6,6 +6,7 @@ import { useContextConfig } from "./context-config-store";
 import { ActiveConfigCard } from "./active-config-card";
 import { AddContextFlow } from "./add-context-flow";
 import { AdvancedConfig } from "./advanced-config";
+import { AdvancedSignals } from "./advanced-signals";
 import { JsonPreview } from "./json-preview";
 
 export function ContextConfigDrawer() {
@@ -101,6 +102,12 @@ export function ContextConfigDrawer() {
 
           {/* Advanced — edits the active config */}
           <AdvancedConfig
+            config={active}
+            onChange={(patch) => updateConfig(active.context_id, patch)}
+          />
+
+          {/* Advanced signals — optional matching modifiers */}
+          <AdvancedSignals
             config={active}
             onChange={(patch) => updateConfig(active.context_id, patch)}
           />
