@@ -284,6 +284,91 @@
   }
 }
 
+/* ==========================================================================
+   ONYX — true-black (OLED) theme. Layered ON TOP of `.dark` so the shadcn
+   semantic mapping is inherited; we only override surface tones, borders,
+   shadows and accents to deliver a pure obsidian aesthetic without losing
+   the dark theme's contrast contracts.
+   Activate by adding BOTH `dark` and `theme-onyx` on <html>.
+   ========================================================================== */
+.theme-onyx {
+  /* Pure black canvas with subtly raised charcoal panels. */
+  --surface:         oklch(0 0 0);              /* #000000 */
+  --surface-raised:  oklch(0.115 0.003 70);     /* #0B0B0C panel */
+  --surface-sunken:  oklch(0.060 0.002 70);     /* near-black input wells */
+
+  --ink:             oklch(0.985 0.003 80);     /* #FAFAF9 */
+  --ink-secondary:   oklch(0.720 0.008 75);
+  --ink-tertiary:    oklch(0.500 0.008 75);
+
+  /* Brand accent stays warm but is dialed up against the void. */
+  --earth:           oklch(0.820 0.075 78);
+  --earth-light:     oklch(0.220 0.020 75);
+  --earth-dark:      oklch(0.880 0.060 78);
+
+  /* Hairline dividers — barely-there at rest, crisp on hover. */
+  --border-subtle:   oklch(1 0 0 / 7%);
+  --border-strong:   oklch(1 0 0 / 16%);
+
+  --signal-green:    oklch(0.700 0.150 150);
+  --signal-amber:    oklch(0.770 0.155 65);
+  --signal-red:      oklch(0.710 0.190 28);
+  --signal-blue:     oklch(0.620 0.105 240);
+
+  /* Re-bind shadcn semantics so any class consuming them updates instantly. */
+  --background:           var(--surface);
+  --foreground:           var(--ink);
+  --card:                 var(--surface-raised);
+  --card-foreground:      var(--ink);
+  --popover:              var(--surface-raised);
+  --popover-foreground:   var(--ink);
+  --primary:              var(--earth);
+  --primary-foreground:   oklch(0.080 0.005 70);
+  --secondary:            var(--surface-sunken);
+  --secondary-foreground: var(--ink);
+  --muted:                var(--surface-sunken);
+  --muted-foreground:     var(--ink-tertiary);
+  --accent:               oklch(0.180 0.012 75);
+  --accent-foreground:    var(--ink);
+  --border:               var(--border-subtle);
+  --input:                var(--border-strong);
+  --ring:                 var(--earth);
+
+  --sidebar:                       var(--surface);
+  --sidebar-foreground:            var(--ink);
+  --sidebar-primary:               var(--earth);
+  --sidebar-primary-foreground:    oklch(0.080 0.005 70);
+  --sidebar-accent:                var(--surface-raised);
+  --sidebar-accent-foreground:     var(--ink);
+  --sidebar-border:                var(--border-subtle);
+  --sidebar-ring:                  var(--earth);
+
+  /* Deeper, longer shadows — feel like objects floating in a void. */
+  --shadow-sm: 0 1px 0 rgba(255,255,255,0.04) inset, 0 1px 2px rgba(0,0,0,0.6);
+  --shadow-md: 0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 24px rgba(0,0,0,0.7);
+  --shadow-lg: 0 1px 0 rgba(255,255,255,0.05) inset, 0 24px 60px rgba(0,0,0,0.85);
+
+  color-scheme: dark;
+}
+
+/* Smooth global cross-fade when switching themes — only animates colors,
+ * never layout. Skipped for users who request reduced motion. */
+html.theme-transition,
+html.theme-transition body,
+html.theme-transition *:not(svg):not(path) {
+  transition:
+    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition,
+  html.theme-transition body,
+  html.theme-transition *:not(svg):not(path) {
+    transition: none !important;
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
