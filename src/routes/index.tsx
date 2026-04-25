@@ -84,12 +84,12 @@ function Landing() {
                 />
               </Link>
 
-              <button
-                type="button"
+              <Link
+                to="/policy"
                 className="inline-flex h-12 items-center rounded-full border border-border-strong bg-transparent px-6 text-[15px] font-medium text-ink transition-colors hover:bg-surface-sunken"
               >
                 View for policymakers
-              </button>
+              </Link>
             </div>
 
             {/* Stat chips */}

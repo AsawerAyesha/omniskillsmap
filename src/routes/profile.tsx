@@ -1,6 +1,7 @@
 import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Share2, Download, Info, MapPin } from "lucide-react";
+import { toast } from "sonner";
 import {
   sampleProfile,
   type OccupationMatch,
@@ -41,6 +42,34 @@ function ProfilePage() {
     return () => clearTimeout(t);
   }, []);
 
+  const handleShare = React.useCallback(async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    const shareData = {
+      title: `${p.name} — UNMAPPED Skills Profile`,
+      text: `${p.name}'s portable skills profile, built on ISCO-08 and ESCO standards.`,
+      url,
+    };
+    try {
+      if (typeof navigator !== "undefined" && navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+      if (typeof navigator !== "undefined" && navigator.clipboard && url) {
+        await navigator.clipboard.writeText(url);
+        toast.success("Profile link copied", {
+          description: "Paste it anywhere to share Amara's profile.",
+        });
+        return;
+      }
+      toast.info("Sharing not supported on this device");
+    } catch (err) {
+      // user dismissed share sheet — silent
+      if ((err as Error)?.name !== "AbortError") {
+        toast.error("Couldn't share right now");
+      }
+    }
+  }, [p.name]);
+
   return (
     <div className="bg-surface min-h-screen">
       <div className="mx-auto w-full max-w-[840px] px-4 md:px-6 py-8 md:py-12 space-y-8">
@@ -75,6 +104,7 @@ function ProfilePage() {
           <div className="flex items-center gap-2 no-print shrink-0">
             <button
               type="button"
+              onClick={handleShare}
               aria-label="Share profile"
               className="inline-flex items-center gap-1.5 rounded-full border border-border-strong bg-transparent px-3 h-10 text-[13px] font-medium text-ink-secondary hover:bg-surface-sunken transition-colors"
             >
@@ -227,6 +257,7 @@ function ProfilePage() {
             </button>
             <button
               type="button"
+              onClick={handleShare}
               className="inline-flex items-center gap-2 h-11 rounded-full border border-earth-dark/30 bg-transparent px-5 text-[14px] font-medium text-earth-dark hover:bg-earth-dark/5 transition-colors"
             >
               <Share2 size={14} strokeWidth={1.75} />
