@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Compass, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,24 @@ const LINKS = [
 export function PolicyShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const { active, openDrawer } = useContextConfig();
+
+  /* Force dark theme while the policy shell is mounted (analytical context).
+   * Snapshot the previous classes and restore on unmount so toggling back to
+   * the youth shell never leaves a stray .dark on <html>. Living here — not
+   * inside the route component — guarantees the class lifetime exactly
+   * matches the shell that needs it, eliminating the youth-shell-in-dark
+   * flash users were seeing. */
+  React.useEffect(() => {
+    const root = document.documentElement;
+    const hadDark = root.classList.contains("dark");
+    const hadLight = root.classList.contains("light");
+    root.classList.add("dark");
+    root.classList.remove("light");
+    return () => {
+      if (!hadDark) root.classList.remove("dark");
+      if (hadLight) root.classList.add("light");
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--surface)] text-[var(--ink)]">
