@@ -15,6 +15,7 @@ import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PolicySkillsRouteImport } from './routes/policy.skills'
+import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
 
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
@@ -46,6 +47,11 @@ const PolicySkillsRoute = PolicySkillsRouteImport.update({
   path: '/skills',
   getParentRoute: () => PolicyRoute,
 } as any)
+const PolicyOpportunitiesRoute = PolicyOpportunitiesRouteImport.update({
+  id: '/opportunities',
+  path: '/opportunities',
+  getParentRoute: () => PolicyRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/skills': typeof PolicySkillsRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/skills': typeof PolicySkillsRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/skills': typeof PolicySkillsRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/policy/opportunities'
     | '/policy/skills'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/policy/opportunities'
     | '/policy/skills'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/policy/opportunities'
     | '/policy/skills'
   fileRoutesById: FileRoutesById
 }
@@ -151,14 +163,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicySkillsRouteImport
       parentRoute: typeof PolicyRoute
     }
+    '/policy/opportunities': {
+      id: '/policy/opportunities'
+      path: '/opportunities'
+      fullPath: '/policy/opportunities'
+      preLoaderRoute: typeof PolicyOpportunitiesRouteImport
+      parentRoute: typeof PolicyRoute
+    }
   }
 }
 
 interface PolicyRouteChildren {
+  PolicyOpportunitiesRoute: typeof PolicyOpportunitiesRoute
   PolicySkillsRoute: typeof PolicySkillsRoute
 }
 
 const PolicyRouteChildren: PolicyRouteChildren = {
+  PolicyOpportunitiesRoute: PolicyOpportunitiesRoute,
   PolicySkillsRoute: PolicySkillsRoute,
 }
 
