@@ -2,8 +2,8 @@ import * as React from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AlertTriangle, Compass, Download, ShieldCheck, Users } from "lucide-react";
 import { useUnmappedMode } from "@/components/unmapped/mode-context";
-import { RiskBoard } from "@/components/unmapped/policy-dashboard/risk-board";
 import { getRiskDataset } from "@/components/unmapped/policy-dashboard/risk-data";
+import { RiskBoard } from "@/components/unmapped/policy-dashboard/risk-board";
 
 export const Route = createFileRoute("/policy/risk")({
   head: () => ({
