@@ -16,6 +16,9 @@ import {
   FILTERS,
   type OpportunityCategory,
 } from "@/components/unmapped/opportunities/opportunities-data";
+import { evaluateFit } from "@/components/unmapped/opportunities/constraint-fit";
+import { ConstraintBanner } from "@/components/unmapped/constraint-banner";
+import { DEFAULT_ADVANCED_SIGNALS } from "@/components/unmapped/context-config/types";
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -42,13 +45,38 @@ type Filter = OpportunityCategory | "all";
 function OpportunitiesPage() {
   const [filter, setFilter] = React.useState<Filter>("all");
   const { openDrawer, active } = useContextConfig();
+  const signals = active.advanced_signals ?? DEFAULT_ADVANCED_SIGNALS;
+
+  /* Evaluate fit + adjusted score for every opportunity once. */
+  const enriched = React.useMemo(
+    () =>
+      opportunities.map((o) => {
+        const fit = evaluateFit(o, signals);
+        return {
+          o,
+          fit,
+          adjustedScore: Math.max(0, Math.min(100, o.matchScore + fit.scoreDelta)),
+        };
+      }),
+    [signals],
+  );
+
+  const demotedCount = enriched.filter((e) => e.fit.demotedReason !== null).length;
+  const demotedReasons = React.useMemo(() => {
+    const set = new Set<string>();
+    for (const e of enriched) if (e.fit.demotedReason) set.add(e.fit.demotedReason);
+    return Array.from(set);
+  }, [enriched]);
 
   const filtered = React.useMemo(
     () =>
-      filter === "all"
-        ? opportunities
-        : opportunities.filter((o) => o.category === filter),
-    [filter],
+      (filter === "all"
+        ? enriched
+        : enriched.filter(({ o }) => o.category === filter)
+      )
+        .slice()
+        .sort((a, b) => b.adjustedScore - a.adjustedScore),
+    [filter, enriched],
   );
 
   const counts = React.useMemo(() => {
@@ -151,13 +179,45 @@ function OpportunitiesPage() {
               </p>
             </div>
 
+            {/* CONSTRAINT BANNER — hidden when no advanced signals are set */}
+            <div
+              className="opacity-0 animate-rise-in mt-3"
+              style={{ animationDelay: "150ms" }}
+            >
+              <ConstraintBanner />
+            </div>
+
+            {/* DEMOTED-COUNT NOTE — only when constraints pushed cards down */}
+            {demotedCount > 0 && (
+              <p
+                className="opacity-0 animate-rise-in mt-3 text-[12px] text-ink-tertiary"
+                style={{ animationDelay: "180ms" }}
+              >
+                {demotedCount} {demotedCount === 1 ? "opportunity ranks" : "opportunities rank"} lower because of your{" "}
+                {humaniseReasons(demotedReasons)} setting.{" "}
+                <button
+                  type="button"
+                  onClick={openDrawer}
+                  className="font-medium text-earth-dark hover:underline underline-offset-2"
+                >
+                  Relax
+                </button>
+              </p>
+            )}
+
             {/* CARD STACK or EMPTY STATE */}
             <div className="mt-5 space-y-4">
               {filtered.length === 0 ? (
                 <EmptyState onReset={() => setFilter("all")} />
               ) : (
-                filtered.map((o, i) => (
-                  <OpportunityCard key={o.id} opportunity={o} index={i} />
+                filtered.map(({ o, fit }, i) => (
+                  <OpportunityCard
+                    key={o.id}
+                    opportunity={o}
+                    index={i}
+                    fitChips={fit.chips}
+                    scoreDelta={fit.scoreDelta}
+                  />
                 ))
               )}
             </div>
@@ -228,4 +288,17 @@ function EmptyState({ onReset }: { onReset: () => void }) {
       </button>
     </div>
   );
+}
+
+function humaniseReasons(reasons: string[]): string {
+  if (reasons.length === 0) return "constraint";
+  const map: Record<string, string> = {
+    connectivity: "connectivity",
+    mobility: "mobility",
+    displacement: "displacement",
+  };
+  const labels = reasons.map((r) => map[r] ?? r);
+  if (labels.length === 1) return labels[0];
+  if (labels.length === 2) return `${labels[0]} and ${labels[1]}`;
+  return `${labels.slice(0, -1).join(", ")} and ${labels[labels.length - 1]}`;
 }

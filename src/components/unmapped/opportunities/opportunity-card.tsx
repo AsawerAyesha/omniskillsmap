@@ -12,19 +12,29 @@ import {
 import { cn } from "@/lib/utils";
 import { useCountUp } from "./use-count-up";
 import type { Opportunity } from "./opportunities-data";
+import type { FitChip } from "./constraint-fit";
 
 interface Props {
   opportunity: Opportunity;
   index: number;
+  /* Constraint-aware additions — empty/zero when no signals are active. */
+  fitChips?: FitChip[];
+  scoreDelta?: number;
 }
 
 const STAGGER = [0, 80, 160, 240, 320];
 
-export function OpportunityCard({ opportunity: o, index }: Props) {
+export function OpportunityCard({
+  opportunity: o,
+  index,
+  fitChips = [],
+  scoreDelta = 0,
+}: Props) {
   const [open, setOpen] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
   const [filled, setFilled] = React.useState(false);
-  const score = useCountUp(o.matchScore, 400);
+  const adjusted = Math.max(0, Math.min(100, o.matchScore + scoreDelta));
+  const score = useCountUp(adjusted, 400);
 
   React.useEffect(() => {
     const t = setTimeout(() => setFilled(true), 120 + index * 80);
@@ -46,12 +56,48 @@ export function OpportunityCard({ opportunity: o, index }: Props) {
         </span>
         <span
           className="inline-flex items-center gap-1.5 rounded-full bg-earth-light px-2.5 py-1 text-[12px] font-medium text-earth-dark"
-          aria-label={`Match score ${o.matchScore} percent`}
+          aria-label={`Match score ${adjusted} percent${scoreDelta !== 0 ? `, adjusted from ${o.matchScore}` : ""}`}
+          title={
+            scoreDelta === 0
+              ? undefined
+              : `Adjusted ${scoreDelta > 0 ? "+" : ""}${scoreDelta} from base ${o.matchScore}% based on your constraints.`
+          }
         >
+          {scoreDelta !== 0 && (
+            <span className="font-mono tabular-nums text-ink-tertiary line-through opacity-70">
+              {o.matchScore}
+            </span>
+          )}
           <span className="font-mono tabular-nums">{score}%</span>
           <span className="hidden sm:inline">match</span>
         </span>
       </div>
+
+      {/* CONSTRAINT FIT CHIPS — only render when we have any */}
+      {fitChips.length > 0 && (
+        <ul className="mt-3 flex flex-wrap gap-1.5">
+          {fitChips.map((c, i) => {
+            const Icon = c.icon;
+            const good = c.tone === "good";
+            return (
+              <li key={`${c.label}-${i}`}>
+                <span
+                  title={c.hint}
+                  className={cn(
+                    "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium",
+                    good
+                      ? "border-signal-green/30 bg-signal-green/10 text-signal-green"
+                      : "border-signal-amber/40 bg-signal-amber/10 text-signal-amber",
+                  )}
+                >
+                  <Icon size={11} strokeWidth={1.7} />
+                  {c.label}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
 
       {/* TITLE + ORG */}
       <div className="mt-3">
