@@ -56,6 +56,9 @@ export const opportunities: Opportunity[] = [
     skillsTotal: 8,
     skillsToAcquire: ["Basic circuit diagnostics", "Safety certification"],
     trainingAvailable: true,
+    offlineFriendly: true,
+    walkableRadiusKm: 3,
+    refugeeAccessible: true,
   },
   {
     id: "op-002",
@@ -74,6 +77,9 @@ export const opportunities: Opportunity[] = [
     skillsTotal: 9,
     skillsToAcquire: ["Samsung One UI diagnostics", "Soldering re-certification"],
     trainingAvailable: true,
+    offlineFriendly: false,
+    walkableRadiusKm: 7,
+    refugeeAccessible: false,
   },
   {
     id: "op-003",
@@ -97,6 +103,9 @@ export const opportunities: Opportunity[] = [
       "Tax registration (GRA)",
     ],
     trainingAvailable: true,
+    offlineFriendly: true,
+    walkableRadiusKm: 4,
+    refugeeAccessible: true,
   },
   {
     id: "op-004",
@@ -115,6 +124,9 @@ export const opportunities: Opportunity[] = [
     skillsTotal: 7,
     skillsToAcquire: ["Customer service basics"],
     trainingAvailable: false,
+    offlineFriendly: false,
+    walkableRadiusKm: 22,
+    refugeeAccessible: false,
   },
   {
     id: "op-005",
@@ -133,6 +145,9 @@ export const opportunities: Opportunity[] = [
     skillsTotal: 5,
     skillsToAcquire: ["Safety certification"],
     trainingAvailable: true,
+    offlineFriendly: true,
+    walkableRadiusKm: 9,
+    refugeeAccessible: true,
   },
 ];
 
