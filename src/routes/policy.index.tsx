@@ -61,7 +61,7 @@ function PolicyDashboard() {
       >
         <div className="u-container py-5 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h1 className="font-display text-[28px] tracking-tight leading-tight">
+            <h1 className="text-[28px] tracking-tight leading-tight">
               Cohort dashboard
             </h1>
             <p

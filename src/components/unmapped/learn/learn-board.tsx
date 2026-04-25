@@ -72,7 +72,7 @@ export function LearnBoard() {
             <p className="text-[12px] font-mono uppercase tracking-[0.08em] text-earth-dark">
               Welcome back, {d.learnerFirstName}
             </p>
-            <h2 className="mt-2 font-display text-[28px] md:text-[34px] leading-[1.05] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]">
+            <h2 className="mt-2 text-[28px] md:text-[34px] leading-[1.05] tracking-tight text-ink">
               Keep building toward<br />
               <span className="text-earth-dark">{d.pathwayTitle.replace("Pathway to ", "")}</span>
             </h2>
@@ -138,7 +138,7 @@ export function LearnBoard() {
             >
               Your pathway
             </h2>
-            <p className="mt-1 font-display text-[20px] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]">
+            <p className="mt-1 text-[20px] tracking-tight text-ink">
               3 modules · {overallProgress}% complete
             </p>
           </div>
@@ -204,7 +204,7 @@ export function LearnBoard() {
               <h2 className="text-[12px] font-medium uppercase tracking-[0.08em] text-ink-tertiary">
                 Gaps to close
               </h2>
-              <p className="mt-1 font-display text-[20px] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]">
+              <p className="mt-1 text-[20px] tracking-tight text-ink">
                 What unlocks your next match
               </p>
             </div>
@@ -257,7 +257,7 @@ export function LearnBoard() {
             <h2 className="text-[12px] font-medium uppercase tracking-[0.08em] text-ink-tertiary">
               Bite-sized
             </h2>
-            <p className="mt-1 font-display text-[20px] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]">
+            <p className="mt-1 text-[20px] tracking-tight text-ink">
               5 minutes between jobs
             </p>
           </header>
@@ -381,7 +381,7 @@ function Ring({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="font-display text-[34px] leading-none text-ink tabular-nums [font-variation-settings:'opsz'_144,'wght'_400]">
+        <span className="text-[34px] leading-none text-ink tabular-nums">
           {centerTop}
         </span>
         <span className="mt-1 text-[11px] text-ink-tertiary font-mono">
@@ -514,7 +514,7 @@ function ModuleDetail({ module: m }: { module: PathwayModule }) {
           <p className="text-[11px] font-mono uppercase tracking-[0.08em] text-earth-dark">
             Module {m.step} · {m.cluster}
           </p>
-          <h3 className="mt-1 font-display text-[22px] tracking-tight text-ink leading-tight [font-variation-settings:'opsz'_144,'wght'_400]">
+          <h3 className="mt-1 text-[22px] tracking-tight text-ink leading-tight">
             {m.title}
           </h3>
           <p className="mt-2 text-[13px] text-ink-secondary leading-relaxed max-w-[60ch]">
@@ -559,7 +559,7 @@ function ModuleDetail({ module: m }: { module: PathwayModule }) {
             <p className="text-[10px] uppercase tracking-[0.08em] text-ink-tertiary font-mono">
               Lessons
             </p>
-            <p className="mt-1.5 font-display text-[24px] leading-none text-ink tabular-nums [font-variation-settings:'opsz'_144,'wght'_400]">
+            <p className="mt-1.5 text-[24px] leading-none text-ink tabular-nums">
               {completed}<span className="text-ink-tertiary text-[16px]"> / {m.lessons.length}</span>
             </p>
             <p className="mt-1 text-[11px] text-ink-tertiary">

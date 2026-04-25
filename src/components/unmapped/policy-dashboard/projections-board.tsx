@@ -212,7 +212,7 @@ function KpiTile({
       </div>
       <div className="mt-1 flex items-baseline gap-2">
         <div
-          className="font-display text-[22px] tabular-nums leading-none"
+          className="text-[22px] tabular-nums leading-none"
           style={{ color: accent }}
         >
           {value}

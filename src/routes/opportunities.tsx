@@ -183,7 +183,7 @@ function OpportunitiesPage() {
                     key={s.label}
                     className="rounded-xl border border-border-subtle bg-surface-sunken/60 p-4"
                   >
-                    <div className="font-display text-[28px] leading-none text-ink [font-variation-settings:'opsz'_144,'wght'_400] tracking-tight">
+                    <div className="text-[28px] leading-none text-ink tracking-tight">
                       {s.value}
                     </div>
                     <div className="mt-2 text-[12px] text-ink-secondary">
@@ -212,7 +212,7 @@ function EmptyState({ onReset }: { onReset: () => void }) {
       >
         <SearchX size={24} strokeWidth={1.5} />
       </span>
-      <h3 className="mt-4 font-display text-[20px] tracking-tight text-ink">
+      <h3 className="mt-4 text-[20px] tracking-tight text-ink">
         No matches in this slice
       </h3>
       <p className="mx-auto mt-2 max-w-[420px] text-[13px] text-ink-secondary leading-relaxed">

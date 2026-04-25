@@ -39,7 +39,7 @@ export function CohortPanel({ cohort }: Props) {
           Active profiles
         </div>
         <div
-          className="mt-2 font-display [font-variation-settings:'opsz'_144,'wght'_400] tracking-tight leading-none"
+          className="mt-2 tracking-tight leading-none"
           style={{ color: "#F0EDE8", fontSize: "48px" }}
         >
           {cohort.activeProfiles.toLocaleString()}
@@ -165,7 +165,7 @@ export function CohortPanel({ cohort }: Props) {
           <GenderStat pct={cohort.gender.female} label="F" highlight />
           <span
             aria-hidden
-            className="text-[28px] font-display"
+            className="text-[28px]"
             style={{ color: "rgba(240,237,232,0.25)" }}
           >
             ·
@@ -189,7 +189,7 @@ function GenderStat({
   return (
     <div className="flex items-baseline gap-1.5">
       <span
-        className="font-display [font-variation-settings:'opsz'_144,'wght'_400] tracking-tight leading-none"
+        className="tracking-tight leading-none"
         style={{
           color: highlight ? "var(--earth)" : "#F0EDE8",
           fontSize: "32px",

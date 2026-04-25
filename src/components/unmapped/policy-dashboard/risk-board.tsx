@@ -346,7 +346,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
           >
             {occ.isco} · {occ.cluster}
           </p>
-          <h2 className="font-display text-[20px] tracking-tight leading-tight">
+          <h2 className="text-[20px] tracking-tight leading-tight">
             {occ.title}
           </h2>
         </div>
@@ -358,7 +358,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
             Risk band
           </div>
           <div
-            className="font-display text-[28px] leading-none tabular-nums mt-1"
+            className="text-[28px] leading-none tabular-nums mt-1"
             style={{ color: meta.color }}
           >
             {occ.risk}%
@@ -491,7 +491,7 @@ function Stat({
         {label}
       </div>
       <div
-        className="font-display text-[18px] leading-none mt-1 tabular-nums inline-flex items-center gap-1.5"
+        className="text-[18px] leading-none mt-1 tabular-nums inline-flex items-center gap-1.5"
         style={{ color }}
       >
         {Icon && <Icon size={14} strokeWidth={2} />}
