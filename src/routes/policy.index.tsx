@@ -11,7 +11,7 @@ import { ProjectionChart } from "@/components/unmapped/policy-dashboard/projecti
 import { RawProfilesTable } from "@/components/unmapped/policy-dashboard/raw-profiles-table";
 import { getCountryDataset } from "@/components/unmapped/policy-dashboard/dashboard-data";
 
-export const Route = createFileRoute("/policy")({
+export const Route = createFileRoute("/policy/")({
   head: () => ({
     meta: [
       { title: "Policy Dashboard — UNMAPPED" },
