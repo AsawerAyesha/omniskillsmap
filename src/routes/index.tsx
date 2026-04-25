@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { SkillsConstellation } from "../components/unmapped/landing/skills-constellation";
 import { RegionPills } from "../components/unmapped/landing/region-pills";
@@ -75,8 +75,8 @@ function Landing() {
               className="u-rise-in mt-8 flex flex-wrap items-center gap-3"
               style={{ animationDelay: "240ms" }}
             >
-              <button
-                type="button"
+              <Link
+                to="/intake"
                 className="group inline-flex h-12 items-center gap-2 rounded-full bg-[var(--earth)] px-6 text-[15px] font-medium text-[var(--ink)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:translate-y-[-1px] transition-all"
                 style={{ transitionTimingFunction: "var(--ease-precision)" }}
               >
@@ -86,7 +86,7 @@ function Landing() {
                   strokeWidth={1.75}
                   className="transition-transform group-hover:translate-x-0.5"
                 />
-              </button>
+              </Link>
 
               <button
                 type="button"

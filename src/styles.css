@@ -598,3 +598,40 @@
     .u-dot { animation: none; }
   }
 }
+
+/* ==========================================================================
+   Skills intake — step transitions + tag pop
+   ========================================================================== */
+@layer components {
+  .u-step-in-fwd {
+    animation: u-step-fwd 400ms var(--ease-precision) both;
+  }
+  .u-step-in-back {
+    animation: u-step-back 400ms var(--ease-precision) both;
+  }
+  @keyframes u-step-fwd {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes u-step-back {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .u-tag-pop {
+    animation: u-tag-pop 200ms var(--ease-precision) both;
+    transform-origin: left center;
+  }
+  @keyframes u-tag-pop {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .u-step-in-fwd,
+    .u-step-in-back,
+    .u-tag-pop {
+      animation: none !important;
+    }
+  }
+}
