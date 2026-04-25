@@ -434,3 +434,124 @@
     .u-card { transition: none; }
   }
 }
+
+/* ==========================================================================
+   App shell — focus ring, skeletons, page transitions, toasts, offline
+   ========================================================================== */
+@layer components {
+  /* Skip link */
+  .u-skip-link {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    padding: 8px 12px;
+    background: var(--surface-raised);
+    color: var(--ink);
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    transform: translateY(-200%);
+    transition: transform var(--duration-micro) var(--ease-precision);
+    z-index: 100;
+  }
+  .u-skip-link:focus { transform: translateY(0); outline: none; }
+
+  /* Universal focus ring */
+  .u-focus,
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible,
+  [role="tab"]:focus-visible,
+  [role="link"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--earth);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Skeleton — pulsing earth-light */
+  .u-skeleton {
+    background-color: color-mix(in oklab, var(--earth) 22%, var(--surface-sunken));
+    border-radius: 8px;
+    animation: u-skeleton-pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes u-skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.55; }
+  }
+
+  /* Top progress bar (full-page load) */
+  .u-top-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--earth), transparent);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    animation: u-top-progress 1.2s var(--ease-precision) infinite;
+    z-index: 200;
+  }
+  @keyframes u-top-progress {
+    0%   { background-position: -50% 0; }
+    100% { background-position: 150% 0; }
+  }
+
+  /* Mode cross-fade */
+  .u-mode-fade {
+    animation: u-mode-fade 400ms var(--ease-precision);
+  }
+  @keyframes u-mode-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Route transitions — forward/back */
+  .u-route-fwd  { animation: u-route-in-fwd 200ms var(--ease-precision); }
+  .u-route-back { animation: u-route-in-back 200ms var(--ease-precision); }
+  @keyframes u-route-in-fwd {
+    from { opacity: 0; transform: translateX(8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes u-route-in-back {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Offline banner */
+  .u-offline {
+    background-color: #FAEEDA;
+    color: var(--earth-dark);
+    font-size: 13px;
+    padding: 6px 16px;
+    text-align: center;
+    border-bottom: 1px solid color-mix(in oklab, var(--earth-dark) 20%, transparent);
+  }
+
+  /* Brand toast variants (sonner) */
+  [data-sonner-toast] {
+    font-family: var(--font-sans);
+  }
+  [data-sonner-toast][data-type="success"] {
+    border-left: 3px solid var(--signal-green) !important;
+  }
+  [data-sonner-toast][data-type="error"] {
+    border-left: 3px solid var(--signal-red) !important;
+  }
+  [data-sonner-toast][data-type="info"],
+  [data-sonner-toast][data-type="default"] {
+    border-left: 3px solid var(--earth) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .u-mode-fade,
+    .u-route-fwd,
+    .u-route-back,
+    .u-skeleton,
+    .u-top-progress {
+      animation: none !important;
+    }
+  }
+}
