@@ -39,6 +39,7 @@ export interface ContextConfig {
   opportunity_types: OpportunityType[];
   wage_vintage: 2021 | 2022 | 2023 | 2024;
   flag: string; // emoji
+  advanced_signals?: AdvancedSignals;
 }
 
 export const REGION_LABELS: Record<RegionType, string> = {
