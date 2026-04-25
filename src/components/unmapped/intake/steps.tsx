@@ -36,7 +36,7 @@ export function Step1Where({
       <div>
         <label
           htmlFor="intake-country"
-          className="block text-[13px] font-medium text-[var(--ink-secondary)] mb-2"
+          className="block text-[13px] font-medium text-ink-secondary mb-2"
         >
           Country
         </label>
@@ -51,7 +51,7 @@ export function Step1Where({
             id="intake-country"
             value={data.country}
             onChange={(e) => set("country", e.target.value)}
-            className="appearance-none w-full rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-raised)] pl-12 pr-10 min-h-[56px] text-[15px] text-[var(--ink)] focus:border-[var(--earth)] transition-colors"
+            className="appearance-none w-full rounded-2xl border border-border-strong bg-surface-raised pl-12 pr-10 min-h-[56px] text-[15px] text-ink focus:border-earth transition-colors"
           >
             {COUNTRIES.map((c) => (
               <option key={c.code} value={c.code}>
@@ -62,14 +62,14 @@ export function Step1Where({
           <ChevronDown
             size={18}
             strokeWidth={1.5}
-            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ink-tertiary)]"
+            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-ink-tertiary"
           />
         </div>
       </div>
 
       {/* Region type */}
       <fieldset>
-        <legend className="block text-[13px] font-medium text-[var(--ink-secondary)] mb-2">
+        <legend className="block text-[13px] font-medium text-ink-secondary mb-2">
           Where do you live?
         </legend>
         <div role="radiogroup" className="space-y-2">
@@ -92,7 +92,7 @@ export function Step1Where({
 
       {/* Language */}
       <div>
-        <p className="block text-[13px] font-medium text-[var(--ink-secondary)] mb-2">
+        <p className="block text-[13px] font-medium text-ink-secondary mb-2">
           What language do you prefer?
         </p>
         <div className="flex flex-wrap gap-2">
@@ -135,7 +135,7 @@ export function Step2Education({
 }) {
   return (
     <div className="space-y-3">
-      <p className="text-[13px] font-medium text-[var(--ink-secondary)]">
+      <p className="text-[13px] font-medium text-ink-secondary">
         Highest level completed
       </p>
       <div role="radiogroup" className="space-y-2">
@@ -169,12 +169,12 @@ export function Step3Experience({
 
   return (
     <div className="space-y-6">
-      <p className="text-[14px] text-[var(--ink-secondary)]">
+      <p className="text-[14px] text-ink-secondary">
         Tell us about your experience — formal or not.
       </p>
 
       <div>
-        <p className="block text-[13px] font-medium text-[var(--ink-secondary)] mb-2">
+        <p className="block text-[13px] font-medium text-ink-secondary mb-2">
           Add what you've done
         </p>
         <TagInput
@@ -187,7 +187,7 @@ export function Step3Experience({
 
       {suggestions.length > 0 && (
         <div>
-          <p className="block text-[13px] font-medium text-[var(--ink-secondary)] mb-2">
+          <p className="block text-[13px] font-medium text-ink-secondary mb-2">
             Common in your region
           </p>
           <div className="flex flex-wrap gap-2">
@@ -208,10 +208,10 @@ export function Step3Experience({
       <div>
         <label
           htmlFor="day-to-day"
-          className="block text-[13px] font-medium text-[var(--ink-secondary)] mb-2"
+          className="block text-[13px] font-medium text-ink-secondary mb-2"
         >
           Describe what you do day-to-day{" "}
-          <span className="text-[var(--ink-tertiary)] font-normal">(optional)</span>
+          <span className="text-ink-tertiary font-normal">(optional)</span>
         </label>
         <textarea
           id="day-to-day"
@@ -219,7 +219,7 @@ export function Step3Experience({
           onChange={(e) => set("dayToDay", e.target.value)}
           rows={4}
           placeholder="A typical day for me looks like…"
-          className="w-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-4 py-3 text-[14px] text-[var(--ink)] placeholder:text-[var(--ink-tertiary)] focus:border-[var(--earth)] focus:bg-[var(--surface-raised)] transition-colors resize-none"
+          className="w-full rounded-2xl border border-border-subtle bg-surface-sunken px-4 py-3 text-[14px] text-ink placeholder:text-ink-tertiary focus:border-earth focus:bg-surface-raised transition-colors resize-none"
         />
       </div>
     </div>
@@ -261,16 +261,16 @@ export function Step4LangDigital({
   return (
     <div className="space-y-7">
       <div>
-        <p className="text-[13px] font-medium text-[var(--ink-secondary)] mb-2">
+        <p className="text-[13px] font-medium text-ink-secondary mb-2">
           Languages you speak
         </p>
         <ul className="space-y-2">
           {langs.map((lang) => (
             <li
               key={lang}
-              className="flex items-center justify-between gap-3 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-raised)] px-4 py-3 min-h-[56px]"
+              className="flex items-center justify-between gap-3 rounded-2xl border border-border-subtle bg-surface-raised px-4 py-3 min-h-[56px]"
             >
-              <span className="text-[14px] font-medium text-[var(--ink)]">
+              <span className="text-[14px] font-medium text-ink">
                 {lang}
               </span>
               <LevelSelector
@@ -289,7 +289,7 @@ export function Step4LangDigital({
       </div>
 
       <div>
-        <p className="text-[13px] font-medium text-[var(--ink-secondary)] mb-2">
+        <p className="text-[13px] font-medium text-ink-secondary mb-2">
           Digital skills you have
         </p>
         <div role="group" className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -305,21 +305,21 @@ export function Step4LangDigital({
                 className={
                   "group flex items-center gap-3 rounded-2xl border px-3 py-3 min-h-[56px] text-left transition-colors duration-150 " +
                   (selected
-                    ? "border-[var(--earth)] bg-[var(--earth-light)]"
-                    : "border-[var(--border-subtle)] bg-[var(--surface-raised)] hover:border-[var(--border-strong)]")
+                    ? "border-earth bg-earth-light"
+                    : "border-border-subtle bg-surface-raised hover:border-border-strong")
                 }
               >
                 <span
                   className={
                     "shrink-0 inline-flex h-9 w-9 items-center justify-center rounded-lg " +
                     (selected
-                      ? "bg-[color-mix(in_oklab,var(--earth)_30%,transparent)] text-[var(--earth-dark)]"
-                      : "bg-[var(--surface-sunken)] text-[var(--ink-secondary)]")
+                      ? "bg-[color-mix(in_oklab,var(--earth)_30%,transparent)] text-earth-dark"
+                      : "bg-surface-sunken text-ink-secondary")
                   }
                 >
                   {s.icon}
                 </span>
-                <span className="flex-1 text-[14px] font-medium text-[var(--ink)]">
+                <span className="flex-1 text-[14px] font-medium text-ink">
                   {s.label}
                 </span>
                 <span
@@ -327,8 +327,8 @@ export function Step4LangDigital({
                   className={
                     "inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border " +
                     (selected
-                      ? "border-[var(--earth-dark)] bg-[var(--earth-dark)] text-[var(--earth-light)]"
-                      : "border-[var(--border-strong)] text-transparent")
+                      ? "border-earth-dark bg-earth-dark text-earth-light"
+                      : "border-border-strong text-transparent")
                   }
                 >
                   ✓
@@ -430,10 +430,10 @@ export function Step5Quick({
           <div
             key={c.title}
             className={
-              "rounded-2xl border bg-[var(--surface-raised)] transition-colors duration-150 " +
+              "rounded-2xl border bg-surface-raised transition-colors duration-150 " +
               (isOpen
-                ? "border-[var(--earth)] shadow-[var(--shadow-sm)]"
-                : "border-[var(--border-subtle)]")
+                ? "border-earth shadow-[var(--shadow-sm)]"
+                : "border-border-subtle")
             }
           >
             <button
@@ -443,15 +443,15 @@ export function Step5Quick({
               className="w-full flex items-center justify-between gap-3 px-4 py-4 min-h-[56px] text-left"
             >
               <span className="flex items-center gap-3">
-                <span className="font-mono text-[12px] text-[var(--ink-tertiary)]">
+                <span className="font-mono text-[12px] text-ink-tertiary">
                   Q{i + 1}
                 </span>
-                <span className="text-[15px] font-medium text-[var(--ink)]">
+                <span className="text-[15px] font-medium text-ink">
                   {c.title}
                 </span>
               </span>
               {c.answered && !isOpen && (
-                <span className="text-[13px] text-[var(--earth-dark)] font-medium">
+                <span className="text-[13px] text-earth-dark font-medium">
                   {c.answered}
                 </span>
               )}

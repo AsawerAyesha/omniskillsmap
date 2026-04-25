@@ -30,11 +30,11 @@ export function SelectCard({
       role="radio"
       aria-checked={selected}
       className={cn(
-        "group relative w-full text-left rounded-2xl border bg-[var(--surface-raised)] px-4 py-4 min-h-[64px] flex items-start gap-3",
+        "group relative w-full text-left rounded-2xl border bg-surface-raised px-4 py-4 min-h-[64px] flex items-start gap-3",
         "transition-[background-color,border-color,box-shadow] duration-150",
         selected
-          ? "border-[var(--earth)] bg-[var(--earth-light)] shadow-[var(--shadow-sm)]"
-          : "border-[var(--border-subtle)] hover:border-[var(--border-strong)]",
+          ? "border-earth bg-earth-light shadow-[var(--shadow-sm)]"
+          : "border-border-subtle hover:border-border-strong",
         className,
       )}
       {...props}
@@ -44,24 +44,24 @@ export function SelectCard({
           className={cn(
             "shrink-0 inline-flex h-9 w-9 items-center justify-center rounded-lg",
             selected
-              ? "bg-[color-mix(in_oklab,var(--earth)_30%,transparent)] text-[var(--earth-dark)]"
-              : "bg-[var(--surface-sunken)] text-[var(--ink-secondary)]",
+              ? "bg-[color-mix(in_oklab,var(--earth)_30%,transparent)] text-earth-dark"
+              : "bg-surface-sunken text-ink-secondary",
           )}
         >
           {icon}
         </span>
       )}
       <span className="flex-1 min-w-0">
-        <span className="block text-[15px] font-medium text-[var(--ink)] leading-snug">
+        <span className="block text-[15px] font-medium text-ink leading-snug">
           {title}
         </span>
         {description && (
-          <span className="mt-0.5 block text-[13px] text-[var(--ink-secondary)] leading-snug">
+          <span className="mt-0.5 block text-[13px] text-ink-secondary leading-snug">
             {description}
           </span>
         )}
         {meta && (
-          <span className="mt-2 inline-flex items-center rounded-full border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-2 py-0.5 font-mono text-[11px] text-[var(--ink-tertiary)]">
+          <span className="mt-2 inline-flex items-center rounded-full border border-border-subtle bg-surface-sunken px-2 py-0.5 font-mono text-[11px] text-ink-tertiary">
             {meta}
           </span>
         )}
@@ -71,8 +71,8 @@ export function SelectCard({
         className={cn(
           "shrink-0 inline-flex h-5 w-5 items-center justify-center rounded-full border transition-all",
           selected
-            ? "border-[var(--earth-dark)] bg-[var(--earth-dark)] text-[var(--earth-light)]"
-            : "border-[var(--border-strong)] bg-transparent text-transparent",
+            ? "border-earth-dark bg-earth-dark text-earth-light"
+            : "border-border-strong bg-transparent text-transparent",
         )}
       >
         <Check size={12} strokeWidth={2.5} />
@@ -96,8 +96,8 @@ export function Pill({ selected, className, children, ...props }: PillProps) {
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-4 min-h-[44px] text-[14px] font-medium transition-colors duration-150",
         selected
-          ? "border-[var(--earth)] bg-[var(--earth-light)] text-[var(--earth-dark)]"
-          : "border-[var(--border-strong)] bg-transparent text-[var(--ink-secondary)] hover:bg-[var(--surface-sunken)]",
+          ? "border-earth bg-earth-light text-earth-dark"
+          : "border-border-strong bg-transparent text-ink-secondary hover:bg-surface-sunken",
         className,
       )}
       {...props}
@@ -126,7 +126,7 @@ export function LevelSelector({
     <div
       role="radiogroup"
       aria-label={`${label} proficiency`}
-      className="inline-flex items-center gap-1 rounded-full border border-[var(--border-subtle)] bg-[var(--surface-sunken)] p-1"
+      className="inline-flex items-center gap-1 rounded-full border border-border-subtle bg-surface-sunken p-1"
     >
       {LEVELS.map((lvl, i) => {
         const active = value === lvl;
@@ -143,8 +143,8 @@ export function LevelSelector({
             className={cn(
               "min-h-[36px] min-w-[44px] px-2 rounded-full inline-flex items-center justify-center gap-0.5 text-[12px] transition-colors",
               active
-                ? "bg-[var(--earth-dark)] text-[var(--earth-light)]"
-                : "text-[var(--ink-secondary)] hover:bg-[var(--surface-raised)]",
+                ? "bg-earth-dark text-earth-light"
+                : "text-ink-secondary hover:bg-surface-raised",
             )}
           >
             <span aria-hidden className="font-mono tracking-tight leading-none">
