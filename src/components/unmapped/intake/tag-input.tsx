@@ -29,13 +29,13 @@ export function TagInput({
 
   return (
     <div
-      className="flex flex-wrap items-center gap-2 rounded-2xl border border-[var(--border-strong)] bg-[var(--surface-raised)] px-3 py-2.5 min-h-[56px] focus-within:border-[var(--earth)] transition-colors"
+      className="flex flex-wrap items-center gap-2 rounded-2xl border border-border-strong bg-surface-raised px-3 py-2.5 min-h-[56px] focus-within:border-earth transition-colors"
       onClick={() => inputRef.current?.focus()}
     >
       {value.map((t) => (
         <span
           key={t}
-          className="u-tag-pop inline-flex items-center gap-1.5 rounded-full bg-[var(--earth-light)] pl-3 pr-1 py-1 text-[13px] font-medium text-[var(--earth-dark)]"
+          className="inline-flex items-center gap-1.5 rounded-full bg-earth-light pl-3 pr-1 py-1 text-[13px] font-medium text-earth-dark origin-left animate-tag-pop motion-reduce:animate-none"
         >
           {t}
           <button
@@ -66,7 +66,7 @@ export function TagInput({
           }
         }}
         onBlur={() => add(draft)}
-        className="flex-1 min-w-[120px] bg-transparent border-0 outline-none text-[14px] text-[var(--ink)] placeholder:text-[var(--ink-tertiary)] py-1"
+        className="flex-1 min-w-[120px] bg-transparent border-0 outline-none text-[14px] text-ink placeholder:text-ink-tertiary py-1"
       />
     </div>
   );

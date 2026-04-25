@@ -34,14 +34,14 @@ export function RegionPills() {
 
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-      <span className="text-[13px] text-[var(--ink-tertiary)]">
+      <span className="text-[13px] text-ink-tertiary">
         Currently configured for:
       </span>
 
       {active.map((r) => (
         <span
           key={r.id}
-          className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--earth-light)] pl-3 pr-1.5 py-1.5 text-[13px] font-medium text-[var(--earth-dark)]"
+          className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-earth-light pl-3 pr-1.5 py-1.5 text-[13px] font-medium text-earth-dark"
         >
           <span aria-hidden>{r.flag}</span>
           <span>{r.name}</span>
@@ -49,7 +49,7 @@ export function RegionPills() {
             type="button"
             aria-label={`Remove ${r.name}`}
             onClick={() => remove(r.id)}
-            className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full text-[var(--earth-dark)]/70 hover:bg-[color-mix(in_oklab,var(--earth)_30%,transparent)] hover:text-[var(--earth-dark)] transition-colors"
+            className="ml-1 inline-flex h-5 w-5 items-center justify-center rounded-full text-earth-dark/70 hover:bg-[color-mix(in_oklab,var(--earth)_30%,transparent)] hover:text-earth-dark transition-colors"
           >
             <X size={12} strokeWidth={1.75} />
           </button>
@@ -62,7 +62,7 @@ export function RegionPills() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-haspopup="listbox"
-          className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-strong)] px-3 py-1.5 text-[13px] text-[var(--ink-secondary)] hover:bg-[var(--surface-sunken)] transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-3 py-1.5 text-[13px] text-ink-secondary hover:bg-surface-sunken transition-colors"
         >
           <Plus size={14} strokeWidth={1.5} />
           Add context
@@ -71,7 +71,7 @@ export function RegionPills() {
         {open && (
           <div
             role="listbox"
-            className="absolute left-0 top-full z-20 mt-2 w-[260px] rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-raised)] p-1.5 shadow-[var(--shadow-md)]"
+            className="absolute left-0 top-full z-20 mt-2 w-[260px] rounded-xl border border-border-subtle bg-surface-raised p-1.5 shadow-[var(--shadow-md)]"
           >
             {PRESETS.filter((p) => !active.some((a) => a.id === p.id)).map(
               (r) => (
@@ -80,7 +80,7 @@ export function RegionPills() {
                   type="button"
                   role="option"
                   onClick={() => add(r)}
-                  className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] text-[var(--ink)] hover:bg-[var(--surface-sunken)] transition-colors"
+                  className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] text-ink hover:bg-surface-sunken transition-colors"
                 >
                   <span aria-hidden>{r.flag}</span>
                   <span>{r.name}</span>
@@ -88,7 +88,7 @@ export function RegionPills() {
               ),
             )}
             {PRESETS.every((p) => active.some((a) => a.id === p.id)) && (
-              <p className="px-2.5 py-2 text-[12px] text-[var(--ink-tertiary)]">
+              <p className="px-2.5 py-2 text-[12px] text-ink-tertiary">
                 All preset regions added.
               </p>
             )}

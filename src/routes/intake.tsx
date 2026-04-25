@@ -107,16 +107,19 @@ function IntakePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--surface)] flex flex-col">
+    <div className="min-h-screen bg-surface flex flex-col">
       {/* Progress + back */}
-      <header className="sticky top-0 z-10 bg-[var(--surface)]/95 backdrop-blur border-b border-[var(--border-subtle)]">
-        <div className="u-progress" style={{ height: 3 }}>
+      <header className="sticky top-0 z-10 bg-surface/95 backdrop-blur border-b border-border-subtle">
+        <div
+          className="relative h-[3px] w-full bg-surface-sunken overflow-hidden"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(progress)}
+        >
           <div
-            className="u-progress__fill"
-            style={{
-              width: `${progress}%`,
-              transition: "width 350ms var(--ease-precision)",
-            }}
+            className="h-full bg-earth rounded-full transition-[width] duration-350 ease-precision"
+            style={{ width: `${progress}%` }}
           />
         </div>
         <div className="mx-auto w-full max-w-[560px] px-4 py-3 flex items-center justify-between gap-3">
@@ -124,11 +127,11 @@ function IntakePage() {
             type="button"
             onClick={goBack}
             aria-label="Back"
-            className="inline-flex items-center justify-center h-11 w-11 -ml-2 rounded-full text-[var(--ink-secondary)] hover:bg-[var(--surface-sunken)] transition-colors"
+            className="inline-flex items-center justify-center h-11 w-11 -ml-2 rounded-full text-ink-secondary hover:bg-surface-sunken transition-colors"
           >
             <ChevronLeft size={20} strokeWidth={1.75} />
           </button>
-          <p className="text-[13px] text-[var(--ink-tertiary)] font-medium tabular-nums">
+          <p className="text-[13px] text-ink-tertiary font-medium tabular-nums">
             Step {step + 1} of {STEP_TITLES.length}
             <span className="hidden sm:inline">
               {" "}— {SHORT_LABELS[step]}
@@ -142,17 +145,18 @@ function IntakePage() {
       <main className="flex-1 mx-auto w-full max-w-[560px] px-4 pt-6 pb-32 overflow-x-hidden">
         <h1
           key={`title-${step}`}
-          className="font-display text-[28px] sm:text-[32px] leading-[1.1] tracking-tight text-[var(--ink)] mb-6"
-          style={{
-            fontVariationSettings: '"opsz" 144, "wght" 400',
-          }}
+          className="font-display text-[28px] sm:text-[32px] leading-[1.1] tracking-tight text-ink mb-6 [font-variation-settings:'opsz'_144,'wght'_400]"
         >
           {STEP_TITLES[step]}
         </h1>
 
         <div
           key={`body-${step}`}
-          className={direction === "fwd" ? "u-step-in-fwd" : "u-step-in-back"}
+          className={
+            direction === "fwd"
+              ? "animate-step-fwd motion-reduce:animate-none"
+              : "animate-step-back motion-reduce:animate-none"
+          }
         >
           {step === 0 && <Step1Where data={data} set={set} />}
           {step === 1 && <Step2Education data={data} set={set} />}
@@ -163,19 +167,18 @@ function IntakePage() {
       </main>
 
       {/* Sticky CTA */}
-      <div className="sticky bottom-0 z-10 border-t border-[var(--border-subtle)] bg-[var(--surface)]/95 backdrop-blur">
+      <div className="sticky bottom-0 z-10 border-t border-border-subtle bg-surface/95 backdrop-blur">
         <div className="mx-auto w-full max-w-[560px] px-4 py-4">
           <button
             type="button"
             onClick={goNext}
             disabled={!canContinue}
             className={
-              "group inline-flex w-full h-12 items-center justify-center gap-2 rounded-full text-[15px] font-medium transition-all " +
+              "group inline-flex w-full h-12 items-center justify-center gap-2 rounded-full text-[15px] font-medium transition-all duration-300 ease-precision " +
               (canContinue
-                ? "bg-[var(--earth)] text-[var(--ink)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)] hover:translate-y-[-1px]"
-                : "bg-[var(--surface-sunken)] text-[var(--ink-tertiary)] cursor-not-allowed")
+                ? "bg-earth text-ink shadow-sm hover:shadow-md hover:-translate-y-0.5"
+                : "bg-surface-sunken text-ink-tertiary cursor-not-allowed")
             }
-            style={{ transitionTimingFunction: "var(--ease-precision)" }}
           >
             {step === STEP_TITLES.length - 1 ? "Build my profile" : "Continue"}
             <ArrowRight
@@ -192,22 +195,21 @@ function IntakePage() {
 
 function IntakeComplete({ data }: { data: IntakeData }) {
   return (
-    <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-[560px] text-center">
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--earth-light)] text-[var(--earth-dark)]">
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-earth-light text-earth-dark">
           <Check size={22} strokeWidth={2} />
         </span>
         <h1
-          className="mt-6 font-display text-[32px] leading-[1.1] tracking-tight text-[var(--ink)]"
-          style={{ fontVariationSettings: '"opsz" 144, "wght" 400' }}
+          className="mt-6 font-display text-[32px] leading-[1.1] tracking-tight text-ink [font-variation-settings:'opsz'_144,'wght'_400]"
         >
           Profile saved
         </h1>
-        <p className="mt-3 text-[15px] text-[var(--ink-secondary)]">
+        <p className="mt-3 text-[15px] text-ink-secondary">
           We're mapping your {data.experiences.length} experiences against ILO
           and World Bank skill data. This takes a moment.
         </p>
-        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--surface-sunken)] px-3 py-1.5 font-mono text-[12px] text-[var(--ink-secondary)]">
+        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border-subtle bg-surface-sunken px-3 py-1.5 font-mono text-[12px] text-ink-secondary">
           {data.experiences.slice(0, 3).join(" · ") || "—"}
         </div>
       </div>
