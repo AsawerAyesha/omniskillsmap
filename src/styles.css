@@ -106,6 +106,7 @@
   --animate-step-back: step-back 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-tag-pop: tag-pop 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-pulse-dot: pulse-dot var(--dot-dur, 4s) ease-in-out infinite;
+  --animate-shimmer: shimmer 1.4s linear infinite;
 
   @keyframes rise-in {
     from { opacity: 0; transform: translateY(12px); }
@@ -126,6 +127,10 @@
   @keyframes pulse-dot {
     0%, 100% { transform: scale(1); }
     50%      { transform: scale(1.15); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
   }
 }
 
