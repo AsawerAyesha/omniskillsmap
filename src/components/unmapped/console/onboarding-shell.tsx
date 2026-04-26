@@ -6,9 +6,9 @@ import {
   Activity,
   FileText,
   Settings,
-  Compass,
   CircleDashed,
 } from "lucide-react";
+import omniskillMark from "@/assets/omniskill-mark.svg";
 
 /* OnboardingShell — visual twin of ConsoleShell but with the navigation
  * dimmed and non-interactive. Used during the org-onboarding flow so the
@@ -54,7 +54,7 @@ export function OnboardingShell({
           className="px-5 h-14 flex items-center gap-2.5 border-b"
           style={{ borderColor: "var(--console-border)" }}
         >
-          <Compass size={18} strokeWidth={1.5} style={{ color: "var(--console-accent)" }} />
+          <img src={omniskillMark} alt="" aria-hidden="true" width={20} height={20} className="rounded-sm" />
           <span className="font-display text-base tracking-tight">OmniSkill</span>
           <span
             className="ml-auto text-[10px] uppercase tracking-[0.12em] px-1.5 py-0.5 rounded-full"

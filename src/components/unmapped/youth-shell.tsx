@@ -17,6 +17,7 @@ import { SwitchContextButton } from "./context-config/switch-context-button";
 import { useContextConfig } from "./context-config/context-config-store";
 import { useUnmappedMode } from "./mode-context";
 import { ThemeSwitcher } from "./theme-switcher";
+import omniskillMark from "@/assets/omniskill-mark.svg";
 
 const TABS = [
   { to: "/", label: "Home", icon: House },
@@ -61,7 +62,10 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           )}
         >
           {!collapsed && (
-            <span className="font-display text-lg tracking-tight">OmniSkill</span>
+            <span className="inline-flex items-center gap-2 font-display text-lg tracking-tight">
+              <img src={omniskillMark} alt="" aria-hidden="true" width={22} height={22} className="rounded-sm" />
+              OmniSkill
+            </span>
           )}
           <button
             type="button"
@@ -179,7 +183,10 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile topbar */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-subtle bg-[var(--surface-raised)]">
-          <span className="font-display text-base tracking-tight">OmniSkill</span>
+          <span className="inline-flex items-center gap-2 font-display text-base tracking-tight">
+            <img src={omniskillMark} alt="" aria-hidden="true" width={20} height={20} className="rounded-sm" />
+            OmniSkill
+          </span>
           <div className="flex items-center gap-2">
             <ThemeSwitcher variant="compact" />
             <SwitchContextButton />

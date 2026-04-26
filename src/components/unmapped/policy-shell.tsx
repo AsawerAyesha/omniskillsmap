@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Compass, Download, MoreHorizontal } from "lucide-react";
+import { Download, MoreHorizontal } from "lucide-react";
+import omniskillMark from "@/assets/omniskill-mark.svg";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
 import { useContextConfig } from "./context-config/context-config-store";
@@ -284,7 +285,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
         <div className="u-container flex items-center gap-4 lg:gap-6 py-3">
           {/* Brand cluster — fixed-width, never shrinks */}
           <div className="flex items-center gap-3 shrink-0">
-            <Compass size={18} strokeWidth={1.5} style={{ color: "#C4A882" }} />
+            <img src={omniskillMark} alt="" aria-hidden="true" width={20} height={20} className="rounded-sm" />
             <span className="font-display text-base tracking-tight">OmniSkill</span>
             <span
               className="hidden lg:inline-block text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 rounded-full whitespace-nowrap"

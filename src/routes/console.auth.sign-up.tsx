@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Loader2, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
+import omniskillMark from "@/assets/omniskill-mark.svg";
 
 /* C1 — Console Sign Up.
  *
@@ -88,6 +89,14 @@ function ConsoleSignUp() {
         style={{ background: "#111009", color: "#F0EDE8" }}
       >
         <div className="space-y-1.5">
+          <img
+            src={omniskillMark}
+            alt="OmniSkill"
+            width={56}
+            height={56}
+            className="mb-4 rounded-md"
+            style={{ display: "block" }}
+          />
           <div
             className="font-display tracking-tight"
             style={{ fontSize: "32px", color: "#F0EDE8", lineHeight: 1.1 }}
