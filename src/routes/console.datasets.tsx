@@ -394,6 +394,7 @@ function DatasetsPage() {
               const f = e.target.files?.[0];
               if (f) void onFile(f);
             }}
+            disabled={uploadPhase === "reading" || uploadPhase === "validating"}
           />
           <Upload
             size={20}
@@ -410,6 +411,24 @@ function DatasetsPage() {
             UTF-8, header row required.
           </div>
         </label>
+
+        {(uploadPhase === "reading" || uploadPhase === "validating") && (
+          <div className="mt-4">
+            <div
+              className="flex items-center justify-between text-xs mb-1.5"
+              style={{ color: "var(--console-fg-muted)" }}
+            >
+              <span className="inline-flex items-center gap-1.5">
+                <Loader2 size={12} className="animate-spin" />
+                {uploadPhase === "reading"
+                  ? `Reading ${fileName}…`
+                  : "Validating rows against schema…"}
+              </span>
+              <span className="font-mono">{uploadPct}%</span>
+            </div>
+            <ProgressBar pct={uploadPhase === "validating" ? 100 : uploadPct} indeterminate={uploadPhase === "validating"} />
+          </div>
+        )}
       </div>
 
       {/* Validation result */}
@@ -508,6 +527,27 @@ function DatasetsPage() {
               {!committing && <ArrowRight size={14} />}
             </button>
           </div>
+
+          {committing && (
+            <div className="mt-4">
+              <div
+                className="flex items-center justify-between text-xs mb-1.5"
+                style={{ color: "var(--console-fg-muted)" }}
+              >
+                <span>
+                  {commitPhase === "creating" && "Creating draft dataset…"}
+                  {commitPhase === "inserting" &&
+                    `Inserting rows… ${commitProgress.inserted.toLocaleString()} / ${commitProgress.total.toLocaleString()}`}
+                  {commitPhase === "logging" && "Writing audit log…"}
+                </span>
+                <span className="font-mono">{commitPct}%</span>
+              </div>
+              <ProgressBar
+                pct={commitPct}
+                indeterminate={commitPhase === "creating" || commitPhase === "logging"}
+              />
+            </div>
+          )}
 
           {commitError && (
             <div
