@@ -23,7 +23,6 @@ import { Route as PolicySkillsRouteImport } from './routes/policy.skills'
 import { Route as PolicyRiskRouteImport } from './routes/policy.risk'
 import { Route as PolicyProjectionsRouteImport } from './routes/policy.projections'
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
-import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -96,11 +95,6 @@ const PolicyOpportunitiesRoute = PolicyOpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => PolicyRoute,
 } as any)
-const ConsoleAuthSignInRoute = ConsoleAuthSignInRouteImport.update({
-  id: '/auth/sign-in',
-  path: '/auth/sign-in',
-  getParentRoute: () => ConsoleRoute,
-} as any)
 const ConsoleAuthForgotRoute = ConsoleAuthForgotRouteImport.update({
   id: '/auth/forgot',
   path: '/auth/forgot',
@@ -123,7 +117,6 @@ export interface FileRoutesByFullPath {
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
-  '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -139,7 +132,6 @@ export interface FileRoutesByTo {
   '/console': typeof ConsoleIndexRoute
   '/policy': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
-  '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -158,7 +150,6 @@ export interface FileRoutesById {
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
-  '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,7 +169,6 @@ export interface FileRouteTypes {
     | '/console/'
     | '/policy/'
     | '/console/auth/forgot'
-    | '/console/auth/sign-in'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -194,7 +184,6 @@ export interface FileRouteTypes {
     | '/console'
     | '/policy'
     | '/console/auth/forgot'
-    | '/console/auth/sign-in'
   id:
     | '__root__'
     | '/'
@@ -212,7 +201,6 @@ export interface FileRouteTypes {
     | '/console/'
     | '/policy/'
     | '/console/auth/forgot'
-    | '/console/auth/sign-in'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,13 +314,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicyOpportunitiesRouteImport
       parentRoute: typeof PolicyRoute
     }
-    '/console/auth/sign-in': {
-      id: '/console/auth/sign-in'
-      path: '/auth/sign-in'
-      fullPath: '/console/auth/sign-in'
-      preLoaderRoute: typeof ConsoleAuthSignInRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
     '/console/auth/forgot': {
       id: '/console/auth/forgot'
       path: '/auth/forgot'
@@ -346,13 +327,11 @@ declare module '@tanstack/react-router' {
 interface ConsoleRouteChildren {
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleAuthForgotRoute: typeof ConsoleAuthForgotRoute
-  ConsoleAuthSignInRoute: typeof ConsoleAuthSignInRoute
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleAuthForgotRoute: ConsoleAuthForgotRoute,
-  ConsoleAuthSignInRoute: ConsoleAuthSignInRoute,
 }
 
 const ConsoleRouteWithChildren =
@@ -390,3 +369,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
