@@ -23,6 +23,7 @@ import { Route as PolicySkillsRouteImport } from './routes/policy.skills'
 import { Route as PolicyRiskRouteImport } from './routes/policy.risk'
 import { Route as PolicyProjectionsRouteImport } from './routes/policy.projections'
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
+import { Route as ConsoleTaxonomyRouteImport } from './routes/console.taxonomy'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
@@ -100,6 +101,11 @@ const PolicyOpportunitiesRoute = PolicyOpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => PolicyRoute,
 } as any)
+const ConsoleTaxonomyRoute = ConsoleTaxonomyRouteImport.update({
+  id: '/taxonomy',
+  path: '/taxonomy',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleOnboardingRoute = ConsoleOnboardingRouteImport.update({
   id: '/onboarding',
   path: '/onboarding',
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/onboarding': typeof ConsoleOnboardingRoute
+  '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/onboarding': typeof ConsoleOnboardingRoute
+  '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/onboarding': typeof ConsoleOnboardingRoute
+  '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/onboarding'
+    | '/console/taxonomy'
     | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/onboarding'
+    | '/console/taxonomy'
     | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/onboarding'
+    | '/console/taxonomy'
     | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
@@ -374,6 +386,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicyOpportunitiesRouteImport
       parentRoute: typeof PolicyRoute
     }
+    '/console/taxonomy': {
+      id: '/console/taxonomy'
+      path: '/taxonomy'
+      fullPath: '/console/taxonomy'
+      preLoaderRoute: typeof ConsoleTaxonomyRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/onboarding': {
       id: '/console/onboarding'
       path: '/onboarding'
@@ -435,6 +454,7 @@ interface ConsoleRouteChildren {
   ConsoleConnectionsRoute: typeof ConsoleConnectionsRoute
   ConsoleContextsRoute: typeof ConsoleContextsRouteWithChildren
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
+  ConsoleTaxonomyRoute: typeof ConsoleTaxonomyRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleAuthForgotRoute: typeof ConsoleAuthForgotRoute
   ConsoleAuthSignInRoute: typeof ConsoleAuthSignInRoute
@@ -444,6 +464,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleConnectionsRoute: ConsoleConnectionsRoute,
   ConsoleContextsRoute: ConsoleContextsRouteWithChildren,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
+  ConsoleTaxonomyRoute: ConsoleTaxonomyRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleAuthForgotRoute: ConsoleAuthForgotRoute,
   ConsoleAuthSignInRoute: ConsoleAuthSignInRoute,
