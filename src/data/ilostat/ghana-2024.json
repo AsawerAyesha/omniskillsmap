@@ -1,0 +1,90 @@
+{
+  "iso3": "GHA",
+  "country": "Ghana",
+  "region": "Sub-Saharan Africa",
+  "contextLabel": "Urban informal · Accra",
+  "currency": "GHS",
+  "headline": {
+    "sectorGrowth": {
+      "value": 12.4,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_TEMP_SEX_AGE_NB · ISCO-08 group 74",
+      "vintage": 2024,
+      "unit": "% YoY",
+      "note": "Sector employment growth, electronics & electrical trades, 2023→2024."
+    },
+    "avgEntryWage": {
+      "value": "GHS 1,240",
+      "source": "World Bank WDI · ILO modelled",
+      "dataset": "EAR_4MTH_SEX_OCU_CUR_NB",
+      "vintage": 2023,
+      "unit": "/ month",
+      "note": "Median entry-level wage for ISCO-08 group 7 (craft & trades), Greater Accra."
+    },
+    "youthNeet": {
+      "value": 24.5,
+      "source": "ILO ILOSTAT",
+      "dataset": "SDG_0861_SEX_RT",
+      "vintage": 2023,
+      "unit": "% of youth 15–24",
+      "note": "Share of youth not in education, employment or training."
+    },
+    "employmentToPop": {
+      "value": 65.1,
+      "source": "World Bank WDI · ILO modelled",
+      "dataset": "SL.EMP.TOTL.SP.ZS",
+      "vintage": 2023,
+      "unit": "%",
+      "note": "Employment to population ratio, ages 15+."
+    },
+    "informalShare": {
+      "value": 78.3,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_NIFL_SEX_ECO_NB",
+      "vintage": 2023,
+      "unit": "% non-agri",
+      "note": "Informal share of non-agricultural employment."
+    },
+    "mobileBroadband": {
+      "value": 96.4,
+      "source": "ITU Digital Development",
+      "dataset": "MobileBroadband_per100",
+      "vintage": 2023,
+      "unit": "/ 100 people",
+      "note": "Active mobile broadband subscriptions per 100 inhabitants."
+    }
+  },
+  "focalSector": {
+    "iscoGroup": "ISCO 74 — Electrical & electronic trades",
+    "localLabel": "Electronics & repair",
+    "employmentShare": {
+      "value": 4.1,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_TEMP_SEX_OCU_NB",
+      "vintage": 2023,
+      "unit": "% of total"
+    },
+    "yoyGrowth": {
+      "value": 12.4,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_TEMP_SEX_AGE_NB",
+      "vintage": 2024,
+      "unit": "% YoY"
+    },
+    "entryWageMonthly": {
+      "value": "GHS 1,100–1,650",
+      "source": "World Bank WDI · ILO modelled",
+      "dataset": "EAR_4MTH_SEX_OCU_CUR_NB",
+      "vintage": 2023,
+      "unit": "/ month"
+    },
+    "automationExposure": {
+      "value": 0.31,
+      "source": "Frey-Osborne · LMIC-calibrated",
+      "dataset": "FreyOsborne_2017_LMIC_adj_v2",
+      "vintage": 2024,
+      "unit": "probability",
+      "note": "Adjusted downward from US baseline (0.61) to reflect LMIC task composition: more diagnosis, less line-routine."
+    }
+  }
+}

@@ -12,13 +12,15 @@ import { OpportunityCard } from "@/components/unmapped/opportunities/opportunity
 import { useContextConfig } from "@/components/unmapped/context-config/context-config-store";
 import {
   opportunities,
-  sectorSignals,
   FILTERS,
   type OpportunityCategory,
 } from "@/components/unmapped/opportunities/opportunities-data";
 import { evaluateFit } from "@/components/unmapped/opportunities/constraint-fit";
 import { ConstraintBanner } from "@/components/unmapped/constraint-banner";
 import { DEFAULT_ADVANCED_SIGNALS } from "@/components/unmapped/context-config/types";
+import { useCountryData } from "@/data/use-country-data";
+import { SourcedTile } from "@/components/unmapped/data/sourced-tile";
+import { COUNTRY_INDEX } from "@/components/unmapped/context-config/types";
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -46,6 +48,13 @@ function OpportunitiesPage() {
   const [filter, setFilter] = React.useState<Filter>("all");
   const { openDrawer, active } = useContextConfig();
   const signals = active.advanced_signals ?? DEFAULT_ADVANCED_SIGNALS;
+
+  /* Resolve the active country to its ISO3 so we can look up the cached
+   * real-data snapshot. We also expose a `wired` flag so the sidebar can
+   * be honest when the user picks a country we haven't yet wired up. */
+  const iso3 =
+    COUNTRY_INDEX.find((c) => c.name === active.country)?.iso3 ?? "GHA";
+  const { data: country, wired } = useCountryData(iso3);
 
   /* Evaluate fit + adjusted score for every opportunity once. */
   const enriched = React.useMemo(
@@ -174,8 +183,18 @@ function OpportunitiesPage() {
             >
               <Info size={14} className="mt-0.5 shrink-0" />
               <p className="leading-relaxed">
-                These matches are based on real ILO and World Bank labour data
-                for Ghana, 2023–2024. Wages are estimates — actual offers vary.
+                These matches use cached <strong>ILO ILOSTAT</strong> and{" "}
+                <strong>World Bank WDI</strong> series for {country.country},{" "}
+                vintage {country.headline.sectorGrowth.vintage}. Wages are
+                modelled estimates — actual offers vary by employer.
+                {!wired && (
+                  <>
+                    {" "}
+                    Country snapshot for <strong>{active.country}</strong> is
+                    not yet wired — values shown are from {country.country} as
+                    a fallback.
+                  </>
+                )}
               </p>
             </div>
 
@@ -234,26 +253,28 @@ function OpportunitiesPage() {
                 Labor market signals
               </h2>
               <p className="mt-1 text-[12px] text-ink-secondary">
-                Ghana · Electronics sector
+                {country.country} · {country.focalSector.localLabel}
               </p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                {sectorSignals.map((s) => (
-                  <div
-                    key={s.label}
-                    className="rounded-xl border border-border-subtle bg-surface-sunken/60 p-4"
-                  >
-                    <div className="text-[28px] leading-none text-ink tracking-tight">
-                      {s.value}
-                    </div>
-                    <div className="mt-2 text-[12px] text-ink-secondary">
-                      {s.label}
-                    </div>
-                    <div className="mt-1 text-[11px] uppercase tracking-[0.06em] text-ink-tertiary font-mono">
-                      {s.source}
-                    </div>
-                  </div>
-                ))}
+                <SourcedTile
+                  signal={country.headline.sectorGrowth}
+                  label={`Sector job growth, ${country.focalSector.localLabel}`}
+                  formatValue={(v) =>
+                    typeof v === "number" ? `↑ ${v.toFixed(1)}%` : String(v)
+                  }
+                />
+                <SourcedTile
+                  signal={country.headline.avgEntryWage}
+                  label="Avg. entry wage / month"
+                />
+                <SourcedTile
+                  signal={country.headline.youthNeet}
+                  label="Youth not in education, employment or training"
+                  formatValue={(v) =>
+                    typeof v === "number" ? `${v.toFixed(1)}%` : String(v)
+                  }
+                />
               </div>
             </div>
           </aside>
