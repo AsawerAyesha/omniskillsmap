@@ -16,6 +16,7 @@ import { Route as OpportunitiesRouteImport } from './routes/opportunities'
 import { Route as LearnRouteImport } from './routes/learn'
 import { Route as IntakeRouteImport } from './routes/intake'
 import { Route as ConsoleRouteImport } from './routes/console'
+import { Route as AiReadinessRouteImport } from './routes/ai-readiness'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PolicyIndexRouteImport } from './routes/policy.index'
 import { Route as ConsoleIndexRouteImport } from './routes/console.index'
@@ -66,6 +67,11 @@ const IntakeRoute = IntakeRouteImport.update({
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
   path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiReadinessRoute = AiReadinessRouteImport.update({
+  id: '/ai-readiness',
+  path: '/ai-readiness',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -151,6 +157,7 @@ const ConsoleAuthForgotRoute = ConsoleAuthForgotRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-readiness': typeof AiReadinessRoute
   '/console': typeof ConsoleRouteWithChildren
   '/intake': typeof IntakeRoute
   '/learn': typeof LearnRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-readiness': typeof AiReadinessRoute
   '/intake': typeof IntakeRoute
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
@@ -200,6 +208,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-readiness': typeof AiReadinessRoute
   '/console': typeof ConsoleRouteWithChildren
   '/intake': typeof IntakeRoute
   '/learn': typeof LearnRoute
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-readiness'
     | '/console'
     | '/intake'
     | '/learn'
@@ -252,6 +262,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-readiness'
     | '/intake'
     | '/learn'
     | '/opportunities'
@@ -275,6 +286,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-readiness'
     | '/console'
     | '/intake'
     | '/learn'
@@ -301,6 +313,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiReadinessRoute: typeof AiReadinessRoute
   ConsoleRoute: typeof ConsoleRouteWithChildren
   IntakeRoute: typeof IntakeRoute
   LearnRoute: typeof LearnRoute
@@ -359,6 +372,13 @@ declare module '@tanstack/react-router' {
       path: '/console'
       fullPath: '/console'
       preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-readiness': {
+      id: '/ai-readiness'
+      path: '/ai-readiness'
+      fullPath: '/ai-readiness'
+      preLoaderRoute: typeof AiReadinessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -536,6 +556,7 @@ const PolicyRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiReadinessRoute: AiReadinessRoute,
   ConsoleRoute: ConsoleRouteWithChildren,
   IntakeRoute: IntakeRoute,
   LearnRoute: LearnRoute,
