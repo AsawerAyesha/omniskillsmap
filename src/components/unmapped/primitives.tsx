@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /* ============================================================
-   UNMAPPED Primitives — thin React wrappers over CSS utility
+   OmniSkill Primitives — thin React wrappers over CSS utility
    classes defined in src/styles.css. Keep markup minimal so
    tokens stay the single source of truth.
    ============================================================ */

@@ -6,7 +6,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * UNMAPPED — Civic Precision Design System
+ * OmniSkill — Civic Precision Design System
  *
  * Aesthetic: high-trust institutional clarity (UN / World Bank) reimagined
  * for 2026 with warmth, motion and human empathy. Authoritative, not corporate.
@@ -58,7 +58,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* UNMAPPED brand colors */
+  /* OmniSkill brand colors */
   --color-earth: var(--earth);
   --color-earth-light: var(--earth-light);
   --color-earth-dark: var(--earth-dark);
@@ -139,7 +139,7 @@
   --radius: 0.5rem;            /* 8px default */
   --radius-pill: 999px;
 
-  /* === UNMAPPED brand palette (light) === */
+  /* === OmniSkill brand palette (light) === */
   --earth:           oklch(0.760 0.058 78);    /* #C4A882 warm parchment */
   --earth-light:     oklch(0.953 0.018 80);    /* #F5EFE6 light parchment */
   --earth-dark:      oklch(0.490 0.045 70);    /* #7A6548 deep earth */
@@ -160,7 +160,7 @@
   --signal-red:      oklch(0.555 0.180 28);    /* #C0392B */
   --signal-blue:     oklch(0.395 0.075 240);   /* #1A5276 */
 
-  /* === Shadcn semantic mapping (built on UNMAPPED tokens) === */
+  /* === Shadcn semantic mapping (built on OmniSkill tokens) === */
   --background:           var(--surface);
   --foreground:           var(--ink);
   --card:                 var(--surface-raised);
@@ -504,7 +504,7 @@ html.theme-transition *:not(svg):not(path) {
 }
 
 /* ==========================================================================
-   UNMAPPED component primitives — utility classes
+   OmniSkill component primitives — utility classes
    Use these from any component for consistent civic-precision styling.
    ========================================================================== */
 @layer components {

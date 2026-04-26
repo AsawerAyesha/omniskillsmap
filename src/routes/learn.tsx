@@ -4,13 +4,13 @@ import { LearnBoard } from "@/components/unmapped/learn/learn-board";
 export const Route = createFileRoute("/learn")({
   head: () => ({
     meta: [
-      { title: "Learn — Your pathway · UNMAPPED" },
+      { title: "Learn — Your pathway · OmniSkill" },
       {
         name: "description",
         content:
           "A personal learning pathway built from your skills profile, ESCO standards and real labour-market signals — works offline.",
       },
-      { property: "og:title", content: "Learn — Your pathway · UNMAPPED" },
+      { property: "og:title", content: "Learn — Your pathway · OmniSkill" },
       {
         property: "og:description",
         content:

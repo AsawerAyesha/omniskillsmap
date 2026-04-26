@@ -37,7 +37,7 @@ function ForgotPage() {
       <div className="w-full max-w-[400px]">
         <div className="flex items-center gap-2 mb-8">
           <Compass size={18} strokeWidth={1.5} style={{ color: "var(--console-accent)" }} />
-          <span className="font-display text-base tracking-tight">UNMAPPED Console</span>
+          <span className="font-display text-base tracking-tight">OmniSkill Console</span>
         </div>
         <h2 className="font-display text-2xl tracking-tight">Reset your password</h2>
         <p className="mt-1.5 text-sm" style={{ color: "var(--console-fg-muted)" }}>

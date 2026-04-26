@@ -13,13 +13,13 @@ import {
 export const Route = createFileRoute("/profile")({
   head: () => ({
     meta: [
-      { title: "Amara Mensah — Skills Profile · UNMAPPED" },
+      { title: "Amara Mensah — Skills Profile · OmniSkill" },
       {
         name: "description",
         content:
           "A portable skills credential built on ISCO-08 and ESCO standards, with real labour market signals from ILO and World Bank.",
       },
-      { property: "og:title", content: "Amara Mensah — Skills Profile · UNMAPPED" },
+      { property: "og:title", content: "Amara Mensah — Skills Profile · OmniSkill" },
       {
         property: "og:description",
         content:
@@ -45,7 +45,7 @@ function ProfilePage() {
   const handleShare = React.useCallback(async () => {
     const url = typeof window !== "undefined" ? window.location.href : "";
     const shareData = {
-      title: `${p.name} — UNMAPPED Skills Profile`,
+      title: `${p.name} — OmniSkill Skills Profile`,
       text: `${p.name}'s portable skills profile, built on ISCO-08 and ESCO standards.`,
       url,
     };

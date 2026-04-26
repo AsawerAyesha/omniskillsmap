@@ -28,7 +28,7 @@ import { JsonPreview } from "@/components/unmapped/console/json-preview";
 /* C2 — Context Wizard.
  *
  * The most critical screen in the console. An operator configures every
- * parameter UNMAPPED needs to deploy a context: identity, data sources,
+ * parameter OmniSkill needs to deploy a context: identity, data sources,
  * education taxonomy, language, automation calibration, and opportunity
  * surface. A live config.json preview renders on the right so judges can
  * see the configuration is real, not theatre. */
@@ -677,7 +677,7 @@ function PageHeader({ onOpenDrawer }: { onOpenDrawer: () => void }) {
         style={{ color: "var(--console-fg-muted)" }}
       >
         A context is a complete configuration package — labor data, taxonomy,
-        language, and automation calibration — that UNMAPPED deploys for a
+        language, and automation calibration — that OmniSkill deploys for a
         specific population.
       </p>
       <button
@@ -2298,7 +2298,7 @@ function WhatIsContextDrawer({ open, onClose }: { open: boolean; onClose: () => 
           style={{ color: "var(--console-fg-muted)" }}
         >
           <p>
-            Most labor market tools assume one global model. UNMAPPED works
+            Most labor market tools assume one global model. OmniSkill works
             differently — every deployment is rooted in a{" "}
             <strong style={{ color: "var(--console-fg)" }}>context</strong>: a
             self-contained configuration package describing one country, region

@@ -127,7 +127,7 @@ function ConsoleLanding() {
             className="font-display tracking-tight"
             style={{ fontSize: "32px", color: "#F0EDE8", lineHeight: 1.1 }}
           >
-            UNMAPPED
+            OmniSkill
           </div>
           <div
             className="uppercase tracking-[0.18em]"
@@ -213,7 +213,7 @@ function ConsoleLanding() {
           className="max-w-md leading-relaxed"
           style={{ fontSize: "12px", color: "#6B6560" }}
         >
-          UNMAPPED is open infrastructure. No vendor lock-in. Your data stays yours.
+          OmniSkill is open infrastructure. No vendor lock-in. Your data stays yours.
         </p>
       </aside>
 
@@ -381,7 +381,7 @@ function ConsoleLanding() {
             className="mt-6 text-xs text-center"
             style={{ color: "rgba(26,24,20,0.55)" }}
           >
-            New to UNMAPPED?{" "}
+            New to OmniSkill?{" "}
             <Link
               to="/console/auth/sign-up"
               className="underline underline-offset-2"

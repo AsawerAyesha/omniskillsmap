@@ -6,13 +6,13 @@ import { RegionPills } from "../components/unmapped/landing/region-pills";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "UNMAPPED — Your skills. Mapped." },
+      { title: "OmniSkill — Your skills. Mapped." },
       {
         name: "description",
         content:
           "An open infrastructure for youth to discover, own, and connect their skills to real economic opportunity. Powered by ILO and World Bank data.",
       },
-      { property: "og:title", content: "UNMAPPED — Your skills. Mapped." },
+      { property: "og:title", content: "OmniSkill — Your skills. Mapped." },
       {
         property: "og:description",
         content:
