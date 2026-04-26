@@ -71,6 +71,27 @@ interface ContextRow {
   flag_emoji: string | null;
 }
 
+/* Per-kind unique constraints (must match the DB indexes). Used to dedupe
+ * rows before upserting so Postgres doesn't see two rows with the same
+ * conflict target in a single payload. */
+const UNIQUE_KEYS: Partial<Record<DatasetKind, string[]>> = {
+  taxonomy: ["dataset_id", "code"],
+  occupations: ["dataset_id", "code"],
+  labor: ["dataset_id", "indicator_code", "year", "sex", "age_band"],
+};
+
+function dedupeBy<T extends Record<string, unknown>>(
+  rows: T[],
+  keys: string[],
+): T[] {
+  const seen = new Map<string, T>();
+  for (const row of rows) {
+    const k = keys.map((c) => String(row[c] ?? "∅")).join("│");
+    seen.set(k, row); // last-wins
+  }
+  return Array.from(seen.values());
+}
+
 function DatasetsPage() {
   const { user } = useConsoleAuth();
   const [contexts, setContexts] = React.useState<ContextRow[] | null>(null);
@@ -205,13 +226,26 @@ function DatasetsPage() {
       dataset_id: ds.id,
     }));
 
+    // Deduplicate within the CSV against the table's unique key. Postgres
+    // upsert can't accept two rows with the same conflict target in a single
+    // payload, so we collapse them client-side first (last-wins).
+    const conflictCols = UNIQUE_KEYS[kind];
+    const dedupedRows = conflictCols
+      ? dedupeBy(rowsWithDataset, conflictCols)
+      : rowsWithDataset;
+    const droppedDuplicates = rowsWithDataset.length - dedupedRows.length;
+
     setCommitPhase("inserting");
     const CHUNK = 500;
-    for (let i = 0; i < rowsWithDataset.length; i += CHUNK) {
-      const chunk = rowsWithDataset.slice(i, i + CHUNK);
-      const { error: rowErr } = await supabase
-        .from(meta.table as never)
-        .insert(chunk as never);
+    for (let i = 0; i < dedupedRows.length; i += CHUNK) {
+      const chunk = dedupedRows.slice(i, i + CHUNK);
+      const query = supabase.from(meta.table as never);
+      const { error: rowErr } = conflictCols
+        ? await query.upsert(chunk as never, {
+            onConflict: conflictCols.join(","),
+            ignoreDuplicates: false,
+          })
+        : await query.insert(chunk as never);
       if (rowErr) {
         setCommitError(`Row insert failed at row ${i + 1}: ${rowErr.message}`);
         // Best-effort: leave the empty draft so the operator can retry/delete.
@@ -219,9 +253,9 @@ function DatasetsPage() {
         setCommitPhase("idle");
         return;
       }
-      const insertedSoFar = Math.min(i + chunk.length, rowsWithDataset.length);
-      setCommitProgress({ inserted: insertedSoFar, total: rowsWithDataset.length });
-      setCommitPct(Math.round((insertedSoFar / rowsWithDataset.length) * 100));
+      const insertedSoFar = Math.min(i + chunk.length, dedupedRows.length);
+      setCommitProgress({ inserted: insertedSoFar, total: dedupedRows.length });
+      setCommitPct(Math.round((insertedSoFar / dedupedRows.length) * 100));
     }
 
     // 4. Audit log
@@ -233,7 +267,7 @@ function DatasetsPage() {
       kind,
       file_name: fileName,
       rows_in: result.totalRows,
-      rows_ok: result.ok.length,
+      rows_ok: dedupedRows.length,
       rows_err: result.errors.length,
       errors: result.errors.slice(0, 50) as never,
     } as never);
@@ -241,8 +275,13 @@ function DatasetsPage() {
     setCommitted({
       dataset_id: ds.id,
       version: ds.version,
-      inserted: result.ok.length,
+      inserted: dedupedRows.length,
     });
+    if (droppedDuplicates > 0) {
+      setCommitError(
+        `Note: ${droppedDuplicates} duplicate row${droppedDuplicates === 1 ? "" : "s"} were collapsed (same ${conflictCols!.filter((c: string) => c !== "dataset_id").join(" + ")}).`,
+      );
+    }
     setCommitting(false);
     setCommitPhase("done");
     setCommitPct(100);
