@@ -4,6 +4,7 @@ import { Download, Layers, MapPin, TrendingUp, Users } from "lucide-react";
 import { useUnmappedMode } from "@/components/unmapped/mode-context";
 import { SkillsMapBoard } from "@/components/unmapped/policy-dashboard/skills-map-board";
 import { getSkillsMapDataset } from "@/components/unmapped/policy-dashboard/skills-map-data";
+import { LiveDataPanel } from "@/components/unmapped/live/live-data-panel";
 
 export const Route = createFileRoute("/policy/skills")({
   head: () => ({
@@ -95,6 +96,10 @@ function SkillsMapPage() {
       </div>
 
       <div className="u-container py-6 space-y-6">
+        {/* Live taxonomy from operator console (visible only when an active
+            context exists with a published taxonomy dataset). */}
+        <LiveDataPanel kind="skills" title="Live skills taxonomy" />
+
         {/* KPI strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {stats.map((s) => (
