@@ -32,10 +32,12 @@ import { Route as ConsoleDatasetsRouteImport } from './routes/console.datasets'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
 import { Route as ConsoleContextsIndexRouteImport } from './routes/console.contexts.index'
+import { Route as ApiV1IndexRouteImport } from './routes/api/v1/index'
 import { Route as ConsoleContextsNewRouteImport } from './routes/console.contexts.new'
 import { Route as ConsoleAuthSignUpRouteImport } from './routes/console.auth.sign-up'
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
+import { Route as ApiV1ContextsRouteImport } from './routes/api/v1/contexts'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -152,6 +154,11 @@ const ConsoleContextsIndexRoute = ConsoleContextsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ConsoleContextsRoute,
 } as any)
+const ApiV1IndexRoute = ApiV1IndexRouteImport.update({
+  id: '/api/v1/',
+  path: '/api/v1/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConsoleContextsNewRoute = ConsoleContextsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -171,6 +178,11 @@ const ConsoleAuthForgotRoute = ConsoleAuthForgotRouteImport.update({
   id: '/auth/forgot',
   path: '/auth/forgot',
   getParentRoute: () => ConsoleRoute,
+} as any)
+const ApiV1ContextsRoute = ApiV1ContextsRouteImport.update({
+  id: '/api/v1/contexts',
+  path: '/api/v1/contexts',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -196,10 +208,12 @@ export interface FileRoutesByFullPath {
   '/policy/skills': typeof PolicySkillsRoute
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
+  '/api/v1/contexts': typeof ApiV1ContextsRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/api/v1/': typeof ApiV1IndexRoute
   '/console/contexts/': typeof ConsoleContextsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -222,10 +236,12 @@ export interface FileRoutesByTo {
   '/policy/skills': typeof PolicySkillsRoute
   '/console': typeof ConsoleIndexRoute
   '/policy': typeof PolicyIndexRoute
+  '/api/v1/contexts': typeof ApiV1ContextsRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/api/v1': typeof ApiV1IndexRoute
   '/console/contexts': typeof ConsoleContextsIndexRoute
 }
 export interface FileRoutesById {
@@ -252,10 +268,12 @@ export interface FileRoutesById {
   '/policy/skills': typeof PolicySkillsRoute
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
+  '/api/v1/contexts': typeof ApiV1ContextsRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/api/v1/': typeof ApiV1IndexRoute
   '/console/contexts/': typeof ConsoleContextsIndexRoute
 }
 export interface FileRouteTypes {
@@ -283,10 +301,12 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console/'
     | '/policy/'
+    | '/api/v1/contexts'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/api/v1/'
     | '/console/contexts/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -309,10 +329,12 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console'
     | '/policy'
+    | '/api/v1/contexts'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/api/v1'
     | '/console/contexts'
   id:
     | '__root__'
@@ -338,10 +360,12 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console/'
     | '/policy/'
+    | '/api/v1/contexts'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/api/v1/'
     | '/console/contexts/'
   fileRoutesById: FileRoutesById
 }
@@ -355,6 +379,8 @@ export interface RootRouteChildren {
   PolicyRoute: typeof PolicyRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiV1ContextsRoute: typeof ApiV1ContextsRoute
+  ApiV1IndexRoute: typeof ApiV1IndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -520,6 +546,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleContextsIndexRouteImport
       parentRoute: typeof ConsoleContextsRoute
     }
+    '/api/v1/': {
+      id: '/api/v1/'
+      path: '/api/v1'
+      fullPath: '/api/v1/'
+      preLoaderRoute: typeof ApiV1IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/console/contexts/new': {
       id: '/console/contexts/new'
       path: '/new'
@@ -547,6 +580,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/console/auth/forgot'
       preLoaderRoute: typeof ConsoleAuthForgotRouteImport
       parentRoute: typeof ConsoleRoute
+    }
+    '/api/v1/contexts': {
+      id: '/api/v1/contexts'
+      path: '/api/v1/contexts'
+      fullPath: '/api/v1/contexts'
+      preLoaderRoute: typeof ApiV1ContextsRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -625,6 +665,8 @@ const rootRouteChildren: RootRouteChildren = {
   PolicyRoute: PolicyRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiV1ContextsRoute: ApiV1ContextsRoute,
+  ApiV1IndexRoute: ApiV1IndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
