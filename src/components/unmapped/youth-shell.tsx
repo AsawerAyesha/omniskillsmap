@@ -10,6 +10,7 @@ import {
   PanelLeftOpen,
   ArrowLeftRight,
   ShieldAlert,
+  Terminal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
