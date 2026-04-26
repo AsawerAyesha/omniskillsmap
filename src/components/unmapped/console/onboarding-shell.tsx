@@ -54,7 +54,7 @@ export function OnboardingShell({
           className="px-5 h-14 flex items-center gap-2.5 border-b"
           style={{ borderColor: "var(--console-border)" }}
         >
-          <img src={omniskillMark} alt="" aria-hidden="true" width={20} height={20} className="rounded-sm" />
+          <img src={omniskillMark} alt="" aria-hidden="true" width={32} height={32} className="rounded-md" />
           <span className="font-display text-base tracking-tight">OmniSkill</span>
           <span
             className="ml-auto text-[10px] uppercase tracking-[0.12em] px-1.5 py-0.5 rounded-full"
