@@ -249,8 +249,6 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
            * duplicate SwitchContextButton so the country pill is the single
            * affordance for context switching. */}
           <div className="ml-auto flex items-center gap-2 lg:gap-3 shrink-0">
-            <ThemeSwitcher variant="compact" />
-
             <button
               type="button"
               onClick={openDrawer}
@@ -283,6 +281,11 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
             >
               MA
             </div>
+
+            {/* Theme is a low-frequency control — collapse it behind a single
+             * icon button on the far right. Click reveals a popover with the
+             * three-mode selector, keeping the topbar uncluttered. */}
+            <ThemeSwitcher variant="popover" />
 
             <ModeSwitcher />
           </div>
