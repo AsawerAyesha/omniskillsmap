@@ -49,7 +49,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
       aria-label="Education level projections"
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -57,13 +57,13 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Education level projections 2025–2035
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Wittgenstein Centre · % of youth population
           </p>
@@ -73,7 +73,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
             <li
               key={s.key}
               className="flex items-center gap-1.5 text-[11px]"
-              style={{ color: var(--policy-fg) }}
+              style={{ color: "var(--policy-fg)" }}
             >
               <span
                 className="inline-block h-[2px] w-4 rounded"
@@ -102,7 +102,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
                   x2={W - PAD.right}
                   y1={yy}
                   y2={yy}
-                  stroke=var(--policy-panel-border)
+                  stroke="var(--policy-panel-border)"
                   strokeDasharray={t === 0 ? "0" : "2 4"}
                 />
                 <text
@@ -111,7 +111,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
                   textAnchor="end"
                   fontSize="10"
                   fontFamily="JetBrains Mono, monospace"
-                  fill=var(--policy-fg-faint)
+                  fill="var(--policy-fg-faint)"
                 >
                   {t}%
                 </text>
@@ -128,7 +128,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
               textAnchor="middle"
               fontSize="11"
               fontFamily="JetBrains Mono, monospace"
-              fill=var(--policy-fg-muted)
+              fill="var(--policy-fg-muted)"
             >
               {p.year}
             </text>
@@ -140,7 +140,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
             x2={nowX}
             y1={PAD.top}
             y2={H - PAD.bottom}
-            stroke=var(--policy-fg-faint)
+            stroke="var(--policy-fg-faint)"
             strokeDasharray="3 3"
           />
           <text
@@ -148,7 +148,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
             y={PAD.top + 10}
             fontSize="10"
             fontFamily="DM Sans, sans-serif"
-            fill=var(--policy-fg)
+            fill="var(--policy-fg)"
           >
             {nowYear} (now)
           </text>
@@ -189,7 +189,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
           <li
             key={s.key}
             className="flex items-center gap-1.5 text-[11px]"
-            style={{ color: var(--policy-fg) }}
+            style={{ color: "var(--policy-fg)" }}
           >
             <span className="inline-block h-[2px] w-4 rounded" style={{ background: s.color }} />
             {s.label}

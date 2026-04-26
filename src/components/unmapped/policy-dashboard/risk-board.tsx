@@ -103,7 +103,7 @@ function ExposureSpectrum({
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -111,13 +111,13 @@ function ExposureSpectrum({
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Exposure spectrum
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Each bubble is an occupation in the cohort. Size = workers exposed,
             colour = risk band. Click to inspect.
@@ -128,7 +128,7 @@ function ExposureSpectrum({
             <span
               key={b}
               className="inline-flex items-center gap-1.5 text-[11px]"
-              style={{ color: var(--policy-fg) }}
+              style={{ color: "var(--policy-fg)" }}
             >
               <span
                 className="h-2 w-2 rounded-full"
@@ -137,7 +137,7 @@ function ExposureSpectrum({
               {BAND_META[b].label}
               <span
                 className="font-mono"
-                style={{ color: var(--policy-fg-faint) }}
+                style={{ color: "var(--policy-fg-faint)" }}
               >
                 · {BAND_META[b].range}
               </span>
@@ -183,7 +183,7 @@ function ExposureSpectrum({
                 x2={x}
                 y1={PAD.t + 8}
                 y2={PAD.t + innerH - 8}
-                stroke=var(--policy-panel-border)
+                stroke="var(--policy-panel-border)"
                 strokeDasharray="3 4"
               />
             );
@@ -218,11 +218,11 @@ function ExposureSpectrum({
                   textAnchor="middle"
                   fontSize="13"
                   fontFamily="ui-sans-serif, system-ui"
-                  fill=var(--policy-fg)
+                  fill="var(--policy-fg)"
                 >
                   {summary.workers.toLocaleString()}
                   <tspan
-                    fill=var(--policy-fg-faint)
+                    fill="var(--policy-fg-faint)"
                     fontSize="10"
                     fontFamily="ui-monospace, monospace"
                   >
@@ -240,7 +240,7 @@ function ExposureSpectrum({
             x2={PAD.l + innerW}
             y1={PAD.t + innerH}
             y2={PAD.t + innerH}
-            stroke=var(--policy-grid-strong)
+            stroke="var(--policy-grid-strong)"
           />
           {[0, 25, 50, 70, 100].map((t) => {
             const x = PAD.l + (t / 100) * innerW;
@@ -259,7 +259,7 @@ function ExposureSpectrum({
                   textAnchor="middle"
                   fontSize="10"
                   fontFamily="ui-monospace, monospace"
-                  fill=var(--policy-fg-muted)
+                  fill="var(--policy-fg-muted)"
                 >
                   {t}%
                 </text>
@@ -272,7 +272,7 @@ function ExposureSpectrum({
             textAnchor="middle"
             fontSize="11"
             fontFamily="ui-monospace, monospace"
-            fill=var(--policy-fg-muted)
+            fill="var(--policy-fg-muted)"
           >
             Probability of automation in 10 years →
           </text>
@@ -308,7 +308,7 @@ function ExposureSpectrum({
                     textAnchor="middle"
                     fontSize="10"
                     fontFamily="ui-monospace, monospace"
-                    fill=var(--policy-fg)
+                    fill="var(--policy-fg)"
                   >
                     {o.title}
                   </text>
@@ -334,7 +334,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: `1px solid ${meta.ring}`,
       }}
     >
@@ -342,7 +342,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
         <div className="min-w-0">
           <p
             className="text-[10px] font-mono uppercase tracking-[0.08em] mb-1"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             {occ.isco} · {occ.cluster}
           </p>
@@ -353,7 +353,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
         <div className="text-right">
           <div
             className="text-[10px] uppercase tracking-[0.08em]"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Risk band
           </div>
@@ -376,13 +376,13 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
       <div className="mb-4">
         <div
           className="text-[10px] uppercase tracking-[0.06em] mb-1.5"
-          style={{ color: var(--policy-fg-faint) }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           Task decomposition
         </div>
         <div
           className="h-3 w-full rounded-md flex overflow-hidden"
-          style={{ background: var(--policy-panel-border) }}
+          style={{ background: "var(--policy-panel-border)" }}
         >
           {taskKeys.map((k) => {
             const w = (occ.tasks[k] / total) * 100;
@@ -417,7 +417,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
               </span>
               <span
                 className="font-mono tabular-nums"
-                style={{ color: var(--policy-fg-muted) }}
+                style={{ color: "var(--policy-fg-muted)" }}
               >
                 {occ.tasks[k]}%
               </span>
@@ -429,7 +429,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
       {/* Cohort + trend */}
       <div
         className="grid grid-cols-2 gap-3 pt-3 border-t"
-        style={{ borderColor: var(--policy-panel-border) }}
+        style={{ borderColor: "var(--policy-panel-border)" }}
       >
         <Stat
           label="Workers exposed"
@@ -482,11 +482,11 @@ function Stat({
   return (
     <div
       className="rounded-lg px-3 py-2"
-      style={{ background: var(--policy-panel) }}
+      style={{ background: "var(--policy-panel)" }}
     >
       <div
         className="text-[10px] uppercase tracking-[0.06em]"
-        style={{ color: var(--policy-fg-muted) }}
+        style={{ color: "var(--policy-fg-muted)" }}
       >
         {label}
       </div>
@@ -499,7 +499,7 @@ function Stat({
       </div>
       <div
         className="text-[10px] mt-0.5"
-        style={{ color: var(--policy-fg-faint) }}
+        style={{ color: "var(--policy-fg-faint)" }}
       >
         {sub}
       </div>
@@ -516,20 +516,20 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
     <section
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-4">
         <h2
           className="text-[12px] uppercase tracking-[0.08em] font-medium"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Mitigation pathways
         </h2>
         <p
           className="mt-1 text-[11px]"
-          style={{ color: var(--policy-fg-faint) }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           Adjacent occupations with overlapping skills and lower exposure.
         </p>
@@ -563,7 +563,7 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
             key={p}
             className="rounded-lg p-3 flex items-center gap-3"
             style={{
-              background: var(--policy-panel),
+              background: "var(--policy-panel)",
               border: "1px solid var(--policy-panel-strong)",
             }}
           >
@@ -580,13 +580,13 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
             <div className="min-w-0 flex-1">
               <div
                 className="text-[13px]"
-                style={{ color: var(--policy-fg) }}
+                style={{ color: "var(--policy-fg)" }}
               >
                 {p}
               </div>
               <div
                 className="text-[10px] font-mono mt-0.5"
-                style={{ color: var(--policy-fg-faint) }}
+                style={{ color: "var(--policy-fg-faint)" }}
               >
                 Overlap on interpersonal &amp; non-routine cognitive tasks
               </div>
@@ -594,7 +594,7 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
             <ArrowRight
               size={14}
               strokeWidth={1.8}
-              style={{ color: var(--policy-fg-muted) }}
+              style={{ color: "var(--policy-fg-muted)" }}
             />
           </li>
         ))}
@@ -603,8 +603,8 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
       <p
         className="text-[11px] leading-relaxed mt-4 pt-3 border-t"
         style={{
-          color: var(--policy-fg-muted),
-          borderColor: var(--policy-panel-border),
+          color: "var(--policy-fg-muted)",
+          borderColor: "var(--policy-panel-border)",
         }}
       >
         Pathways are derived from ESCO skill-overlap ≥ 0.45 and a target band
@@ -630,7 +630,7 @@ function RiskRegister({
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -638,20 +638,20 @@ function RiskRegister({
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Risk register
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Click a row to inspect above.
           </p>
         </div>
         <span
           className="text-[11px] font-mono"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           {rows.length} occupations
         </span>
@@ -660,7 +660,7 @@ function RiskRegister({
       <div className="overflow-x-auto -mx-1 px-1">
         <table className="w-full text-left border-separate border-spacing-y-1.5 min-w-[680px]">
           <thead>
-            <tr style={{ color: var(--policy-fg-muted) }}>
+            <tr style={{ color: "var(--policy-fg-muted)" }}>
               <Th>ISCO</Th>
               <Th>Occupation</Th>
               <Th>Cluster</Th>
@@ -683,8 +683,8 @@ function RiskRegister({
                   )}
                   style={{
                     background: isActive
-                      ? var(--policy-panel-border)
-                      : var(--policy-panel),
+                      ? "var(--policy-panel-border)"
+                      : "var(--policy-panel)",
                     outline: isActive ? `1px solid ${meta.ring}` : "none",
                   }}
                 >
@@ -699,7 +699,7 @@ function RiskRegister({
                       <div
                         className="h-1 rounded-full overflow-hidden shrink-0"
                         style={{
-                          background: var(--policy-panel-border),
+                          background: "var(--policy-panel-border)",
                           width: 80,
                         }}
                       >

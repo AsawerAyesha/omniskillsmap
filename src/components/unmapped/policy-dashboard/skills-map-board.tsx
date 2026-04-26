@@ -43,7 +43,7 @@ export function SkillsMapBoard({ data }: Props) {
         <div
           className="rounded-2xl px-4 py-3 flex flex-wrap items-center gap-x-5 gap-y-3"
           style={{
-            background: var(--policy-panel),
+            background: "var(--policy-panel)",
             border: "1px solid var(--policy-panel-border)",
           }}
         >
@@ -51,7 +51,7 @@ export function SkillsMapBoard({ data }: Props) {
           <div className="flex items-center gap-2 min-w-0 flex-wrap">
             <span
               className="text-[10px] uppercase tracking-[0.08em]"
-              style={{ color: var(--policy-fg-faint) }}
+              style={{ color: "var(--policy-fg-faint)" }}
             >
               Region
             </span>
@@ -71,7 +71,7 @@ export function SkillsMapBoard({ data }: Props) {
                   style={{
                     background: active
                       ? "rgba(196,168,130,0.18)"
-                      : var(--policy-panel),
+                      : "var(--policy-panel)",
                     color: active ? "var(--policy-fg)" : "var(--policy-fg)",
                   }}
                 >
@@ -83,14 +83,14 @@ export function SkillsMapBoard({ data }: Props) {
 
           <div
             className="hidden md:block h-5 w-px"
-            style={{ background: var(--policy-panel-border) }}
+            style={{ background: "var(--policy-panel-border)" }}
           />
 
           {/* Tier filter */}
           <div className="flex items-center gap-2 flex-wrap">
             <span
               className="text-[10px] uppercase tracking-[0.08em]"
-              style={{ color: var(--policy-fg-faint) }}
+              style={{ color: "var(--policy-fg-faint)" }}
             >
               Tier
             </span>
@@ -109,10 +109,10 @@ export function SkillsMapBoard({ data }: Props) {
                     )}
                     style={{
                       background: active
-                        ? var(--policy-panel-border)
-                        : var(--policy-panel),
+                        ? "var(--policy-panel-border)"
+                        : "var(--policy-panel)",
                       border: `1px solid ${
-                        active ? meta?.ring ?? var(--policy-grid-strong) : "transparent"
+                        active ? meta?.ring ?? "var(--policy-grid-strong)" : "transparent"
                       }`,
                       color: active ? "var(--policy-fg)" : "var(--policy-fg)",
                     }}
@@ -147,9 +147,9 @@ export function SkillsMapBoard({ data }: Props) {
             <div
               className="sm:col-span-2 rounded-2xl px-5 py-10 text-center text-[13px]"
               style={{
-                background: var(--policy-panel),
+                background: "var(--policy-panel)",
                 border: "1px dashed var(--policy-grid)",
-                color: var(--policy-fg-muted),
+                color: "var(--policy-fg-muted)",
               }}
             >
               No clusters match this filter combination.
@@ -191,8 +191,8 @@ function ClusterCard({
       onMouseLeave={onLeave}
       className="group rounded-2xl p-4 transition-all duration-200 cursor-pointer"
       style={{
-        background: active ? var(--policy-panel-strong) : var(--policy-panel),
-        border: `1px solid ${active ? tier.ring : var(--policy-panel-border)}`,
+        background: active ? "var(--policy-panel-strong)" : "var(--policy-panel)",
+        border: `1px solid ${active ? tier.ring : "var(--policy-panel-border)"}`,
         boxShadow: active
           ? `0 8px 32px -16px ${tier.color}40`
           : "none",
@@ -206,7 +206,7 @@ function ClusterCard({
           </h3>
           <p
             className="text-[10px] font-mono uppercase tracking-[0.06em] mt-1"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             {cluster.iscoMajor}
           </p>
@@ -235,7 +235,7 @@ function ClusterCard({
           value={cluster.supply}
           display={`${cluster.supply.toLocaleString()} profiles`}
           ratio={Math.min(1, cluster.supply / 1500)}
-          color=var(--policy-fg-muted)
+          color="var(--policy-fg-muted)"
         />
         <BarRow
           label="Market demand"
@@ -250,7 +250,7 @@ function ClusterCard({
       <div className="mb-3">
         <div
           className="text-[10px] uppercase tracking-[0.06em] mb-1.5"
-          style={{ color: var(--policy-fg-faint) }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           Top occupations
         </div>
@@ -260,7 +260,7 @@ function ClusterCard({
               key={o}
               className="text-[11px] px-2 py-0.5 rounded"
               style={{
-                background: var(--policy-panel),
+                background: "var(--policy-panel)",
                 color: "var(--policy-fg)",
               }}
             >
@@ -273,12 +273,12 @@ function ClusterCard({
       {/* Regional split */}
       <div
         className="flex items-center justify-between gap-3 pt-3 border-t"
-        style={{ borderColor: var(--policy-panel-border) }}
+        style={{ borderColor: "var(--policy-panel-border)" }}
       >
         <div className="min-w-0">
           <div
             className="text-[10px] uppercase tracking-[0.06em]"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Regional concentration
           </div>
@@ -318,7 +318,7 @@ function BarRow({
       <div className="flex items-baseline justify-between mb-1">
         <span
           className="text-[10px] uppercase tracking-[0.06em]"
-          style={{ color: var(--policy-fg-faint) }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           {label}
         </span>
@@ -331,7 +331,7 @@ function BarRow({
       </div>
       <div
         className="h-1.5 rounded-full overflow-hidden"
-        style={{ background: var(--policy-panel-border) }}
+        style={{ background: "var(--policy-panel-border)" }}
       >
         <div
           className="h-full rounded-full transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -376,7 +376,7 @@ function SupplyDemandQuadrant({
     <div
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -384,14 +384,14 @@ function SupplyDemandQuadrant({
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium inline-flex items-center gap-2"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             <Sparkles size={12} strokeWidth={1.8} style={{ color: "var(--earth)" }} />
             Supply × Demand quadrant
           </h2>
           <p
             className="text-[11px] mt-1"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Bubble size = cohort supply. Upper-right = high-leverage clusters.
           </p>
@@ -427,7 +427,7 @@ function SupplyDemandQuadrant({
             x2={PAD.l + innerW / 2}
             y1={PAD.t}
             y2={PAD.t + innerH}
-            stroke=var(--policy-panel-border)
+            stroke="var(--policy-panel-border)"
             strokeDasharray="3 4"
           />
           <line
@@ -435,7 +435,7 @@ function SupplyDemandQuadrant({
             x2={PAD.l + innerW}
             y1={PAD.t + innerH / 2}
             y2={PAD.t + innerH / 2}
-            stroke=var(--policy-panel-border)
+            stroke="var(--policy-panel-border)"
             strokeDasharray="3 4"
           />
 
@@ -445,14 +445,14 @@ function SupplyDemandQuadrant({
             x2={PAD.l}
             y1={PAD.t}
             y2={PAD.t + innerH}
-            stroke=var(--policy-grid-strong)
+            stroke="var(--policy-grid-strong)"
           />
           <line
             x1={PAD.l}
             x2={PAD.l + innerW}
             y1={PAD.t + innerH}
             y2={PAD.t + innerH}
-            stroke=var(--policy-grid-strong)
+            stroke="var(--policy-grid-strong)"
           />
 
           {/* Axis labels */}
@@ -462,7 +462,7 @@ function SupplyDemandQuadrant({
             textAnchor="middle"
             fontSize="11"
             fontFamily="ui-monospace, monospace"
-            fill=var(--policy-fg-muted)
+            fill="var(--policy-fg-muted)"
           >
             Cohort supply →
           </text>
@@ -473,7 +473,7 @@ function SupplyDemandQuadrant({
             textAnchor="middle"
             fontSize="11"
             fontFamily="ui-monospace, monospace"
-            fill=var(--policy-fg-muted)
+            fill="var(--policy-fg-muted)"
           >
             Market demand →
           </text>
@@ -537,13 +537,13 @@ function SupplyDemandQuadrant({
                       width={Math.min(180, c.cluster.length * 7 + 24)}
                       height={36}
                       fill="rgba(20,18,15,0.92)"
-                      stroke=var(--policy-grid)
+                      stroke="var(--policy-grid)"
                     />
                     <text
                       x={x + r + 18}
                       y={y - 8}
                       fontSize="11"
-                      fill=var(--policy-fg)
+                      fill="var(--policy-fg)"
                       fontFamily="ui-sans-serif, system-ui"
                     >
                       {c.cluster}
@@ -552,7 +552,7 @@ function SupplyDemandQuadrant({
                       x={x + r + 18}
                       y={y + 7}
                       fontSize="10"
-                      fill=var(--policy-fg-muted)
+                      fill="var(--policy-fg-muted)"
                       fontFamily="ui-monospace, monospace"
                     >
                       {c.supply.toLocaleString()} supply · {c.demand} demand
@@ -571,7 +571,7 @@ function SupplyDemandQuadrant({
           <span
             key={k}
             className="inline-flex items-center gap-1.5 text-[11px]"
-            style={{ color: var(--policy-fg) }}
+            style={{ color: "var(--policy-fg)" }}
           >
             <span
               aria-hidden

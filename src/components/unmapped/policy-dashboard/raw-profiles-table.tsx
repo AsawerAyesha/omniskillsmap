@@ -48,7 +48,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
       aria-label="Raw profile data"
       className="rounded-2xl"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -61,13 +61,13 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
         <div className="flex items-baseline gap-3">
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             View raw profile data
           </h2>
           <span
             className="text-[11px] font-mono tabular-nums"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             {rows.length} rows
           </span>
@@ -75,7 +75,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
         <ChevronDown
           size={16}
           className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         />
       </button>
 
@@ -99,7 +99,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                       style={{
                         color: active
                           ? "var(--earth)"
-                          : var(--policy-fg-muted),
+                          : "var(--policy-fg-muted)",
                         textAlign: c.align ?? "left",
                       }}
                     >
@@ -124,7 +124,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                     background:
                       i % 2 === 0
                         ? "transparent"
-                        : var(--policy-panel),
+                        : "var(--policy-panel)",
                   }}
                 >
                   {COLUMNS.map((c) => {

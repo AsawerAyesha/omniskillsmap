@@ -104,7 +104,7 @@ function ScenarioControls({
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -112,13 +112,13 @@ function ScenarioControls({
         <div className="min-w-0">
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Scenario
           </h2>
           <p
             className="mt-1 text-[11px] max-w-md"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             {meta.blurb}
           </p>
@@ -127,7 +127,7 @@ function ScenarioControls({
         <div
           className="inline-flex rounded-lg p-1"
           style={{
-            background: var(--policy-panel),
+            background: "var(--policy-panel)",
             border: "1px solid var(--policy-panel-border)",
           }}
           role="tablist"
@@ -155,7 +155,7 @@ function ScenarioControls({
                 <span
                   className="h-2 w-2 rounded-full"
                   style={{
-                    background: active ? var(--policy-accent-ink) : s.color,
+                    background: active ? "var(--policy-accent-ink)" : s.color,
                     opacity: active ? 0.65 : 1,
                   }}
                 />
@@ -194,19 +194,19 @@ function KpiTile({
       ? "rgba(127,181,138,0.95)"
       : delta < 0
       ? "rgba(224,122,95,0.95)"
-      : var(--policy-fg-muted);
+      : "var(--policy-fg-muted)";
 
   return (
     <div
       className="rounded-xl px-4 py-3"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-strong)",
       }}
     >
       <div
         className="text-[10px] uppercase tracking-[0.08em]"
-        style={{ color: var(--policy-fg-muted) }}
+        style={{ color: "var(--policy-fg-muted)" }}
       >
         {label}
       </div>
@@ -224,7 +224,7 @@ function KpiTile({
           {delta > 0 ? "+" : ""}
           {delta}
         </span>
-        <span style={{ color: var(--policy-fg-faint) }}>{unit}</span>
+        <span style={{ color: "var(--policy-fg-faint)" }}>{unit}</span>
       </div>
     </div>
   );
@@ -307,7 +307,7 @@ function DualCurveChart({
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -315,13 +315,13 @@ function DualCurveChart({
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Supply × demand trajectory
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Cumulative cohort (left axis, k profiles) vs weighted demand index
             (right axis, 100 = 2025). Active scenario shown with ±
@@ -332,7 +332,7 @@ function DualCurveChart({
           <LegendDot color={meta.color} label="Supply (active)" />
           <LegendDot color={meta.color} label="Demand (active)" dashed />
           <LegendDot
-            color=var(--policy-fg-faint)
+            color="var(--policy-fg-faint)"
             label="Other scenarios"
             ghost
           />
@@ -356,7 +356,7 @@ function DualCurveChart({
               x2={W - PAD.r}
               y1={PAD.t + innerH * t}
               y2={PAD.t + innerH * t}
-              stroke=var(--policy-panel-strong)
+              stroke="var(--policy-panel-strong)"
             />
           ))}
 
@@ -370,7 +370,7 @@ function DualCurveChart({
                 y={PAD.t + innerH * t + 3}
                 textAnchor="end"
                 fontSize="10"
-                fill=var(--policy-fg-faint)
+                fill="var(--policy-fg-faint)"
                 fontFamily="ui-monospace, monospace"
               >
                 {v}k
@@ -388,7 +388,7 @@ function DualCurveChart({
                 y={PAD.t + innerH * t + 3}
                 textAnchor="start"
                 fontSize="10"
-                fill=var(--policy-fg-faint)
+                fill="var(--policy-fg-faint)"
                 fontFamily="ui-monospace, monospace"
               >
                 {v}
@@ -406,8 +406,8 @@ function DualCurveChart({
                 y2={H - PAD.b}
                 stroke={
                   p.year === hoverYear
-                    ? var(--policy-grid-strong)
-                    : var(--policy-panel)
+                    ? "var(--policy-grid-strong)"
+                    : "var(--policy-panel)"
                 }
               />
               <text
@@ -415,7 +415,7 @@ function DualCurveChart({
                 y={H - PAD.b + 16}
                 textAnchor="middle"
                 fontSize="10"
-                fill=var(--policy-fg-muted)
+                fill="var(--policy-fg-muted)"
                 fontFamily="ui-monospace, monospace"
               >
                 {p.year}
@@ -468,7 +468,7 @@ function DualCurveChart({
               cy={ySupply(p[scenario])}
               r={p.year === hoverYear ? 5 : 3}
               fill={meta.color}
-              stroke=var(--policy-bg)
+              stroke="var(--policy-bg)"
               strokeWidth={1.5}
             />
           ))}
@@ -493,7 +493,7 @@ function DualCurveChart({
                   cy={PAD.t - 12}
                   r={4}
                   fill={meta.color}
-                  stroke=var(--policy-bg)
+                  stroke="var(--policy-bg)"
                   strokeWidth={1.5}
                 />
               </g>
@@ -530,13 +530,13 @@ function DualCurveChart({
                 width={158}
                 height={58}
                 fill="rgba(17,16,9,0.92)"
-                stroke=var(--policy-grid)
+                stroke="var(--policy-grid)"
               />
               <text
                 x={x(hoverPoint.year) + 20}
                 y={PAD.t + 22}
                 fontSize="10"
-                fill=var(--policy-fg-muted)
+                fill="var(--policy-fg-muted)"
                 fontFamily="ui-monospace, monospace"
               >
                 {hoverPoint.year} · {meta.shortLabel}
@@ -545,7 +545,7 @@ function DualCurveChart({
                 x={x(hoverPoint.year) + 20}
                 y={PAD.t + 38}
                 fontSize="11"
-                fill=var(--policy-fg)
+                fill="var(--policy-fg)"
                 fontFamily="ui-monospace, monospace"
               >
                 Supply {hoverPoint[scenario]}k
@@ -554,7 +554,7 @@ function DualCurveChart({
                 x={x(hoverPoint.year) + 20}
                 y={PAD.t + 54}
                 fontSize="11"
-                fill=var(--policy-fg)
+                fill="var(--policy-fg)"
                 fontFamily="ui-monospace, monospace"
               >
                 Demand idx {hoverDemand[scenario]}
@@ -574,10 +574,10 @@ function DualCurveChart({
               className="rounded-lg p-3"
               style={{
                 background: visible
-                  ? var(--policy-panel)
+                  ? "var(--policy-panel)"
                   : "var(--policy-panel)",
                 border: `1px solid ${
-                  visible ? var(--policy-panel-border) : var(--policy-panel)
+                  visible ? "var(--policy-panel-border)" : "var(--policy-panel)"
                 }`,
                 opacity: visible ? 1 : 0.45,
               }}
@@ -588,13 +588,13 @@ function DualCurveChart({
                   style={{
                     background:
                       m.scenario === "all"
-                        ? var(--policy-fg-muted)
+                        ? "var(--policy-fg-muted)"
                         : SCENARIOS.find((s) => s.id === m.scenario)?.color,
                   }}
                 />
                 <span
                   className="text-[10px] font-mono"
-                  style={{ color: var(--policy-fg-muted) }}
+                  style={{ color: "var(--policy-fg-muted)" }}
                 >
                   {m.year} ·{" "}
                   {m.scenario === "all"
@@ -604,13 +604,13 @@ function DualCurveChart({
               </div>
               <div
                 className="mt-1 text-[12px] font-medium"
-                style={{ color: var(--policy-fg) }}
+                style={{ color: "var(--policy-fg)" }}
               >
                 {m.label}
               </div>
               <div
                 className="mt-0.5 text-[11px]"
-                style={{ color: var(--policy-fg-muted) }}
+                style={{ color: "var(--policy-fg-muted)" }}
               >
                 {m.detail}
               </div>
@@ -636,7 +636,7 @@ function LegendDot({
   return (
     <span
       className="inline-flex items-center gap-1.5"
-      style={{ color: ghost ? var(--policy-fg-faint) : var(--policy-fg) }}
+      style={{ color: ghost ? "var(--policy-fg-faint)" : "var(--policy-fg)" }}
     >
       <svg width="20" height="6">
         <line
@@ -683,7 +683,7 @@ function ClusterGapMatrix({
     <section
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
@@ -691,13 +691,13 @@ function ClusterGapMatrix({
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: var(--policy-fg-muted) }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Cluster gap matrix · 2030
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: var(--policy-fg-faint) }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Demand index (100 = 2025) and net cohort gap under{" "}
             <span style={{ color: meta.color }}>{meta.label.toLowerCase()}</span>.
@@ -707,11 +707,11 @@ function ClusterGapMatrix({
       </header>
 
       <div className="overflow-x-auto -mx-2">
-        <table className="w-full text-[12px]" style={{ color: var(--policy-fg) }}>
+        <table className="w-full text-[12px]" style={{ color: "var(--policy-fg)" }}>
           <thead>
             <tr
               className="text-left"
-              style={{ color: var(--policy-fg-muted) }}
+              style={{ color: "var(--policy-fg-muted)" }}
             >
               <ThSort onClick={() => setSort("cluster")} active={sort === "cluster"}>
                 Cluster
@@ -742,13 +742,13 @@ function ClusterGapMatrix({
                 <tr
                   key={c.cluster}
                   className="border-t"
-                  style={{ borderColor: var(--policy-panel-border) }}
+                  style={{ borderColor: "var(--policy-panel-border)" }}
                 >
                   <td className="px-2 py-2.5 align-top">
                     <div className="font-medium leading-tight">{c.cluster}</div>
                     <div
                       className="text-[11px] mt-0.5"
-                      style={{ color: var(--policy-fg-muted) }}
+                      style={{ color: "var(--policy-fg-muted)" }}
                     >
                       {c.notes}
                     </div>
@@ -762,7 +762,7 @@ function ClusterGapMatrix({
                             : demand >= 105
                             ? "#C4A882"
                             : demand >= 95
-                            ? var(--policy-fg)
+                            ? "var(--policy-fg)"
                             : "#E07A5F",
                       }}
                     >
@@ -784,7 +784,7 @@ function ClusterGapMatrix({
                         style={{
                           left: "50%",
                           width: 1,
-                          background: var(--policy-grid-strong),
+                          background: "var(--policy-grid-strong)",
                         }}
                       />
                     </div>
@@ -856,20 +856,20 @@ function AttainmentTrajectoryPanel({
     <section
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-4">
         <h2
           className="text-[12px] uppercase tracking-[0.08em] font-medium"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Attainment trajectory
         </h2>
         <p
           className="mt-1 text-[11px]"
-          style={{ color: var(--policy-fg-faint) }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           Education mix evolution under{" "}
           <span style={{ color: meta.color }}>{meta.label.toLowerCase()}</span>.
@@ -886,7 +886,7 @@ function AttainmentTrajectoryPanel({
               <div className="flex items-baseline justify-between mb-1.5">
                 <span
                   className="font-mono text-[11px]"
-                  style={{ color: var(--policy-fg) }}
+                  style={{ color: "var(--policy-fg)" }}
                 >
                   {row.year}
                 </span>
@@ -899,7 +899,7 @@ function AttainmentTrajectoryPanel({
               </div>
               <div
                 className="flex h-3 w-full overflow-hidden rounded-full"
-                style={{ background: var(--policy-panel-strong) }}
+                style={{ background: "var(--policy-panel-strong)" }}
               >
                 <div
                   style={{
@@ -922,7 +922,7 @@ function AttainmentTrajectoryPanel({
               </div>
               <div
                 className="mt-1 flex justify-between text-[10px] tabular-nums font-mono"
-                style={{ color: var(--policy-fg-muted) }}
+                style={{ color: "var(--policy-fg-muted)" }}
               >
                 <span>None {none}%</span>
                 <span>Secondary {secondary}%</span>
@@ -936,7 +936,7 @@ function AttainmentTrajectoryPanel({
       <div
         className="mt-5 pt-4 border-t flex flex-wrap items-center gap-3 text-[11px]"
         style={{
-          borderColor: var(--policy-panel-border),
+          borderColor: "var(--policy-panel-border)",
           color: "var(--policy-fg)",
         }}
       >

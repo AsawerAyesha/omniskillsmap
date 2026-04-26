@@ -74,11 +74,11 @@ function getHeaderPalette(theme: "light" | "dark" | "onyx"): HeaderPalette {
     fg: "var(--policy-fg)",
     fgMuted: "#9C9890",
     fgInactive: "#9C9890",
-    border: var(--policy-panel-border),
-    pill: var(--policy-panel-border),
-    pillBorder: var(--policy-grid),
-    pillHover: var(--policy-grid),
-    badgeBg: var(--policy-panel-border),
+    border: "var(--policy-panel-border)",
+    pill: "var(--policy-panel-border)",
+    pillBorder: "var(--policy-grid)",
+    pillHover: "var(--policy-grid)",
+    badgeBg: "var(--policy-panel-border)",
     badgeBgActive: "rgba(196,168,130,0.25)",
     badgeFgActive: "#C4A882",
     menuBg: theme === "onyx" ? "#15130F" : "#23201B",
@@ -323,7 +323,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
 
             <button
               className="hidden sm:inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap"
-              style={{ background: "#C4A882", color: var(--policy-accent-ink) }}
+              style={{ background: "#C4A882", color: "var(--policy-accent-ink)" }}
             >
               <Download size={14} strokeWidth={1.5} />
               <span className="hidden lg:inline">Export</span>

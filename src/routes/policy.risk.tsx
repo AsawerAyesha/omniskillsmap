@@ -59,11 +59,11 @@ function PolicyRiskPage() {
   return (
     <div
       className="min-h-[calc(100vh-49px)]"
-      style={{ background: var(--policy-bg), color: var(--policy-fg) }}
+      style={{ background: "var(--policy-bg)", color: "var(--policy-fg)" }}
     >
       <div
         className="border-b"
-        style={{ borderColor: var(--policy-panel-border) }}
+        style={{ borderColor: "var(--policy-panel-border)" }}
       >
         <div className="u-container py-5 flex flex-wrap items-end justify-between gap-3">
           <div>
@@ -72,7 +72,7 @@ function PolicyRiskPage() {
             </h1>
             <p
               className="mt-1 text-[12px] font-mono"
-              style={{ color: var(--policy-fg-muted) }}
+              style={{ color: "var(--policy-fg-muted)" }}
             >
               {data.contextLine} · Frey-Osborne + ILO task indices, LMIC-calibrated
             </p>
@@ -80,7 +80,7 @@ function PolicyRiskPage() {
           <button
             type="button"
             className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-medium"
-            style={{ background: "var(--earth)", color: var(--policy-accent-ink) }}
+            style={{ background: "var(--earth)", color: "var(--policy-accent-ink)" }}
           >
             <Download size={13} strokeWidth={1.6} />
             Export risk register
@@ -95,7 +95,7 @@ function PolicyRiskPage() {
               key={s.label}
               className="rounded-2xl px-4 py-3 flex items-center gap-3"
               style={{
-                background: var(--policy-panel),
+                background: "var(--policy-panel)",
                 border: "1px solid var(--policy-panel-border)",
               }}
             >
@@ -111,7 +111,7 @@ function PolicyRiskPage() {
               <div className="min-w-0">
                 <div
                   className="text-[10px] uppercase tracking-[0.08em]"
-                  style={{ color: var(--policy-fg-muted) }}
+                  style={{ color: "var(--policy-fg-muted)" }}
                 >
                   {s.label}
                 </div>
@@ -120,7 +120,7 @@ function PolicyRiskPage() {
                 </div>
                 <div
                   className="text-[10px] mt-0.5"
-                  style={{ color: var(--policy-fg-faint) }}
+                  style={{ color: "var(--policy-fg-faint)" }}
                 >
                   {s.sub}
                 </div>

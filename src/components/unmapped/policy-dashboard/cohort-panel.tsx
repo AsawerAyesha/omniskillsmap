@@ -16,14 +16,14 @@ export function CohortPanel({ cohort }: Props) {
       aria-label="Cohort overview"
       className="rounded-2xl p-5 md:p-6 space-y-7"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3">
         <h2
           className="text-[12px] uppercase tracking-[0.08em] font-medium"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Cohort overview
         </h2>
@@ -34,7 +34,7 @@ export function CohortPanel({ cohort }: Props) {
       <div>
         <div
           className="text-[11px] uppercase tracking-[0.08em]"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Active profiles
         </div>
@@ -56,7 +56,7 @@ export function CohortPanel({ cohort }: Props) {
       <div>
         <div
           className="text-[11px] uppercase tracking-[0.08em] mb-3"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Skill clusters
         </div>
@@ -74,7 +74,7 @@ export function CohortPanel({ cohort }: Props) {
                   </div>
                   <div
                     className="h-2 rounded-full overflow-hidden"
-                    style={{ background: var(--policy-panel-border) }}
+                    style={{ background: "var(--policy-panel-border)" }}
                   >
                     <div
                       className="h-full rounded-full transition-[width] duration-700 ease-precision"
@@ -98,7 +98,7 @@ export function CohortPanel({ cohort }: Props) {
       <div>
         <div
           className="text-[11px] uppercase tracking-[0.08em] mb-3"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Education level distribution
         </div>
@@ -133,7 +133,7 @@ export function CohortPanel({ cohort }: Props) {
               <li
                 key={seg.label}
                 className="flex items-center gap-1.5 text-[11px]"
-                style={{ color: var(--policy-fg) }}
+                style={{ color: "var(--policy-fg)" }}
               >
                 <span
                   className="inline-block h-2 w-2 rounded-sm shrink-0"
@@ -144,7 +144,7 @@ export function CohortPanel({ cohort }: Props) {
                   }}
                 />
                 <span>{seg.label}</span>
-                <span className="font-mono tabular-nums" style={{ color: var(--policy-fg-muted) }}>
+                <span className="font-mono tabular-nums" style={{ color: "var(--policy-fg-muted)" }}>
                   {seg.pct}%
                 </span>
               </li>
@@ -157,7 +157,7 @@ export function CohortPanel({ cohort }: Props) {
       <div>
         <div
           className="text-[11px] uppercase tracking-[0.08em] mb-3"
-          style={{ color: var(--policy-fg-muted) }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Gender breakdown
         </div>
@@ -199,7 +199,7 @@ function GenderStat({
       </span>
       <span
         className="text-[12px] font-mono"
-        style={{ color: var(--policy-fg-muted) }}
+        style={{ color: "var(--policy-fg-muted)" }}
       >
         {label}
       </span>
@@ -213,7 +213,7 @@ export function ExportButton({ label }: { label: string }) {
       type="button"
       className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium uppercase tracking-[0.06em] transition-colors"
       style={{
-        background: var(--policy-panel),
+        background: "var(--policy-panel)",
         color: "var(--policy-fg)",
         border: "1px solid var(--policy-panel-border)",
       }}
