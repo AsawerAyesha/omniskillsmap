@@ -220,6 +220,26 @@
   --policy-grid:         rgba(28,26,22,0.08);          /* chart gridlines */
   --policy-grid-strong:  rgba(28,26,22,0.18);          /* axis baseline */
   --policy-accent-ink:   #1A1814;                      /* foreground on earth pill */
+
+  /* === Console palette (light) ===
+   * Console is the operator/admin surface. Same three-theme system, but a
+   * cool slate accent so judges read it as a different tool from Policy. */
+  --console-bg:           #FAF7F1;
+  --console-canvas:       #FFFFFF;
+  --console-sidebar-bg:   #F2EDE3;
+  --console-panel:        rgba(28,26,22,0.04);
+  --console-panel-strong: rgba(28,26,22,0.07);
+  --console-border:       rgba(28,26,22,0.10);
+  --console-rule:         rgba(28,26,22,0.06);
+  --console-fg:           #1C1A16;
+  --console-fg-muted:     rgba(28,26,22,0.65);
+  --console-fg-faint:     rgba(28,26,22,0.45);
+  --console-accent:       #3B5266;
+  --console-accent-hover: #2F4356;
+  --console-accent-fg:    #F5F7FA;
+  --console-accent-wash:  linear-gradient(160deg, #3B5266 0%, #25384B 100%);
+  --console-success:      #2D7A4F;
+  --console-danger:       #C0392B;
 }
 
 .dark {
@@ -294,6 +314,24 @@
   --policy-grid:         rgba(255,255,255,0.06);
   --policy-grid-strong:  rgba(255,255,255,0.18);
   --policy-accent-ink:   #1A1814;
+
+  /* Console palette (dark) — warm ink + slate accent */
+  --console-bg:           #14130E;
+  --console-canvas:       #1C1A16;
+  --console-sidebar-bg:   #0F0E0A;
+  --console-panel:        rgba(255,255,255,0.04);
+  --console-panel-strong: rgba(255,255,255,0.08);
+  --console-border:       rgba(255,255,255,0.10);
+  --console-rule:         rgba(255,255,255,0.06);
+  --console-fg:           #F0EDE8;
+  --console-fg-muted:     rgba(240,237,232,0.65);
+  --console-fg-faint:     rgba(240,237,232,0.45);
+  --console-accent:       #6E8AA6;
+  --console-accent-hover: #87A2BC;
+  --console-accent-fg:    #0F1620;
+  --console-accent-wash:  linear-gradient(160deg, #1F2A36 0%, #0E1620 100%);
+  --console-success:      #4DAE76;
+  --console-danger:       #E26A5A;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -393,6 +431,24 @@
   --policy-grid:         rgba(255,255,255,0.05);
   --policy-grid-strong:  rgba(255,255,255,0.16);
   --policy-accent-ink:   #0A0908;
+
+  /* Console palette (onyx) — pure black, brighter slate */
+  --console-bg:           #000000;
+  --console-canvas:       #0B0B0C;
+  --console-sidebar-bg:   #050506;
+  --console-panel:        rgba(255,255,255,0.03);
+  --console-panel-strong: rgba(255,255,255,0.06);
+  --console-border:       rgba(255,255,255,0.08);
+  --console-rule:         rgba(255,255,255,0.05);
+  --console-fg:           #FAFAF9;
+  --console-fg-muted:     rgba(250,250,249,0.62);
+  --console-fg-faint:     rgba(250,250,249,0.40);
+  --console-accent:       #8AA8C4;
+  --console-accent-hover: #A4BDD4;
+  --console-accent-fg:    #050B12;
+  --console-accent-wash:  linear-gradient(160deg, #14202C 0%, #060A10 100%);
+  --console-success:      #5BC084;
+  --console-danger:       #E87968;
 }
 
 /* Smooth global cross-fade when switching themes — only animates colors,

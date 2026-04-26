@@ -6,3 +6,4 @@ Youth shell uses shadcn semantic tokens (`--surface`, `--surface-raised`, `--sur
 
 ## Memories
 - [Policy palette tokens](mem://design/policy-palette) — Theme-aware tokens that drive every policy dashboard surface
+- [Console palette tokens](mem://design/console-tokens) — Slate-accented token family for the /console operator+admin surface; ConsoleGuard wraps gated routes; roles live in `user_roles` + `has_role()`
