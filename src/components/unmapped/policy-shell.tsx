@@ -333,6 +333,21 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
               <span className="hidden lg:inline">Export</span>
             </button>
 
+            <Link
+              to="/console"
+              className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors"
+              style={{
+                background: palette.pill,
+                color: palette.fg,
+                border: `1px solid ${palette.pillBorder}`,
+              }}
+              aria-label="Open Operator Console"
+              title="Operator Console"
+            >
+              <Terminal size={14} strokeWidth={1.5} />
+              <span className="hidden lg:inline">Console</span>
+            </Link>
+
             <div
               aria-label="Account"
               className="h-8 w-8 shrink-0 rounded-full flex items-center justify-center text-xs font-medium"
