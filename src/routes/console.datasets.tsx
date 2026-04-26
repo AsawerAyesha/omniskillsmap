@@ -36,6 +36,34 @@ export const Route = createFileRoute("/console/datasets")({
   ),
 });
 
+/* Stream a File via ReadableStream so we can report read progress. Falls back
+ * to f.text() when streams are unavailable. */
+async function readFileWithProgress(
+  file: File,
+  onProgress: (pct: number) => void,
+): Promise<string> {
+  if (!file.stream) {
+    onProgress(100);
+    return file.text();
+  }
+  const total = file.size || 1;
+  const reader = file.stream().getReader();
+  const decoder = new TextDecoder("utf-8");
+  let received = 0;
+  let text = "";
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    received += value.byteLength;
+    text += decoder.decode(value, { stream: true });
+    onProgress(Math.min(99, Math.round((received / total) * 100)));
+  }
+  text += decoder.decode();
+  onProgress(100);
+  return text;
+}
+
 interface ContextRow {
   id: string;
   code: string;
