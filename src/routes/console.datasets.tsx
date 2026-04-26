@@ -58,6 +58,18 @@ function DatasetsPage() {
     inserted: number;
   } | null>(null);
   const [commitError, setCommitError] = React.useState<string | null>(null);
+  const [uploadPhase, setUploadPhase] = React.useState<
+    "idle" | "reading" | "validating" | "done"
+  >("idle");
+  const [uploadPct, setUploadPct] = React.useState(0);
+  const [commitPhase, setCommitPhase] = React.useState<
+    "idle" | "creating" | "inserting" | "logging" | "done"
+  >("idle");
+  const [commitPct, setCommitPct] = React.useState(0);
+  const [commitProgress, setCommitProgress] = React.useState<{
+    inserted: number;
+    total: number;
+  }>({ inserted: 0, total: 0 });
 
   React.useEffect(() => {
     if (!user) return;
@@ -84,10 +96,21 @@ function DatasetsPage() {
     setFileName(f.name);
     setCommitted(null);
     setCommitError(null);
-    const text = await f.text();
+    setResult(null);
+    setUploadPhase("reading");
+    setUploadPct(0);
+
+    // Stream the file so we can show real read progress for large CSVs.
+    const text = await readFileWithProgress(f, (pct) => setUploadPct(pct));
     setCsvText(text);
+
+    setUploadPhase("validating");
+    setUploadPct(100);
+    // Yield to the browser so the progress bar can paint before we block on parse.
+    await new Promise((r) => setTimeout(r, 30));
     const r = validateCsv(text, meta.schema as never);
     setResult(r as ParseResult<unknown>);
+    setUploadPhase("done");
   };
 
   // Re-validate when kind changes
@@ -113,6 +136,9 @@ function DatasetsPage() {
     if (!user || !contextId || !result || result.ok.length === 0) return;
     setCommitting(true);
     setCommitError(null);
+    setCommitPhase("creating");
+    setCommitPct(0);
+    setCommitProgress({ inserted: 0, total: result.ok.length });
 
     // 1. Determine next version
     const { data: prev } = await supabase
@@ -141,6 +167,7 @@ function DatasetsPage() {
     if (dsErr || !ds) {
       setCommitError(dsErr?.message ?? "Failed to create dataset");
       setCommitting(false);
+      setCommitPhase("idle");
       return;
     }
 
@@ -150,6 +177,7 @@ function DatasetsPage() {
       dataset_id: ds.id,
     }));
 
+    setCommitPhase("inserting");
     const CHUNK = 500;
     for (let i = 0; i < rowsWithDataset.length; i += CHUNK) {
       const chunk = rowsWithDataset.slice(i, i + CHUNK);
@@ -160,11 +188,16 @@ function DatasetsPage() {
         setCommitError(`Row insert failed at row ${i + 1}: ${rowErr.message}`);
         // Best-effort: leave the empty draft so the operator can retry/delete.
         setCommitting(false);
+        setCommitPhase("idle");
         return;
       }
+      const insertedSoFar = Math.min(i + chunk.length, rowsWithDataset.length);
+      setCommitProgress({ inserted: insertedSoFar, total: rowsWithDataset.length });
+      setCommitPct(Math.round((insertedSoFar / rowsWithDataset.length) * 100));
     }
 
     // 4. Audit log
+    setCommitPhase("logging");
     await supabase.from("ingestion_runs").insert({
       actor_id: user.id,
       context_id: contextId,
@@ -183,6 +216,8 @@ function DatasetsPage() {
       inserted: result.ok.length,
     });
     setCommitting(false);
+    setCommitPhase("done");
+    setCommitPct(100);
   };
 
   return (
