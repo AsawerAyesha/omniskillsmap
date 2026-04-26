@@ -9,6 +9,7 @@ import {
   Settings,
   LogOut,
   Compass,
+  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "../theme-switcher";
@@ -31,6 +32,7 @@ interface NavItem {
 
 const NAV: NavItem[] = [
   { to: "/console", label: "Workspace", icon: LayoutDashboard },
+  { to: "/console/contexts", label: "Contexts", icon: Layers },
   { to: "/console/cohorts", label: "Cohorts", icon: Users },
   { to: "/console/programs", label: "Programs", icon: BookOpen },
   { to: "/console/signals", label: "Signals", icon: Activity },
