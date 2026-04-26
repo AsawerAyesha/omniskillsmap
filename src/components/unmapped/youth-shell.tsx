@@ -123,6 +123,21 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
               </Link>
             );
           })}
+          {/* Persistent prominent link to Operator Console */}
+          <Link
+            to="/console"
+            title={collapsed ? "Operator Console" : undefined}
+            aria-label="Operator Console"
+            className={cn(
+              "mt-2 flex items-center rounded-lg text-sm transition-colors border border-border-subtle bg-[var(--surface-sunken)] hover:bg-[var(--earth-light)] hover:text-[var(--earth-dark)] text-[var(--ink-secondary)]",
+              collapsed
+                ? "h-10 w-10 mx-auto justify-center"
+                : "gap-3 px-3 py-2.5",
+            )}
+          >
+            <Terminal size={20} strokeWidth={1.5} className="shrink-0" />
+            {!collapsed && <span className="truncate font-medium">Operator Console</span>}
+          </Link>
         </nav>
 
         <div
