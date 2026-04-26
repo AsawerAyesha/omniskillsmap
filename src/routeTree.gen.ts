@@ -39,6 +39,7 @@ import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sig
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
 import { Route as ApiV1ContextsRouteImport } from './routes/api/v1/contexts'
 import { Route as ApiV1ContextsCodeRouteImport } from './routes/api/v1/contexts.$code'
+import { Route as ApiV1ContextsCodeDatasetsRouteImport } from './routes/api/v1/contexts.$code.datasets'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -190,6 +191,12 @@ const ApiV1ContextsCodeRoute = ApiV1ContextsCodeRouteImport.update({
   path: '/$code',
   getParentRoute: () => ApiV1ContextsRoute,
 } as any)
+const ApiV1ContextsCodeDatasetsRoute =
+  ApiV1ContextsCodeDatasetsRouteImport.update({
+    id: '/datasets',
+    path: '/datasets',
+    getParentRoute: () => ApiV1ContextsCodeRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -221,7 +228,8 @@ export interface FileRoutesByFullPath {
   '/console/contexts/new': typeof ConsoleContextsNewRoute
   '/api/v1/': typeof ApiV1IndexRoute
   '/console/contexts/': typeof ConsoleContextsIndexRoute
-  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRoute
+  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRouteWithChildren
+  '/api/v1/contexts/$code/datasets': typeof ApiV1ContextsCodeDatasetsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -250,7 +258,8 @@ export interface FileRoutesByTo {
   '/console/contexts/new': typeof ConsoleContextsNewRoute
   '/api/v1': typeof ApiV1IndexRoute
   '/console/contexts': typeof ConsoleContextsIndexRoute
-  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRoute
+  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRouteWithChildren
+  '/api/v1/contexts/$code/datasets': typeof ApiV1ContextsCodeDatasetsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -283,7 +292,8 @@ export interface FileRoutesById {
   '/console/contexts/new': typeof ConsoleContextsNewRoute
   '/api/v1/': typeof ApiV1IndexRoute
   '/console/contexts/': typeof ConsoleContextsIndexRoute
-  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRoute
+  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRouteWithChildren
+  '/api/v1/contexts/$code/datasets': typeof ApiV1ContextsCodeDatasetsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -318,6 +328,7 @@ export interface FileRouteTypes {
     | '/api/v1/'
     | '/console/contexts/'
     | '/api/v1/contexts/$code'
+    | '/api/v1/contexts/$code/datasets'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -347,6 +358,7 @@ export interface FileRouteTypes {
     | '/api/v1'
     | '/console/contexts'
     | '/api/v1/contexts/$code'
+    | '/api/v1/contexts/$code/datasets'
   id:
     | '__root__'
     | '/'
@@ -379,6 +391,7 @@ export interface FileRouteTypes {
     | '/api/v1/'
     | '/console/contexts/'
     | '/api/v1/contexts/$code'
+    | '/api/v1/contexts/$code/datasets'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -607,6 +620,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1ContextsCodeRouteImport
       parentRoute: typeof ApiV1ContextsRoute
     }
+    '/api/v1/contexts/$code/datasets': {
+      id: '/api/v1/contexts/$code/datasets'
+      path: '/datasets'
+      fullPath: '/api/v1/contexts/$code/datasets'
+      preLoaderRoute: typeof ApiV1ContextsCodeDatasetsRouteImport
+      parentRoute: typeof ApiV1ContextsCodeRoute
+    }
   }
 }
 
@@ -674,12 +694,23 @@ const PolicyRouteChildren: PolicyRouteChildren = {
 const PolicyRouteWithChildren =
   PolicyRoute._addFileChildren(PolicyRouteChildren)
 
+interface ApiV1ContextsCodeRouteChildren {
+  ApiV1ContextsCodeDatasetsRoute: typeof ApiV1ContextsCodeDatasetsRoute
+}
+
+const ApiV1ContextsCodeRouteChildren: ApiV1ContextsCodeRouteChildren = {
+  ApiV1ContextsCodeDatasetsRoute: ApiV1ContextsCodeDatasetsRoute,
+}
+
+const ApiV1ContextsCodeRouteWithChildren =
+  ApiV1ContextsCodeRoute._addFileChildren(ApiV1ContextsCodeRouteChildren)
+
 interface ApiV1ContextsRouteChildren {
-  ApiV1ContextsCodeRoute: typeof ApiV1ContextsCodeRoute
+  ApiV1ContextsCodeRoute: typeof ApiV1ContextsCodeRouteWithChildren
 }
 
 const ApiV1ContextsRouteChildren: ApiV1ContextsRouteChildren = {
-  ApiV1ContextsCodeRoute: ApiV1ContextsCodeRoute,
+  ApiV1ContextsCodeRoute: ApiV1ContextsCodeRouteWithChildren,
 }
 
 const ApiV1ContextsRouteWithChildren = ApiV1ContextsRoute._addFileChildren(
