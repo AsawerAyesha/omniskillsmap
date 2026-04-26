@@ -17,6 +17,7 @@ import { Route as IntakeRouteImport } from './routes/intake'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PolicyIndexRouteImport } from './routes/policy.index'
+import { Route as ConsoleIndexRouteImport } from './routes/console.index'
 import { Route as PolicySkillsRouteImport } from './routes/policy.skills'
 import { Route as PolicyRiskRouteImport } from './routes/policy.risk'
 import { Route as PolicyProjectionsRouteImport } from './routes/policy.projections'
@@ -62,6 +63,11 @@ const PolicyIndexRoute = PolicyIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PolicyRoute,
 } as any)
+const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const PolicySkillsRoute = PolicySkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
@@ -85,7 +91,7 @@ const PolicyOpportunitiesRoute = PolicyOpportunitiesRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/console': typeof ConsoleRoute
+  '/console': typeof ConsoleRouteWithChildren
   '/intake': typeof IntakeRoute
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
@@ -95,11 +101,11 @@ export interface FileRoutesByFullPath {
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
   '/policy/skills': typeof PolicySkillsRoute
+  '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/console': typeof ConsoleRoute
   '/intake': typeof IntakeRoute
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
@@ -108,12 +114,13 @@ export interface FileRoutesByTo {
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
   '/policy/skills': typeof PolicySkillsRoute
+  '/console': typeof ConsoleIndexRoute
   '/policy': typeof PolicyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/console': typeof ConsoleRoute
+  '/console': typeof ConsoleRouteWithChildren
   '/intake': typeof IntakeRoute
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
@@ -123,6 +130,7 @@ export interface FileRoutesById {
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
   '/policy/skills': typeof PolicySkillsRoute
+  '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,11 +147,11 @@ export interface FileRouteTypes {
     | '/policy/projections'
     | '/policy/risk'
     | '/policy/skills'
+    | '/console/'
     | '/policy/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/console'
     | '/intake'
     | '/learn'
     | '/opportunities'
@@ -152,6 +160,7 @@ export interface FileRouteTypes {
     | '/policy/projections'
     | '/policy/risk'
     | '/policy/skills'
+    | '/console'
     | '/policy'
   id:
     | '__root__'
@@ -166,12 +175,13 @@ export interface FileRouteTypes {
     | '/policy/projections'
     | '/policy/risk'
     | '/policy/skills'
+    | '/console/'
     | '/policy/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ConsoleRoute: typeof ConsoleRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
   IntakeRoute: typeof IntakeRoute
   LearnRoute: typeof LearnRoute
   OpportunitiesRoute: typeof OpportunitiesRoute
@@ -237,6 +247,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicyIndexRouteImport
       parentRoute: typeof PolicyRoute
     }
+    '/console/': {
+      id: '/console/'
+      path: '/'
+      fullPath: '/console/'
+      preLoaderRoute: typeof ConsoleIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/policy/skills': {
       id: '/policy/skills'
       path: '/skills'
@@ -268,6 +285,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ConsoleRouteChildren {
+  ConsoleIndexRoute: typeof ConsoleIndexRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleIndexRoute: ConsoleIndexRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
 interface PolicyRouteChildren {
   PolicyOpportunitiesRoute: typeof PolicyOpportunitiesRoute
   PolicyProjectionsRoute: typeof PolicyProjectionsRoute
@@ -289,7 +317,7 @@ const PolicyRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ConsoleRoute: ConsoleRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
   IntakeRoute: IntakeRoute,
   LearnRoute: LearnRoute,
   OpportunitiesRoute: OpportunitiesRoute,
@@ -299,3 +327,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
