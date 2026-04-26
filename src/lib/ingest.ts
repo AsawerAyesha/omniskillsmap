@@ -28,13 +28,71 @@ export const occupationsRow = z.object({
   automation_risk: z.coerce.number().min(0).max(1).optional().nullable(),
 });
 
-export const laborRow = z.object({
+/* Labor indicators accepts BOTH:
+ *   (a) our compact schema:   indicator_code, year, value, age_band, sex
+ *   (b) raw ILOSTAT exports:  ref_area, source, indicator, sex, classif1,
+ *                             classif2, time, obs_value, obs_status,
+ *                             note_classif, note_indicator, note_source
+ * In raw mode we map: indicator→indicator_code, time→year, obs_value→value,
+ * classif1→age_band (and keep raw classif1/classif2), source→source_code,
+ * sex SEX_T/M/F→total/male/female (truncated to 8 chars).
+ */
+const SEX_MAP: Record<string, string> = {
+  SEX_T: "total",
+  SEX_M: "male",
+  SEX_F: "female",
+  SEX_O: "other",
+};
+function normSex(v: string | null | undefined): string | null {
+  if (!v) return null;
+  const up = v.trim().toUpperCase();
+  if (SEX_MAP[up]) return SEX_MAP[up];
+  return v.trim().slice(0, 8).toLowerCase();
+}
+function stripAgePrefix(v: string | null | undefined): string | null {
+  if (!v) return null;
+  return v.trim().replace(/^AGE_[A-Z0-9]+_/i, "").slice(0, 32);
+}
+const laborRowCompact = z.object({
   indicator_code: z.string().trim().min(1).max(64),
   year: z.coerce.number().int().min(1900).max(2100),
   value: z.coerce.number().optional().nullable(),
   age_band: z.string().trim().max(32).optional().nullable(),
   sex: z.string().trim().max(8).optional().nullable(),
 });
+const laborRowIlostat = z
+  .object({
+    ref_area: z.string().trim().max(16).optional().nullable(),
+    source: z.string().trim().max(64).optional().nullable(),
+    indicator: z.string().trim().min(1).max(64),
+    sex: z.string().trim().max(16).optional().nullable(),
+    classif1: z.string().trim().max(64).optional().nullable(),
+    classif2: z.string().trim().max(64).optional().nullable(),
+    time: z.coerce.number().int().min(1900).max(2100),
+    obs_value: z.coerce.number().optional().nullable(),
+    obs_status: z.string().trim().max(8).optional().nullable(),
+    note_classif: z.string().trim().max(255).optional().nullable(),
+    note_indicator: z.string().trim().max(255).optional().nullable(),
+    note_source: z.string().trim().max(255).optional().nullable(),
+  })
+  .transform((r) => ({
+    indicator_code: r.indicator,
+    year: r.time,
+    value: r.obs_value ?? null,
+    age_band: stripAgePrefix(r.classif1),
+    sex: normSex(r.sex),
+    ref_area: r.ref_area ?? null,
+    source_code: r.source ?? null,
+    classif1: r.classif1 ?? null,
+    classif2: r.classif2 ?? null,
+    obs_status: r.obs_status ?? null,
+    note_classif: r.note_classif ?? null,
+    note_indicator: r.note_indicator ?? null,
+    note_source: r.note_source ?? null,
+  }));
+/* Discriminated union: try ILOSTAT shape first (it has more required fields),
+ * fall back to the compact shape. */
+export const laborRow = z.union([laborRowIlostat, laborRowCompact]);
 
 export const opportunitiesRow = z.object({
   title: z.string().trim().min(1).max(255),
@@ -113,9 +171,13 @@ export const KIND_META: Record<
     label: "Labor indicators (employment / wages)",
     table: "labor_indicators",
     schema: laborRow,
-    headers: ["indicator_code", "year", "value", "age_band", "sex"],
+    headers: [
+      "indicator_code, year, value, age_band, sex",
+      "— OR ILOSTAT raw —",
+      "ref_area, source, indicator, sex, classif1, classif2, time, obs_value, obs_status, note_classif, note_indicator, note_source",
+    ],
     example:
-      "indicator_code,year,value,age_band,sex\nUNEM_TOT,2024,5.4,15-64,total\nLFP_FEMALE,2024,38.1,15-64,female\n",
+      "ref_area,source,indicator,sex,classif1,classif2,time,obs_value,obs_status,note_classif,note_indicator,note_source\nPAK,XA:2080,SDG_0111_SEX_AGE_RT,SEX_T,AGE_YTHADULT_YGE15,,2025,15.096,A,,,\nPAK,XA:2080,SDG_0111_SEX_AGE_RT,SEX_M,AGE_YTHADULT_Y15-24,,2023,15.154,A,,,\n",
   },
   opportunities: {
     label: "Opportunities (jobs / gigs)",
