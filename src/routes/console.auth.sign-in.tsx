@@ -123,6 +123,14 @@ function ConsoleLanding() {
         style={{ background: "#111009", color: "#F0EDE8" }}
       >
         <div className="space-y-1.5">
+          <img
+            src="/src/assets/omniskill-mark.svg"
+            alt="OmniSkill"
+            width={56}
+            height={56}
+            className="mb-4 rounded-md"
+            style={{ display: "block" }}
+          />
           <div
             className="font-display tracking-tight"
             style={{ fontSize: "32px", color: "#F0EDE8", lineHeight: 1.1 }}
