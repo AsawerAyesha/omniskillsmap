@@ -64,12 +64,12 @@ function SkillsMapPage() {
   return (
     <div
       className="min-h-[calc(100vh-49px)]"
-      style={{ background: "#111009", color: "#F0EDE8" }}
+      style={{ background: var(--policy-bg), color: var(--policy-fg) }}
     >
       {/* Sub-header */}
       <div
         className="border-b"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
+        style={{ borderColor: var(--policy-panel-border) }}
       >
         <div className="u-container py-5 flex flex-wrap items-end justify-between gap-3">
           <div>
@@ -78,7 +78,7 @@ function SkillsMapPage() {
             </h1>
             <p
               className="mt-1 text-[12px] font-mono"
-              style={{ color: "rgba(240,237,232,0.55)" }}
+              style={{ color: var(--policy-fg-muted) }}
             >
               {data.contextLine} · ISCO-08 classification
             </p>
@@ -86,7 +86,7 @@ function SkillsMapPage() {
           <button
             type="button"
             className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-medium"
-            style={{ background: "var(--earth)", color: "#1A1814" }}
+            style={{ background: "var(--earth)", color: var(--policy-accent-ink) }}
           >
             <Download size={13} strokeWidth={1.6} />
             Export skills map
@@ -102,7 +102,7 @@ function SkillsMapPage() {
               key={s.label}
               className="rounded-2xl px-4 py-3 flex items-center gap-3"
               style={{
-                background: "rgba(255,255,255,0.03)",
+                background: var(--policy-panel),
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
@@ -118,7 +118,7 @@ function SkillsMapPage() {
               <div className="min-w-0">
                 <div
                   className="text-[10px] uppercase tracking-[0.08em]"
-                  style={{ color: "rgba(240,237,232,0.55)" }}
+                  style={{ color: var(--policy-fg-muted) }}
                 >
                   {s.label}
                 </div>
@@ -127,7 +127,7 @@ function SkillsMapPage() {
                 </div>
                 <div
                   className="text-[10px] mt-0.5"
-                  style={{ color: "rgba(240,237,232,0.45)" }}
+                  style={{ color: var(--policy-fg-faint) }}
                 >
                   {s.sub}
                 </div>

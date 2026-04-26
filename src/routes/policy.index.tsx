@@ -52,12 +52,12 @@ function PolicyDashboard() {
   return (
     <div
       className="min-h-[calc(100vh-49px)]"
-      style={{ background: "#111009", color: "#F0EDE8" }}
+      style={{ background: var(--policy-bg), color: var(--policy-fg) }}
     >
       {/* Sub-header: title + context line + page-level export */}
       <div
         className="border-b"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
+        style={{ borderColor: var(--policy-panel-border) }}
       >
         <div className="u-container py-5 flex flex-wrap items-end justify-between gap-3">
           <div>
@@ -66,7 +66,7 @@ function PolicyDashboard() {
             </h1>
             <p
               className="mt-1 text-[12px] font-mono"
-              style={{ color: "rgba(240,237,232,0.55)" }}
+              style={{ color: var(--policy-fg-muted) }}
             >
               {data.contextLine}
             </p>
@@ -78,7 +78,7 @@ function PolicyDashboard() {
               className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-[12px] font-medium"
               style={{
                 background: "var(--earth)",
-                color: "#1A1814",
+                color: var(--policy-accent-ink),
               }}
             >
               <Download size={13} strokeWidth={1.6} />
@@ -103,7 +103,7 @@ function PolicyDashboard() {
                 aria-label="Real econometric signals"
                 className="rounded-2xl p-5 md:p-6"
                 style={{
-                  background: "rgba(255,255,255,0.03)",
+                  background: var(--policy-panel),
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}
               >
@@ -111,13 +111,13 @@ function PolicyDashboard() {
                   <div>
                     <h2
                       className="text-[12px] uppercase tracking-[0.08em] font-medium"
-                      style={{ color: "rgba(240,237,232,0.55)" }}
+                      style={{ color: var(--policy-fg-muted) }}
                     >
                       Real econometric signals
                     </h2>
                     <p
                       className="mt-1 text-[11px]"
-                      style={{ color: "rgba(240,237,232,0.45)" }}
+                      style={{ color: var(--policy-fg-faint) }}
                     >
                       {data.country} · ILO ILOSTAT + World Bank WDI
                     </p>

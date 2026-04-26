@@ -13,7 +13,7 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
       aria-label="Automation exposure"
       className="rounded-2xl p-5 md:p-6 space-y-5"
       style={{
-        background: "rgba(255,255,255,0.03)",
+        background: var(--policy-panel),
         border: "1px solid rgba(255,255,255,0.08)",
       }}
     >
@@ -21,13 +21,13 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: "rgba(240,237,232,0.55)" }}
+            style={{ color: var(--policy-fg-muted) }}
           >
             Automation exposure
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: "rgba(240,237,232,0.45)" }}
+            style={{ color: var(--policy-fg-faint) }}
           >
             LMIC-calibrated · Frey-Osborne
           </p>
@@ -48,7 +48,7 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
                 </span>
                 <span
                   className="text-[12px] font-mono tabular-nums inline-flex items-center gap-1"
-                  style={{ color: "rgba(240,237,232,0.7)" }}
+                  style={{ color: var(--policy-fg) }}
                 >
                   <span aria-hidden>{dot}</span>
                   {r.risk}%
@@ -56,7 +56,7 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
               </div>
               <div
                 className="h-1 rounded-full overflow-hidden"
-                style={{ background: "rgba(255,255,255,0.06)" }}
+                style={{ background: var(--policy-panel-border) }}
                 role="progressbar"
                 aria-valuenow={r.risk}
                 aria-valuemin={0}
@@ -76,8 +76,8 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
       <p
         className="text-[11px] leading-relaxed pt-2 border-t"
         style={{
-          color: "rgba(240,237,232,0.55)",
-          borderColor: "rgba(255,255,255,0.06)",
+          color: var(--policy-fg-muted),
+          borderColor: var(--policy-panel-border),
         }}
       >
         Risk calibrated for LMIC context (lower capital intensity).

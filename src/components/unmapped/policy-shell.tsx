@@ -71,18 +71,18 @@ function getHeaderPalette(theme: "light" | "dark" | "onyx"): HeaderPalette {
   // dark + onyx share the inky topbar so analytical surfaces stay calm
   return {
     bg: theme === "onyx" ? "#0A0908" : "#1C1A16",
-    fg: "#F0EDE8",
+    fg: var(--policy-fg),
     fgMuted: "#9C9890",
     fgInactive: "#9C9890",
-    border: "rgba(255,255,255,0.08)",
-    pill: "rgba(255,255,255,0.06)",
-    pillBorder: "rgba(255,255,255,0.12)",
-    pillHover: "rgba(255,255,255,0.10)",
-    badgeBg: "rgba(255,255,255,0.08)",
+    border: var(--policy-panel-border),
+    pill: var(--policy-panel-border),
+    pillBorder: var(--policy-grid),
+    pillHover: var(--policy-grid),
+    badgeBg: var(--policy-panel-border),
     badgeBgActive: "rgba(196,168,130,0.25)",
     badgeFgActive: "#C4A882",
     menuBg: theme === "onyx" ? "#15130F" : "#23201B",
-    menuFg: "#F0EDE8",
+    menuFg: var(--policy-fg),
     menuActiveFg: "#C4A882",
     avatarBg: "rgba(196,168,130,0.2)",
     avatarFg: "#C4A882",
@@ -323,7 +323,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
 
             <button
               className="hidden sm:inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap"
-              style={{ background: "#C4A882", color: "#1A1814" }}
+              style={{ background: "#C4A882", color: var(--policy-accent-ink) }}
             >
               <Download size={14} strokeWidth={1.5} />
               <span className="hidden lg:inline">Export</span>
