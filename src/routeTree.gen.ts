@@ -25,6 +25,7 @@ import { Route as PolicyProjectionsRouteImport } from './routes/policy.projectio
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
 import { Route as ConsoleTaxonomyRouteImport } from './routes/console.taxonomy'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
+import { Route as ConsoleMonitorRouteImport } from './routes/console.monitor'
 import { Route as ConsoleDeployRouteImport } from './routes/console.deploy'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
@@ -112,6 +113,11 @@ const ConsoleOnboardingRoute = ConsoleOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleMonitorRoute = ConsoleMonitorRouteImport.update({
+  id: '/monitor',
+  path: '/monitor',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleDeployRoute = ConsoleDeployRouteImport.update({
   id: '/deploy',
   path: '/deploy',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/deploy': typeof ConsoleDeployRoute
+  '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/deploy': typeof ConsoleDeployRoute
+  '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/deploy': typeof ConsoleDeployRoute
+  '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/deploy'
+    | '/console/monitor'
     | '/console/onboarding'
     | '/console/taxonomy'
     | '/policy/opportunities'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/deploy'
+    | '/console/monitor'
     | '/console/onboarding'
     | '/console/taxonomy'
     | '/policy/opportunities'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/deploy'
+    | '/console/monitor'
     | '/console/onboarding'
     | '/console/taxonomy'
     | '/policy/opportunities'
@@ -412,6 +424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleOnboardingRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/monitor': {
+      id: '/console/monitor'
+      path: '/monitor'
+      fullPath: '/console/monitor'
+      preLoaderRoute: typeof ConsoleMonitorRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/deploy': {
       id: '/console/deploy'
       path: '/deploy'
@@ -473,6 +492,7 @@ interface ConsoleRouteChildren {
   ConsoleConnectionsRoute: typeof ConsoleConnectionsRoute
   ConsoleContextsRoute: typeof ConsoleContextsRouteWithChildren
   ConsoleDeployRoute: typeof ConsoleDeployRoute
+  ConsoleMonitorRoute: typeof ConsoleMonitorRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleTaxonomyRoute: typeof ConsoleTaxonomyRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
@@ -484,6 +504,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleConnectionsRoute: ConsoleConnectionsRoute,
   ConsoleContextsRoute: ConsoleContextsRouteWithChildren,
   ConsoleDeployRoute: ConsoleDeployRoute,
+  ConsoleMonitorRoute: ConsoleMonitorRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleTaxonomyRoute: ConsoleTaxonomyRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
