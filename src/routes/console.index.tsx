@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, Globe2, Database, Rocket, ArrowRight } from "lucide-react";
+import { Plus, Globe2, Database, Rocket, Upload, ArrowRight } from "lucide-react";
 import { ConsoleGuard } from "@/components/unmapped/console/console-guard";
 import { supabase } from "@/integrations/supabase/client";
 import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
@@ -77,10 +77,16 @@ function ConsoleHome() {
           desc="View and edit your existing contexts."
         />
         <ActionCard
+          to="/console/datasets"
+          icon={<Upload size={16} />}
+          title="Ingest data"
+          desc="Upload CSVs into a context as a draft dataset."
+        />
+        <ActionCard
           to="/console/taxonomy"
           icon={<Database size={16} />}
-          title="Taxonomy & data"
-          desc="Import ESCO/ONET, occupations, indicators."
+          title="Taxonomy editor"
+          desc="Map local credentials to ISCED / ISCO."
         />
         <ActionCard
           to="/console/deploy"
