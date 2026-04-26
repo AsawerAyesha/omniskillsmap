@@ -1,16 +1,19 @@
 import * as React from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Compass, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, Building2, HeartHandshake, Briefcase, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
 
-/* C0 — Sign in to Console.
+/* C1 Screen A — Console Landing.
  *
- * Two-column layout. Left: brand wash with institutional tagline. Right:
- * email/password + Google sign-in. After success the user is redirected to
- * the `redirect` search param (or /console). Already-authenticated visits
- * are short-circuited away. All surfaces use --console-* tokens so all
- * three themes resolve. */
+ * Pre-login full-viewport split (50/50 desktop). Left: dark institutional
+ * brand panel with operator-type selector. Right: warm-white sign-in form
+ * with primary "Continue" and a ghost "Create a new deployment" CTA that
+ * routes the operator into the onboarding flow.
+ *
+ * The selected operator type is persisted to sessionStorage so the
+ * onboarding flow can prefill Step 1 when the operator clicks
+ * "Create a new deployment". */
 
 interface SignInSearch {
   redirect: string;
@@ -20,13 +23,47 @@ export const Route = createFileRoute("/console/auth/sign-in")({
   validateSearch: (raw): SignInSearch => ({
     redirect: typeof raw.redirect === "string" ? raw.redirect : "/console",
   }),
-  component: SignInPage,
+  component: ConsoleLanding,
 });
 
-function SignInPage() {
+type OperatorType = "government" | "ngo" | "employer";
+
+const OPERATOR_CARDS: Array<{
+  id: OperatorType;
+  title: string;
+  blurb: string;
+  Icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
+}> = [
+  {
+    id: "government",
+    title: "Government ministry",
+    blurb: "Deploy for national youth labor programs",
+    Icon: Building2,
+  },
+  {
+    id: "ngo",
+    title: "NGO / Training provider",
+    blurb: "Configure for your beneficiary population",
+    Icon: HeartHandshake,
+  },
+  {
+    id: "employer",
+    title: "Employer / Sector body",
+    blurb: "Map your vacancies to real skills signals",
+    Icon: Briefcase,
+  },
+];
+
+function ConsoleLanding() {
   const search = Route.useSearch();
   const navigate = useNavigate();
   const { session, loading: authLoading } = useConsoleAuth();
+
+  const [operator, setOperator] = React.useState<OperatorType | null>(() => {
+    if (typeof window === "undefined") return null;
+    const v = window.sessionStorage.getItem("unmapped:operator-type");
+    return (v as OperatorType | null) ?? null;
+  });
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -35,12 +72,18 @@ function SignInPage() {
   const [submitting, setSubmitting] = React.useState(false);
   const [shake, setShake] = React.useState(false);
 
-  // Already signed in → bounce to redirect target
   React.useEffect(() => {
     if (!authLoading && session) {
       void navigate({ to: search.redirect || "/console", replace: true });
     }
   }, [authLoading, session, navigate, search.redirect]);
+
+  const selectOperator = (id: OperatorType) => {
+    setOperator(id);
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("unmapped:operator-type", id);
+    }
+  };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,79 +101,134 @@ function SignInPage() {
     void navigate({ to: search.redirect || "/console", replace: true });
   };
 
-  const onGoogle = async () => {
-    setError(null);
-    const { error: err } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo:
-          typeof window !== "undefined"
-            ? `${window.location.origin}${search.redirect || "/console"}`
-            : undefined,
-      },
-    });
-    if (err) setError(err.message);
+  const onCreateDeployment = () => {
+    void navigate({ to: "/console/onboarding" });
   };
 
   return (
-    <div
-      className="min-h-screen flex"
-      style={{ background: "var(--console-bg)", color: "var(--console-fg)" }}
-    >
-      {/* Left brand panel (5/12) */}
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* LEFT — dark institutional panel */}
       <aside
-        className="hidden md:flex md:w-5/12 lg:w-[42%] flex-col justify-between p-10 lg:p-14"
-        style={{
-          background: "var(--console-accent-wash)",
-          color: "var(--console-accent-fg)",
-        }}
+        className="md:w-1/2 flex flex-col justify-between p-8 md:p-12 lg:p-16"
+        style={{ background: "#111009", color: "#F0EDE8" }}
       >
-        <div className="flex items-center gap-2.5">
-          <Compass size={22} strokeWidth={1.5} />
-          <span className="font-display text-lg tracking-tight">UNMAPPED Console</span>
-        </div>
-
-        <div className="space-y-6 max-w-md">
-          <h1 className="font-display text-3xl lg:text-4xl leading-[1.1] tracking-tight">
-            Skills intelligence for ministries and partners.
-          </h1>
-          <p className="text-sm opacity-80 leading-relaxed">
-            Configure programs, monitor cohorts, and publish opportunities backed
-            by sourced ILOSTAT and World Bank signals.
-          </p>
+        <div className="space-y-1.5">
           <div
-            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] px-2.5 py-1 rounded-full"
-            style={{ background: "rgba(255,255,255,0.10)" }}
+            className="font-display tracking-tight"
+            style={{ fontSize: "32px", color: "#F0EDE8", lineHeight: 1.1 }}
           >
-            <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ background: "var(--console-success)" }}
-            />
-            Cached · ILOSTAT 2024 · WDI 2023
+            UNMAPPED
+          </div>
+          <div
+            className="uppercase tracking-[0.18em]"
+            style={{ fontSize: "13px", color: "#C4A882" }}
+          >
+            Infrastructure Console
           </div>
         </div>
 
-        <div className="text-[11px] opacity-60 tracking-wide">
-          Civic Compass · v0.1
+        <div className="max-w-md space-y-8 my-12 md:my-0">
+          <h1
+            className="font-display italic"
+            style={{
+              fontSize: "22px",
+              color: "#F0EDE8",
+              lineHeight: 1.35,
+              fontVariationSettings: '"opsz" 144',
+            }}
+          >
+            A protocol any institution can deploy.
+          </h1>
+
+          <div className="space-y-2.5">
+            {OPERATOR_CARDS.map(({ id, title, blurb, Icon }) => {
+              const active = operator === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => selectOperator(id)}
+                  aria-pressed={active}
+                  className="w-full text-left rounded-md p-4 transition-all duration-200 group flex items-start gap-3"
+                  style={{
+                    background: active
+                      ? "rgba(196,168,130,0.08)"
+                      : "rgba(255,255,255,0.025)",
+                    border: active
+                      ? "1px solid #C4A882"
+                      : "1px solid rgba(255,255,255,0.08)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!active)
+                      e.currentTarget.style.borderColor = "rgba(196,168,130,0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!active)
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                  }}
+                >
+                  <div
+                    className="shrink-0 h-8 w-8 rounded-md flex items-center justify-center"
+                    style={{
+                      background: active ? "#C4A882" : "rgba(196,168,130,0.12)",
+                      color: active ? "#111009" : "#C4A882",
+                    }}
+                  >
+                    <Icon size={16} strokeWidth={1.75} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div
+                      className="text-sm font-medium flex items-center gap-2"
+                      style={{ color: "#F0EDE8" }}
+                    >
+                      {title}
+                      {active && (
+                        <Check size={13} style={{ color: "#C4A882" }} />
+                      )}
+                    </div>
+                    <div
+                      className="text-xs mt-0.5"
+                      style={{ color: "rgba(240,237,232,0.6)" }}
+                    >
+                      {blurb}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
+
+        <p
+          className="max-w-md leading-relaxed"
+          style={{ fontSize: "12px", color: "#6B6560" }}
+        >
+          UNMAPPED is open infrastructure. No vendor lock-in. Your data stays yours.
+        </p>
       </aside>
 
-      {/* Right form column */}
-      <main className="flex-1 flex items-center justify-center p-6 sm:p-10">
+      {/* RIGHT — warm white sign-in */}
+      <main
+        className="md:w-1/2 flex items-center justify-center p-8 md:p-12 lg:p-16"
+        style={{ background: "#FAFAF8", color: "#1A1814" }}
+      >
         <div className="w-full max-w-[400px]">
-          <div className="md:hidden flex items-center gap-2 mb-8">
-            <Compass size={18} strokeWidth={1.5} style={{ color: "var(--console-accent)" }} />
-            <span className="font-display text-base tracking-tight">UNMAPPED Console</span>
-          </div>
-
-          <h2 className="font-display text-2xl tracking-tight">Sign in to Console</h2>
-          <p className="mt-1.5 text-sm" style={{ color: "var(--console-fg-muted)" }}>
-            Use your work email or Google account.
+          <h2
+            className="font-display tracking-tight"
+            style={{ fontSize: "24px", color: "#1A1814" }}
+          >
+            Sign in to your console
+          </h2>
+          <p
+            className="mt-2 text-sm"
+            style={{ color: "rgba(26,24,20,0.6)" }}
+          >
+            Use your work email to access your deployment.
           </p>
 
           <form
             onSubmit={onSubmit}
-            className={shake ? "mt-7 space-y-4 animate-shake" : "mt-7 space-y-4"}
+            className={shake ? "mt-7 space-y-3.5 animate-console-shake" : "mt-7 space-y-3.5"}
             noValidate
           >
             <Field label="Email" htmlFor="email">
@@ -141,16 +239,17 @@ function SignInPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-transparent rounded-md px-3 py-2.5 text-sm outline-none transition-colors"
+                className="w-full bg-white rounded-md px-3 text-sm outline-none transition-colors"
                 style={{
-                  border: "1px solid var(--console-border)",
-                  color: "var(--console-fg)",
+                  height: 36,
+                  border: "1px solid rgba(26,24,20,0.14)",
+                  color: "#1A1814",
                 }}
                 onFocus={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--console-accent)")
+                  (e.currentTarget.style.borderColor = "#7A6548")
                 }
                 onBlur={(e) =>
-                  (e.currentTarget.style.borderColor = "var(--console-border)")
+                  (e.currentTarget.style.borderColor = "rgba(26,24,20,0.14)")
                 }
               />
             </Field>
@@ -162,7 +261,7 @@ function SignInPage() {
                 <Link
                   to="/console/auth/forgot"
                   className="text-xs underline-offset-2 hover:underline"
-                  style={{ color: "var(--console-fg-muted)" }}
+                  style={{ color: "rgba(26,24,20,0.55)" }}
                 >
                   Forgot password?
                 </Link>
@@ -176,16 +275,17 @@ function SignInPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-transparent rounded-md px-3 py-2.5 pr-10 text-sm outline-none transition-colors"
+                  className="w-full bg-white rounded-md px-3 pr-10 text-sm outline-none transition-colors"
                   style={{
-                    border: "1px solid var(--console-border)",
-                    color: "var(--console-fg)",
+                    height: 36,
+                    border: "1px solid rgba(26,24,20,0.14)",
+                    color: "#1A1814",
                   }}
                   onFocus={(e) =>
-                    (e.currentTarget.style.borderColor = "var(--console-accent)")
+                    (e.currentTarget.style.borderColor = "#7A6548")
                   }
                   onBlur={(e) =>
-                    (e.currentTarget.style.borderColor = "var(--console-border)")
+                    (e.currentTarget.style.borderColor = "rgba(26,24,20,0.14)")
                   }
                 />
                 <button
@@ -193,7 +293,7 @@ function SignInPage() {
                   onClick={() => setShowPw((s) => !s)}
                   aria-label={showPw ? "Hide password" : "Show password"}
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded"
-                  style={{ color: "var(--console-fg-faint)" }}
+                  style={{ color: "rgba(26,24,20,0.45)" }}
                 >
                   {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
@@ -205,9 +305,9 @@ function SignInPage() {
                 role="alert"
                 className="text-xs px-3 py-2 rounded-md"
                 style={{
-                  background: "rgba(192,57,43,0.10)",
-                  color: "var(--console-danger)",
-                  border: "1px solid rgba(192,57,43,0.30)",
+                  background: "rgba(192,57,43,0.08)",
+                  color: "#9B2D22",
+                  border: "1px solid rgba(192,57,43,0.25)",
                 }}
               >
                 {error}
@@ -217,75 +317,81 @@ function SignInPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition-colors disabled:opacity-70"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors disabled:opacity-70"
               style={{
-                background: "var(--console-accent)",
-                color: "var(--console-accent-fg)",
+                height: 40,
+                background: "#7A6548",
+                color: "#F5EFE6",
               }}
               onMouseEnter={(e) => {
                 if (!submitting)
-                  e.currentTarget.style.background = "var(--console-accent-hover)";
+                  e.currentTarget.style.background = "#5E4D36";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "var(--console-accent)";
+                e.currentTarget.style.background = "#7A6548";
               }}
             >
               {submitting && <Loader2 size={14} className="animate-spin" />}
-              {submitting ? "Signing in…" : "Sign in"}
+              {submitting ? "Signing in…" : "Continue"}
             </button>
 
             <div className="flex items-center gap-3 py-1">
-              <span className="flex-1 h-px" style={{ background: "var(--console-rule)" }} />
+              <span className="flex-1 h-px" style={{ background: "rgba(26,24,20,0.10)" }} />
               <span
-                className="text-[10px] uppercase tracking-[0.14em]"
-                style={{ color: "var(--console-fg-faint)" }}
+                className="text-[10px] uppercase tracking-[0.16em]"
+                style={{ color: "rgba(26,24,20,0.4)" }}
               >
                 or
               </span>
-              <span className="flex-1 h-px" style={{ background: "var(--console-rule)" }} />
+              <span className="flex-1 h-px" style={{ background: "rgba(26,24,20,0.10)" }} />
             </div>
 
             <button
               type="button"
-              onClick={onGoogle}
-              className="w-full inline-flex items-center justify-center gap-2.5 rounded-md px-3 py-2.5 text-sm font-medium transition-colors"
+              onClick={onCreateDeployment}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors"
               style={{
+                height: 40,
                 background: "transparent",
-                color: "var(--console-fg)",
-                border: "1px solid var(--console-border)",
+                color: "#1A1814",
+                border: "1px solid rgba(26,24,20,0.18)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "var(--console-panel)";
+                e.currentTarget.style.background = "rgba(26,24,20,0.04)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "transparent";
               }}
             >
-              <GoogleMark />
-              Continue with Google
+              Create a new deployment
             </button>
           </form>
 
           <p
-            className="mt-8 text-[11px] leading-relaxed"
-            style={{ color: "var(--console-fg-faint)" }}
+            className="mt-6 text-xs text-center"
+            style={{ color: "rgba(26,24,20,0.5)" }}
           >
-            By continuing you agree to UNMAPPED's data-use policy. Your access
-            level is determined by your assigned role; contact your workspace
-            admin to request operator or admin permissions.
+            Need a deployment key from your organization?{" "}
+            <a
+              href="mailto:deploy@unmapped.org"
+              className="underline underline-offset-2"
+              style={{ color: "#7A6548" }}
+            >
+              Request access
+            </a>
           </p>
         </div>
       </main>
 
       <style>{`
-        @keyframes console-shake {
+        @keyframes console-shake-kf {
           0%,100% { transform: translateX(0); }
           20% { transform: translateX(-4px); }
           40% { transform: translateX(4px); }
           60% { transform: translateX(-3px); }
           80% { transform: translateX(2px); }
         }
-        .animate-shake { animation: console-shake 380ms cubic-bezier(0.16,1,0.3,1); }
+        .animate-console-shake { animation: console-shake-kf 380ms cubic-bezier(0.16,1,0.3,1); }
       `}</style>
     </div>
   );
@@ -307,7 +413,7 @@ function Field({
       <div className="flex items-baseline justify-between mb-1.5">
         <span
           className="text-[11px] uppercase tracking-[0.10em] font-medium"
-          style={{ color: "var(--console-fg-muted)" }}
+          style={{ color: "rgba(26,24,20,0.55)" }}
         >
           {label}
         </span>
@@ -315,28 +421,5 @@ function Field({
       </div>
       {children}
     </label>
-  );
-}
-
-function GoogleMark() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 48 48" aria-hidden>
-      <path
-        fill="#FFC107"
-        d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"
-      />
-      <path
-        fill="#FF3D00"
-        d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
-      />
-      <path
-        fill="#4CAF50"
-        d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.6 2.4-7.2 2.4-5.3 0-9.7-3.4-11.3-8l-6.5 5C9.6 39.6 16.3 44 24 44z"
-      />
-      <path
-        fill="#1976D2"
-        d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.2 5.2c-.4.4 6.6-4.8 6.6-14.7 0-1.2-.1-2.3-.4-3.5z"
-      />
-    </svg>
   );
 }
