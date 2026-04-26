@@ -21,6 +21,7 @@ import { DEFAULT_ADVANCED_SIGNALS } from "@/components/unmapped/context-config/t
 import { useCountryData } from "@/data/use-country-data";
 import { SourcedTile } from "@/components/unmapped/data/sourced-tile";
 import { COUNTRY_INDEX } from "@/components/unmapped/context-config/types";
+import { LiveDataPanel } from "@/components/unmapped/live/live-data-panel";
 
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
@@ -129,6 +130,11 @@ function OpportunitiesPage() {
             </button>
           </div>
         </header>
+
+        {/* Live opportunities feed from operator console (when context is active). */}
+        <div className="mt-6">
+          <LiveDataPanel kind="opportunities" title="Live opportunities feed" />
+        </div>
 
         {/* TWO-COLUMN: cards + signals (sidebar on desktop) */}
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">

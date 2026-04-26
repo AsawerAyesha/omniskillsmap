@@ -10,6 +10,7 @@ import { BrandToaster } from "./brand-toaster";
 import { PageTransition } from "./page-transition";
 import { ContextConfigProvider, useContextConfig } from "./context-config/context-config-store";
 import { ContextConfigDrawer } from "./context-config/context-config-drawer";
+import { LiveContextPicker } from "./live/live-context-picker";
 
 /* The route tree is the source of truth for which shell to render.
  * If the URL is /policy or /policy/* → PolicyShell, otherwise YouthShell.
@@ -70,6 +71,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       </ReconfigureFader>
       <ContextConfigDrawer />
       <BrandToaster />
+      <div className="fixed top-4 right-4 z-50 pointer-events-auto">
+        <LiveContextPicker />
+      </div>
     </ContextConfigProvider>
   );
 }

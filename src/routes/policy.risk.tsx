@@ -4,6 +4,7 @@ import { AlertTriangle, Compass, Download, ShieldCheck, Users } from "lucide-rea
 import { useUnmappedMode } from "@/components/unmapped/mode-context";
 import { getRiskDataset } from "@/components/unmapped/policy-dashboard/risk-data";
 import { RiskBoard } from "@/components/unmapped/policy-dashboard/risk-board";
+import { LiveDataPanel } from "@/components/unmapped/live/live-data-panel";
 
 export const Route = createFileRoute("/policy/risk")({
   head: () => ({
@@ -89,6 +90,7 @@ function PolicyRiskPage() {
       </div>
 
       <div className="u-container py-6 space-y-6">
+        <LiveDataPanel kind="occupations" title="Live occupations & automation risk" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {stats.map((s) => (
             <div
