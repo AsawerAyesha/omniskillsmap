@@ -289,6 +289,18 @@ function DatasetsPage() {
             >
               {meta.headers.join(", ")}
             </div>
+            {kind === "labor" && (
+              <div
+                className="mt-2 text-xs"
+                style={{ color: "var(--console-fg-faint)" }}
+              >
+                Also accepts raw ILOSTAT exports:{" "}
+                <span className="font-mono">
+                  ref_area, source, indicator, sex, classif1, classif2, time,
+                  obs_value, obs_status, note_classif, note_indicator, note_source
+                </span>
+              </div>
+            )}
           </div>
           <button
             type="button"
