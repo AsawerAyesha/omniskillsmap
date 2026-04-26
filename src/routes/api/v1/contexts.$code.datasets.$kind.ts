@@ -11,7 +11,14 @@ import { jsonResponse, errorResponse, preflight } from "@/lib/api-cors";
  *   offset (>=0, default 0)
  */
 
-const KIND_TABLE: Record<string, { table: string; cols: string }> = {
+type KindTable =
+  | "taxonomy_skills"
+  | "occupations"
+  | "labor_indicators"
+  | "opportunities"
+  | "learning_resources";
+
+const KIND_TABLE: Record<string, { table: KindTable; cols: string }> = {
   taxonomy:      { table: "taxonomy_skills",  cols: "code, label, parent_code, level, source" },
   occupations:   { table: "occupations",      cols: "code, title, isco_major, automation_risk" },
   labor:         { table: "labor_indicators", cols: "indicator_code, year, sex, age_band, value" },
