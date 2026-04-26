@@ -34,6 +34,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <ContextConfigProvider>
+      <CountryBridge />
       <SkipLink />
       <OfflineBanner />
       <ReconfigureFader>
@@ -45,6 +46,28 @@ export function AppShell({ children }: { children: ReactNode }) {
       <BrandToaster />
     </ContextConfigProvider>
   );
+}
+
+/* CountryBridge — single source of truth fix.
+ *
+ * Two stores hold a "country" today: the older UnmappedModeProvider (used by
+ * the policy dashboards) and the newer ContextConfigProvider (used by the
+ * Youth opportunity flow + Demo Switcher). When the Demo Switcher fires
+ * `applyContext`, the new active country must propagate to the policy
+ * dashboards too — otherwise judges see a mode-mismatch during the demo.
+ *
+ * Rather than refactor every dashboard onto the new store mid-hackathon,
+ * we sync one direction here: ContextConfig.active.country → mode.setCountry.
+ * This component renders nothing. */
+function CountryBridge() {
+  const { active } = useContextConfig();
+  const { country, setCountry } = useUnmappedMode();
+  React.useEffect(() => {
+    if (active.country && active.country !== country) {
+      setCountry(active.country);
+    }
+  }, [active.country, country, setCountry]);
+  return null;
 }
 
 /* Fades the entire app while a reconfiguration is in flight so the
