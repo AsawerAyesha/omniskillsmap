@@ -24,6 +24,7 @@ import { Route as PolicyRiskRouteImport } from './routes/policy.risk'
 import { Route as PolicyProjectionsRouteImport } from './routes/policy.projections'
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
+import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
 
@@ -102,6 +103,11 @@ const ConsoleOnboardingRoute = ConsoleOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleContextsRoute = ConsoleContextsRouteImport.update({
+  id: '/contexts',
+  path: '/contexts',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleAuthSignInRoute = ConsoleAuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/console/contexts': typeof ConsoleContextsRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/console/contexts': typeof ConsoleContextsRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/console/contexts': typeof ConsoleContextsRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/policy'
     | '/profile'
     | '/reset-password'
+    | '/console/contexts'
     | '/console/onboarding'
     | '/policy/opportunities'
     | '/policy/projections'
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/profile'
     | '/reset-password'
+    | '/console/contexts'
     | '/console/onboarding'
     | '/policy/opportunities'
     | '/policy/projections'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/policy'
     | '/profile'
     | '/reset-password'
+    | '/console/contexts'
     | '/console/onboarding'
     | '/policy/opportunities'
     | '/policy/projections'
@@ -345,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleOnboardingRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/contexts': {
+      id: '/console/contexts'
+      path: '/contexts'
+      fullPath: '/console/contexts'
+      preLoaderRoute: typeof ConsoleContextsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/auth/sign-in': {
       id: '/console/auth/sign-in'
       path: '/auth/sign-in'
@@ -363,6 +382,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface ConsoleRouteChildren {
+  ConsoleContextsRoute: typeof ConsoleContextsRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleAuthForgotRoute: typeof ConsoleAuthForgotRoute
@@ -370,6 +390,7 @@ interface ConsoleRouteChildren {
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleContextsRoute: ConsoleContextsRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleAuthForgotRoute: ConsoleAuthForgotRoute,
@@ -411,3 +432,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
