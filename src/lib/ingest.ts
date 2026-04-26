@@ -7,9 +7,9 @@ import { z } from "zod";
 export type DatasetKind =
   | "taxonomy"
   | "occupations"
-  | "labor_indicators"
+  | "labor"
   | "opportunities"
-  | "learning_resources";
+  | "learning";
 
 /* ---- per-kind row schemas ---- */
 
@@ -109,7 +109,7 @@ export const KIND_META: Record<
     example:
       "code,title,isco_major,automation_risk\n2511,Systems analyst,2,0.21\n9112,Cleaner,9,0.69\n",
   },
-  labor_indicators: {
+  labor: {
     label: "Labor indicators (employment / wages)",
     table: "labor_indicators",
     schema: laborRow,
@@ -125,7 +125,7 @@ export const KIND_META: Record<
     example:
       "title,employer,sector,region,remote,url,skills\nJunior data analyst,Acme,Tech,Lahore,false,https://example.com/job/1,sql|excel\n",
   },
-  learning_resources: {
+  learning: {
     label: "Learning resources (courses)",
     table: "learning_resources",
     schema: learningRow,
