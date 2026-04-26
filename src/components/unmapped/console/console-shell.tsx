@@ -13,6 +13,7 @@ import {
   Database,
   Network,
   Rocket,
+  LineChart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "../theme-switcher";
@@ -39,6 +40,7 @@ const NAV: NavItem[] = [
   { to: "/console/connections", label: "Connections", icon: Database },
   { to: "/console/taxonomy", label: "Taxonomy", icon: Network },
   { to: "/console/deploy", label: "Deploy", icon: Rocket },
+  { to: "/console/monitor", label: "Monitor", icon: LineChart },
   { to: "/console/cohorts", label: "Cohorts", icon: Users },
   { to: "/console/programs", label: "Programs", icon: BookOpen },
   { to: "/console/signals", label: "Signals", icon: Activity },
