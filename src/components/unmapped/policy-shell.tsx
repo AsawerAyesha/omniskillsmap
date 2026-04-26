@@ -273,7 +273,10 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
   const palette = React.useMemo(() => getHeaderPalette(theme), [theme]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--surface)] text-[var(--ink)]">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: "var(--policy-bg)", color: "var(--policy-fg)" }}
+    >
       <header
         className="w-full transition-colors duration-300 ease-precision border-b"
         style={{ background: palette.bg, color: palette.fg, borderColor: palette.border }}
