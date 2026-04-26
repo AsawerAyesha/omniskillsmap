@@ -52,13 +52,22 @@ export function useLiveContext(): UseLiveContextResult {
 
   const setActive = React.useCallback(
     (code: string) => {
+      const params = new URLSearchParams(
+        Object.entries((location.search as Record<string, unknown>) ?? {}).reduce(
+          (acc, [k, v]) => {
+            if (typeof v === "string") acc[k] = v;
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+      );
+      params.set("ctx", code);
       void navigate({
-        to: location.pathname,
-        search: (prev: Record<string, unknown> = {}) => ({ ...prev, ctx: code }),
+        to: `${location.pathname}?${params.toString()}` as string,
         replace: true,
       });
     },
-    [navigate, location.pathname],
+    [navigate, location.pathname, location.search],
   );
 
   return {
