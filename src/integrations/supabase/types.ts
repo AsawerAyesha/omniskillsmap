@@ -195,28 +195,52 @@ export type Database = {
       labor_indicators: {
         Row: {
           age_band: string | null
+          classif1: string | null
+          classif2: string | null
           dataset_id: string
           id: string
           indicator_code: string
+          note_classif: string | null
+          note_indicator: string | null
+          note_source: string | null
+          obs_status: string | null
+          ref_area: string | null
           sex: string | null
+          source_code: string | null
           value: number | null
           year: number
         }
         Insert: {
           age_band?: string | null
+          classif1?: string | null
+          classif2?: string | null
           dataset_id: string
           id?: string
           indicator_code: string
+          note_classif?: string | null
+          note_indicator?: string | null
+          note_source?: string | null
+          obs_status?: string | null
+          ref_area?: string | null
           sex?: string | null
+          source_code?: string | null
           value?: number | null
           year: number
         }
         Update: {
           age_band?: string | null
+          classif1?: string | null
+          classif2?: string | null
           dataset_id?: string
           id?: string
           indicator_code?: string
+          note_classif?: string | null
+          note_indicator?: string | null
+          note_source?: string | null
+          obs_status?: string | null
+          ref_area?: string | null
           sex?: string | null
+          source_code?: string | null
           value?: number | null
           year?: number
         }
