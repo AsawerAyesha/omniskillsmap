@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import omniskillMark from "../assets/omniskill-mark.svg?url";
 import { UnmappedModeProvider } from "../components/unmapped/mode-context";
 import { AppShell } from "../components/unmapped/app-shell";
 import { ThemeProvider } from "../components/unmapped/theme-context";
@@ -52,7 +53,7 @@ export const Route = createRootRoute({
       {
         rel: "icon",
         type: "image/svg+xml",
-        href: "/src/assets/omniskill-mark.svg",
+        href: omniskillMark,
       },
     ],
   }),
