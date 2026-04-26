@@ -20,9 +20,19 @@ interface SignInSearch {
 }
 
 export const Route = createFileRoute("/console/auth/sign-in")({
-  validateSearch: (raw): SignInSearch => ({
-    redirect: typeof raw.redirect === "string" ? raw.redirect : "/console",
-  }),
+  validateSearch: (raw): SignInSearch => {
+    const r = typeof raw.redirect === "string" ? raw.redirect : "/console";
+    // Only accept safe console paths; reject anything that points back at
+    // the auth screen or contains nested redirect params (which would
+    // otherwise produce an exponential URL loop).
+    const safe =
+      r.startsWith("/console") &&
+      !r.startsWith("/console/auth") &&
+      !r.includes("redirect=")
+        ? r
+        : "/console";
+    return { redirect: safe };
+  },
   component: ConsoleLanding,
 });
 
