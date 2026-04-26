@@ -36,6 +36,34 @@ export const Route = createFileRoute("/console/datasets")({
   ),
 });
 
+/* Stream a File via ReadableStream so we can report read progress. Falls back
+ * to f.text() when streams are unavailable. */
+async function readFileWithProgress(
+  file: File,
+  onProgress: (pct: number) => void,
+): Promise<string> {
+  if (!file.stream) {
+    onProgress(100);
+    return file.text();
+  }
+  const total = file.size || 1;
+  const reader = file.stream().getReader();
+  const decoder = new TextDecoder("utf-8");
+  let received = 0;
+  let text = "";
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    received += value.byteLength;
+    text += decoder.decode(value, { stream: true });
+    onProgress(Math.min(99, Math.round((received / total) * 100)));
+  }
+  text += decoder.decode();
+  onProgress(100);
+  return text;
+}
+
 interface ContextRow {
   id: string;
   code: string;
@@ -58,6 +86,18 @@ function DatasetsPage() {
     inserted: number;
   } | null>(null);
   const [commitError, setCommitError] = React.useState<string | null>(null);
+  const [uploadPhase, setUploadPhase] = React.useState<
+    "idle" | "reading" | "validating" | "done"
+  >("idle");
+  const [uploadPct, setUploadPct] = React.useState(0);
+  const [commitPhase, setCommitPhase] = React.useState<
+    "idle" | "creating" | "inserting" | "logging" | "done"
+  >("idle");
+  const [commitPct, setCommitPct] = React.useState(0);
+  const [commitProgress, setCommitProgress] = React.useState<{
+    inserted: number;
+    total: number;
+  }>({ inserted: 0, total: 0 });
 
   React.useEffect(() => {
     if (!user) return;
@@ -84,10 +124,21 @@ function DatasetsPage() {
     setFileName(f.name);
     setCommitted(null);
     setCommitError(null);
-    const text = await f.text();
+    setResult(null);
+    setUploadPhase("reading");
+    setUploadPct(0);
+
+    // Stream the file so we can show real read progress for large CSVs.
+    const text = await readFileWithProgress(f, (pct) => setUploadPct(pct));
     setCsvText(text);
+
+    setUploadPhase("validating");
+    setUploadPct(100);
+    // Yield to the browser so the progress bar can paint before we block on parse.
+    await new Promise((r) => setTimeout(r, 30));
     const r = validateCsv(text, meta.schema as never);
     setResult(r as ParseResult<unknown>);
+    setUploadPhase("done");
   };
 
   // Re-validate when kind changes
@@ -113,6 +164,9 @@ function DatasetsPage() {
     if (!user || !contextId || !result || result.ok.length === 0) return;
     setCommitting(true);
     setCommitError(null);
+    setCommitPhase("creating");
+    setCommitPct(0);
+    setCommitProgress({ inserted: 0, total: result.ok.length });
 
     // 1. Determine next version
     const { data: prev } = await supabase
@@ -141,6 +195,7 @@ function DatasetsPage() {
     if (dsErr || !ds) {
       setCommitError(dsErr?.message ?? "Failed to create dataset");
       setCommitting(false);
+      setCommitPhase("idle");
       return;
     }
 
@@ -150,6 +205,7 @@ function DatasetsPage() {
       dataset_id: ds.id,
     }));
 
+    setCommitPhase("inserting");
     const CHUNK = 500;
     for (let i = 0; i < rowsWithDataset.length; i += CHUNK) {
       const chunk = rowsWithDataset.slice(i, i + CHUNK);
@@ -160,11 +216,16 @@ function DatasetsPage() {
         setCommitError(`Row insert failed at row ${i + 1}: ${rowErr.message}`);
         // Best-effort: leave the empty draft so the operator can retry/delete.
         setCommitting(false);
+        setCommitPhase("idle");
         return;
       }
+      const insertedSoFar = Math.min(i + chunk.length, rowsWithDataset.length);
+      setCommitProgress({ inserted: insertedSoFar, total: rowsWithDataset.length });
+      setCommitPct(Math.round((insertedSoFar / rowsWithDataset.length) * 100));
     }
 
     // 4. Audit log
+    setCommitPhase("logging");
     await supabase.from("ingestion_runs").insert({
       actor_id: user.id,
       context_id: contextId,
@@ -183,6 +244,8 @@ function DatasetsPage() {
       inserted: result.ok.length,
     });
     setCommitting(false);
+    setCommitPhase("done");
+    setCommitPct(100);
   };
 
   return (
@@ -331,6 +394,7 @@ function DatasetsPage() {
               const f = e.target.files?.[0];
               if (f) void onFile(f);
             }}
+            disabled={uploadPhase === "reading" || uploadPhase === "validating"}
           />
           <Upload
             size={20}
@@ -347,6 +411,24 @@ function DatasetsPage() {
             UTF-8, header row required.
           </div>
         </label>
+
+        {(uploadPhase === "reading" || uploadPhase === "validating") && (
+          <div className="mt-4">
+            <div
+              className="flex items-center justify-between text-xs mb-1.5"
+              style={{ color: "var(--console-fg-muted)" }}
+            >
+              <span className="inline-flex items-center gap-1.5">
+                <Loader2 size={12} className="animate-spin" />
+                {uploadPhase === "reading"
+                  ? `Reading ${fileName}…`
+                  : "Validating rows against schema…"}
+              </span>
+              <span className="font-mono">{uploadPct}%</span>
+            </div>
+            <ProgressBar pct={uploadPhase === "validating" ? 100 : uploadPct} indeterminate={uploadPhase === "validating"} />
+          </div>
+        )}
       </div>
 
       {/* Validation result */}
@@ -446,6 +528,27 @@ function DatasetsPage() {
             </button>
           </div>
 
+          {committing && (
+            <div className="mt-4">
+              <div
+                className="flex items-center justify-between text-xs mb-1.5"
+                style={{ color: "var(--console-fg-muted)" }}
+              >
+                <span>
+                  {commitPhase === "creating" && "Creating draft dataset…"}
+                  {commitPhase === "inserting" &&
+                    `Inserting rows… ${commitProgress.inserted.toLocaleString()} / ${commitProgress.total.toLocaleString()}`}
+                  {commitPhase === "logging" && "Writing audit log…"}
+                </span>
+                <span className="font-mono">{commitPct}%</span>
+              </div>
+              <ProgressBar
+                pct={commitPct}
+                indeterminate={commitPhase === "creating" || commitPhase === "logging"}
+              />
+            </div>
+          )}
+
           {commitError && (
             <div
               className="mt-3 flex items-start gap-2 text-xs rounded-md border px-3 py-2"
@@ -517,6 +620,41 @@ function Field({
         {label}
       </div>
       {children}
+    </div>
+  );
+}
+
+function ProgressBar({
+  pct,
+  indeterminate,
+}: {
+  pct: number;
+  indeterminate?: boolean;
+}) {
+  return (
+    <div
+      className="h-1.5 w-full rounded-full overflow-hidden"
+      style={{
+        background: "var(--console-panel)",
+        border: "1px solid var(--console-border)",
+      }}
+      role="progressbar"
+      aria-valuenow={indeterminate ? undefined : pct}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
+      <div
+        className={
+          indeterminate
+            ? "h-full animate-pulse"
+            : "h-full transition-all duration-200 ease-out"
+        }
+        style={{
+          width: indeterminate ? "100%" : `${Math.max(2, pct)}%`,
+          background: "var(--earth-dark, var(--console-accent))",
+          opacity: indeterminate ? 0.5 : 1,
+        }}
+      />
     </div>
   );
 }
