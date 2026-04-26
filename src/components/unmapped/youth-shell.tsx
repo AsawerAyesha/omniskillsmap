@@ -9,6 +9,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   ArrowLeftRight,
+  ShieldAlert,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
@@ -22,6 +23,7 @@ const TABS = [
   { to: "/profile", label: "My Profile", icon: User },
   { to: "/opportunities", label: "Opportunities", icon: Briefcase },
   { to: "/learn", label: "Learn", icon: BookOpen },
+  { to: "/ai-readiness", label: "Risk", icon: ShieldAlert },
 ] as const;
 
 export function YouthShell({ children }: { children: React.ReactNode }) {
@@ -199,7 +201,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           aria-label="Primary"
           className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--surface-raised)] border-t border-border-subtle z-30"
         >
-          <ul className="grid grid-cols-4">
+          <ul className="grid grid-cols-5">
             {TABS.map((t) => {
               const active = pathname === t.to;
               const Icon = t.icon;
