@@ -1,63 +1,197 @@
-# Add a real Sign Up flow to the Console
 
-## The problem
+# OmniSkill — Infrastructure Layer Plan
 
-Right now `/console/auth/sign-in` only has a sign-in form. The "Create a new deployment" button routes to a 4-step onboarding wizard that never actually creates a Supabase account, so there is **no way for a new user to get credentials** from the UI.
+Right now the app **looks** like infrastructure but is a styled demo: every dataset (`skills-map-data.ts`, `risk-data.ts`, `projections-data.ts`, `opportunities-data.ts`, `learn-data.ts`, `region-pills.tsx`) is hardcoded TypeScript. The console writes nothing. To prove this is a *protocol, not a product*, we need: tenants → per-tenant data uploads → public pages that read those uploads → audit trail.
 
-## What we'll build
+## Goal
 
-### 1. New Sign Up screen at `/console/auth/sign-up`
+A government in Pakistan, an NGO in Kenya, and an employer in Brazil can each:
+1. Sign up to the console
+2. Create their own **context** (country/region + locale + calibration)
+3. Upload their own labor data, taxonomy, occupations, automation scores
+4. Publish a draft → live
+5. The youth + policy dashboards instantly reflect *their* data when that context is selected
 
-A new route file `src/routes/console.auth.sign-up.tsx` that mirrors the visual design of the sign-in screen (same dark-left / warm-white-right split, same operator-type panel) but with a sign-up form:
+No code changes per tenant. Country params are **rows**, not constants.
 
-- Fields: **Work email**, **Password** (with show/hide toggle), **Confirm password**
-- Primary button: **"Create account"** → calls `supabase.auth.signUp({ email, password })`
-- On success → redirect straight to `/console` (auto-confirm enabled, see step 3)
-- Inline error handling + the same shake animation pattern used on sign-in
-- Footer link: **"Already have an account? Sign in"** → routes to `/console/auth/sign-in`
+---
 
-### 2. Add a "Sign up" link on the existing sign-in screen
+## Architecture
 
-In `src/routes/console.auth.sign-in.tsx`:
-- Change the ghost **"Create a new deployment"** button to instead route to `/console/auth/sign-up` (the onboarding wizard stays available but is no longer the only path)
-- Add a small footer line: *"New here? Create an account"* with a link to `/console/auth/sign-up`
+```text
+                  ┌─────────────────────────┐
+                  │   OPERATOR CONSOLE      │
+                  │   (gov / NGO / employer)│
+                  └───────────┬─────────────┘
+                              │ uploads CSV/JSON
+                              ▼
+        ┌──────────────────────────────────────────┐
+        │        DATA LAYER (Lovable Cloud)        │
+        │                                          │
+        │  contexts ── datasets ── ingestion_runs  │
+        │     │                                    │
+        │     ├── taxonomy_skills (per context)    │
+        │     ├── occupations     (per context)    │
+        │     ├── automation_scores                │
+        │     ├── labor_indicators (ILO/WB shape)  │
+        │     ├── opportunities                    │
+        │     └── learning_resources               │
+        └──────────────────┬───────────────────────┘
+                           │ public read (RLS: live + published)
+                           ▼
+                ┌──────────────────────┐
+                │  YOUTH + POLICY APP  │
+                │  reads active ctx    │
+                └──────────────────────┘
+```
 
-### 3. Enable email auto-confirm (hackathon convenience)
+---
 
-Use `supabase--configure_auth` to set `auto_confirm_email: true` so judges/testers don't need to check an inbox. Sign-up immediately gives them a working session.
+## Database schema (migration)
 
-### 4. Auto-assign the `operator` role on signup
+Eight new tables, all with RLS. Roles already exist (`admin`, `operator`, `viewer`).
 
-The `ConsoleGuard` and role-aware screens (C2–C6) check `user_roles` for `operator`. If signup doesn't insert a row there, the new user will be locked out of every console screen.
+| Table | Purpose | Key columns |
+|---|---|---|
+| `contexts` | A tenant's country/region | code (e.g. `PK`, `KE-NRB`), name, locale, currency, calibration JSON, owner_org, status |
+| `context_members` | Who can edit a context | context_id, user_id, role (`owner`/`editor`/`viewer`) |
+| `datasets` | A versioned bundle per context | context_id, kind (`taxonomy`/`occupations`/`labor`/`automation`/`opportunities`/`learning`), version, status (`draft`/`live`/`archived`), published_at |
+| `taxonomy_skills` | ESCO/ONET-style skill nodes | dataset_id, code, label, parent_code, level, source |
+| `occupations` | ISCO-08 / O*NET occupations | dataset_id, code, title, isco_major, automation_risk |
+| `labor_indicators` | ILO/WDI metrics | dataset_id, indicator_code, year, value, sex, age_band |
+| `opportunities` | Jobs/internships available | dataset_id, title, employer, sector, skills[], region, remote |
+| `learning_resources` | Courses tied to skills | dataset_id, title, provider, skill_codes[], duration_h, language, cost |
+| `ingestion_runs` | Audit log of every upload | context_id, dataset_id, file_name, rows_in, rows_ok, rows_err, errors_jsonb, actor_id |
 
-Add a Postgres migration that:
-- Creates a trigger on `auth.users` (insert) that adds a `('user_id', 'operator')` row into `public.user_roles` for every new signup
-- This makes any newly-signed-up user immediately able to use all console screens
+RLS rules:
+- **Operators** can read/write only contexts where they're a member
+- **Admins** can read/write everything
+- **Public** (anon) can `SELECT` only rows in datasets with `status='live'` — this is what the youth/policy pages query
+- `user_roles` keeps existing app-wide role; `context_members` adds per-tenant role
 
-### 5. Demo credentials hint (optional polish)
+---
 
-On the sign-in screen, add a tiny dismissible hint card: *"Demo? Sign up with any email — instant access, no email verification needed."*
+## File ingestion (server route)
 
-## Technical notes
+Single endpoint `/api/console/ingest` (TanStack server route, auth-required):
 
-- Uses existing `supabase.auth.signUp()` — no edge function needed
-- The sign-up screen reuses the same `Field` component pattern and inline styles already in `console.auth.sign-in.tsx` for visual consistency
-- The trigger uses `SECURITY DEFINER` to bypass RLS when inserting into `user_roles`
-- Auto-confirm is reversible — turn it off post-hackathon by re-running `configure_auth` with `auto_confirm_email: false`
-- No changes needed to `ConsoleAuthProvider` or `ConsoleGuard` — they already react to new sessions
+```text
+POST /api/console/ingest
+  body: { contextId, datasetKind, version, format: "csv"|"json", payload }
+  → validates with Zod schemas (one per kind)
+  → inserts rows into the right table
+  → writes ingestion_runs audit row
+  → returns { datasetId, rowsOk, rowsErr, errors[] }
+```
 
-## Files
+Templates the operator can download per kind (CSV headers fixed):
+- `taxonomy.csv` → `code,label,parent_code,level,source`
+- `occupations.csv` → `code,title,isco_major,automation_risk`
+- `labor.csv` → `indicator_code,year,value,sex,age_band`
+- `opportunities.csv` → `title,employer,sector,skills,region,remote`
+- `learning.csv` → `title,provider,skill_codes,duration_h,language,cost`
 
-**Created**
-- `src/routes/console.auth.sign-up.tsx`
-- One DB migration for the auto-role trigger
+Strict validation (reject bad rows with row-number errors), no partial writes unless operator chooses "import valid rows only".
 
-**Modified**
-- `src/routes/console.auth.sign-in.tsx` (re-point ghost button + add footer sign-up link)
+---
 
-## After this lands
+## Console pages — wire to real data
 
-1. Open `/console/auth/sign-up`
-2. Enter any email + password (≥6 chars)
-3. Click "Create account" → instantly logged in, operator role assigned, redirected to `/console`
-4. All C2–C6 screens are accessible
+Existing console routes get real backing:
+
+| Route | What it does now (mock) | What it does after |
+|---|---|---|
+| `/console` | Static cards | Lists *my* contexts + draft/live counts from DB |
+| `/console/contexts` | (missing list view) | Table of contexts I can edit; create/edit/archive |
+| `/console/contexts/new` | UI only | Inserts row into `contexts`, adds me as owner in `context_members` |
+| `/console/taxonomy` | Static tree | Pick context → upload CSV → preview → save as draft dataset |
+| `/console/connections` | Mock | Same upload flow for `opportunities` + `learning` + `labor` |
+| `/console/deploy` | Mock | Promote a `draft` dataset → `live`, archive previous live |
+| `/console/monitor` | Mock | Live feed of `ingestion_runs` for my contexts |
+
+Each upload page: dropzone → server validates → preview table (first 20 rows + error summary) → "Save as draft" or "Save & publish".
+
+---
+
+## Public pages — read live data per context
+
+The country pill on the home/policy/youth pages already exists. We make it the **tenant selector**. Replace each `*-data.ts` import with a TanStack Query hook against Lovable Cloud:
+
+| Public page | Hardcoded today | Reads after |
+|---|---|---|
+| `/` RegionPills | hardcoded list | `contexts WHERE status='active'` |
+| `/intake` skills | hardcoded | `taxonomy_skills` for active context's live taxonomy dataset |
+| `/opportunities` | mock cards | `opportunities` for active context's live dataset |
+| `/learn` | mock courses | `learning_resources` for active context |
+| `/ai-readiness` | static risk | `occupations.automation_risk` for active context |
+| `/policy/skills` | mock heatmap | aggregated `taxonomy_skills` + `labor_indicators` |
+| `/policy/projections` | mock chart | `labor_indicators` time series |
+| `/policy/risk` | mock | `occupations` joined to labor share |
+| `/policy/opportunities` | mock | aggregated `opportunities` |
+
+Empty-state per page: "No live data for {context}. Operators: upload via console."
+
+---
+
+## How you'll test it (the actual point)
+
+End-to-end smoke test you run yourself, twice with **two different operator accounts** to prove tenancy:
+
+```text
+ROUND 1 — Operator A (Pakistan)
+1. Sign up A → /console
+2. Create context "Pakistan / PK / Urdu+English / PKR"
+3. Upload taxonomy_pk.csv  (10 skills)   → save draft → publish
+4. Upload occupations_pk.csv (5 jobs)    → publish
+5. Upload labor_pk.csv (ILO youth NEET)  → publish
+6. Open / in incognito → pick Pakistan   → see your 10 skills, 5 jobs, NEET chart
+
+ROUND 2 — Operator B (Kenya)
+7. Sign up B → /console (cannot see A's contexts)
+8. Create context "Kenya / KE / Swahili+English / KES"
+9. Upload completely different CSVs       → publish
+10. Public app, switch to Kenya           → all numbers change, Pakistan's data nowhere
+11. Switch back to Pakistan               → A's numbers return
+
+NEGATIVE TESTS
+12. Operator B tries to GET /api/console/datasets?contextId=<A's ctx>  → 403
+13. Anonymous visitor queries DB directly for a draft dataset          → 0 rows (RLS)
+14. Upload a CSV with bad rows → preview shows row-numbered errors, no partial write
+15. Publish v2 of taxonomy → public immediately reflects v2, v1 archived
+16. Archive a context → public app falls back to "no live data"
+```
+
+Sample CSVs (5–10 rows each, two countries) ship in `/templates/` so you can run the test in 10 minutes.
+
+---
+
+## What's out of scope (be explicit)
+
+- No auto-scraping of ILO/WB. Operators bring their own CSV in the published shape (we ship the schema + a one-page "how to export from ILOSTAT" guide).
+- No multi-language UI yet — only `locale` is stored on context (used for number/date formatting + future i18n).
+- No data marketplace / cross-context analytics (admin-only view comes later).
+- No payments, no quotas — Lovable Cloud free tier limits apply.
+
+---
+
+## Build order (so you can test as we go)
+
+1. **Migration**: 8 tables + RLS + `context_members` join + helper functions
+2. **Console: contexts list + create + members** (you can already verify tenancy here)
+3. **Server route `/api/console/ingest`** + Zod schemas for all 6 dataset kinds
+4. **Console: taxonomy upload page** (one upload flow, then the others mirror it)
+5. **Console: deploy + monitor pages** wired to real data
+6. **Public: replace `region-pills` and one dashboard (`/policy/skills`) with live data** — proves the round-trip
+7. **Public: migrate remaining pages** off `*-data.ts`
+8. **Sample CSVs in `/templates/`** + a README with the test script above
+
+After step 6 you can already run the full round-trip test. Steps 7–8 finish the rest of the surface.
+
+---
+
+## Decisions needed from you
+
+1. **Do you want to be promoted to `admin`** (full cross-tenant visibility) for testing? Default: yes.
+2. **Tenancy model**: one user = one org with many contexts (simpler) **or** orgs as a separate table with multiple users per org (more realistic). I recommend starting with `context_members` (per-context membership) and adding orgs later.
+3. **Publishing model**: hard cutover (v2 live → v1 archived instantly) or **canary** (v2 live for 10% of viewers first). Recommend hard cutover for v1.
+4. **Anonymous public read**: should the youth/policy pages work without login, or require sign-in too? Current app is anonymous — recommend keeping it that way.
