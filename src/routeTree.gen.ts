@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ProtocolRouteImport } from './routes/protocol'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PolicyRouteImport } from './routes/policy'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
@@ -45,6 +46,11 @@ import { Route as ApiV1ContextsCodeDatasetsKindRouteImport } from './routes/api/
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtocolRoute = ProtocolRouteImport.update({
+  id: '/protocol',
+  path: '/protocol',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/protocol': typeof ProtocolRoute
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
@@ -246,6 +253,7 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
   '/profile': typeof ProfileRoute
+  '/protocol': typeof ProtocolRoute
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/datasets': typeof ConsoleDatasetsRoute
@@ -280,6 +288,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/protocol': typeof ProtocolRoute
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
@@ -316,6 +325,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/protocol'
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
@@ -348,6 +358,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/opportunities'
     | '/profile'
+    | '/protocol'
     | '/reset-password'
     | '/console/connections'
     | '/console/datasets'
@@ -381,6 +392,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/protocol'
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
@@ -416,6 +428,7 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   PolicyRoute: typeof PolicyRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  ProtocolRoute: typeof ProtocolRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiV1ContextsRoute: typeof ApiV1ContextsRouteWithChildren
   ApiV1IndexRoute: typeof ApiV1IndexRoute
@@ -428,6 +441,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/protocol': {
+      id: '/protocol'
+      path: '/protocol'
+      fullPath: '/protocol'
+      preLoaderRoute: typeof ProtocolRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -760,6 +780,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   PolicyRoute: PolicyRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  ProtocolRoute: ProtocolRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiV1ContextsRoute: ApiV1ContextsRouteWithChildren,
   ApiV1IndexRoute: ApiV1IndexRoute,

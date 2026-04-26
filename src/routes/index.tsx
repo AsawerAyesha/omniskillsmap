@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Terminal } from "lucide-react";
+import { ArrowRight, Terminal, Code2 } from "lucide-react";
 import { SkillsConstellation } from "../components/unmapped/landing/skills-constellation";
 import { RegionPills } from "../components/unmapped/landing/region-pills";
 
@@ -97,6 +97,14 @@ function Landing() {
               >
                 <Terminal size={15} strokeWidth={1.75} />
                 Operator console
+              </Link>
+
+              <Link
+                to="/protocol"
+                className="inline-flex h-12 items-center gap-2 rounded-full px-5 text-[14px] font-medium text-ink-secondary transition-colors hover:text-ink hover:bg-surface-sunken"
+              >
+                <Code2 size={15} strokeWidth={1.75} />
+                Protocol &amp; API
               </Link>
             </div>
 
