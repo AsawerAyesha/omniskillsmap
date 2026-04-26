@@ -314,6 +314,24 @@
   --policy-grid:         rgba(255,255,255,0.06);
   --policy-grid-strong:  rgba(255,255,255,0.18);
   --policy-accent-ink:   #1A1814;
+
+  /* Console palette (dark) — warm ink + slate accent */
+  --console-bg:           #14130E;
+  --console-canvas:       #1C1A16;
+  --console-sidebar-bg:   #0F0E0A;
+  --console-panel:        rgba(255,255,255,0.04);
+  --console-panel-strong: rgba(255,255,255,0.08);
+  --console-border:       rgba(255,255,255,0.10);
+  --console-rule:         rgba(255,255,255,0.06);
+  --console-fg:           #F0EDE8;
+  --console-fg-muted:     rgba(240,237,232,0.65);
+  --console-fg-faint:     rgba(240,237,232,0.45);
+  --console-accent:       #6E8AA6;
+  --console-accent-hover: #87A2BC;
+  --console-accent-fg:    #0F1620;
+  --console-accent-wash:  linear-gradient(160deg, #1F2A36 0%, #0E1620 100%);
+  --console-success:      #4DAE76;
+  --console-danger:       #E26A5A;
 }
 
 @media (prefers-color-scheme: dark) {
