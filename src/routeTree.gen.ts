@@ -31,6 +31,7 @@ import { Route as ConsoleDeployRouteImport } from './routes/console.deploy'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
 import { Route as ConsoleContextsNewRouteImport } from './routes/console.contexts.new'
+import { Route as ConsoleAuthSignUpRouteImport } from './routes/console.auth.sign-up'
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
 
@@ -144,6 +145,11 @@ const ConsoleContextsNewRoute = ConsoleContextsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => ConsoleContextsRoute,
 } as any)
+const ConsoleAuthSignUpRoute = ConsoleAuthSignUpRouteImport.update({
+  id: '/auth/sign-up',
+  path: '/auth/sign-up',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleAuthSignInRoute = ConsoleAuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/policy/': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
+  '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
 }
 export interface FileRoutesByTo {
@@ -203,6 +210,7 @@ export interface FileRoutesByTo {
   '/policy': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
+  '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
 }
 export interface FileRoutesById {
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/policy/': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
+  '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
 }
 export interface FileRouteTypes {
@@ -258,6 +267,7 @@ export interface FileRouteTypes {
     | '/policy/'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
+    | '/console/auth/sign-up'
     | '/console/contexts/new'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
     | '/policy'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
+    | '/console/auth/sign-up'
     | '/console/contexts/new'
   id:
     | '__root__'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '/policy/'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
+    | '/console/auth/sign-up'
     | '/console/contexts/new'
   fileRoutesById: FileRoutesById
 }
@@ -479,6 +491,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleContextsNewRouteImport
       parentRoute: typeof ConsoleContextsRoute
     }
+    '/console/auth/sign-up': {
+      id: '/console/auth/sign-up'
+      path: '/auth/sign-up'
+      fullPath: '/console/auth/sign-up'
+      preLoaderRoute: typeof ConsoleAuthSignUpRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/auth/sign-in': {
       id: '/console/auth/sign-in'
       path: '/auth/sign-in'
@@ -518,6 +537,7 @@ interface ConsoleRouteChildren {
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleAuthForgotRoute: typeof ConsoleAuthForgotRoute
   ConsoleAuthSignInRoute: typeof ConsoleAuthSignInRoute
+  ConsoleAuthSignUpRoute: typeof ConsoleAuthSignUpRoute
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
@@ -530,6 +550,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleAuthForgotRoute: ConsoleAuthForgotRoute,
   ConsoleAuthSignInRoute: ConsoleAuthSignInRoute,
+  ConsoleAuthSignUpRoute: ConsoleAuthSignUpRoute,
 }
 
 const ConsoleRouteWithChildren =

@@ -112,7 +112,7 @@ function ConsoleLanding() {
   };
 
   const onCreateDeployment = () => {
-    void navigate({ to: "/console/onboarding" });
+    void navigate({ to: "/console/auth/sign-up" });
   };
 
   return (
@@ -373,22 +373,29 @@ function ConsoleLanding() {
                 e.currentTarget.style.background = "transparent";
               }}
             >
-              Create a new deployment
+              Create a new account
             </button>
           </form>
 
           <p
             className="mt-6 text-xs text-center"
-            style={{ color: "rgba(26,24,20,0.5)" }}
+            style={{ color: "rgba(26,24,20,0.55)" }}
           >
-            Need a deployment key from your organization?{" "}
-            <a
-              href="mailto:deploy@unmapped.org"
+            New to UNMAPPED?{" "}
+            <Link
+              to="/console/auth/sign-up"
               className="underline underline-offset-2"
               style={{ color: "#7A6548" }}
             >
-              Request access
-            </a>
+              Create an account
+            </Link>
+          </p>
+          <p
+            className="mt-2 text-[11px] text-center"
+            style={{ color: "rgba(26,24,20,0.4)" }}
+          >
+            Demo? Sign up with any email — instant access, no email
+            verification needed.
           </p>
         </div>
       </main>

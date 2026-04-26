@@ -1,107 +1,63 @@
-# Console — design system extension + C0 (Sign-In)
+# Add a real Sign Up flow to the Console
 
-A new top-level section at `/console`, completely separate from `/` (Youth) and `/policy`. It will be the operator + admin surface (role-gated) for ministries, NGOs and the UNMAPPED platform team. C0 ships with the foundation; C1–C6 plug into it as you send each prompt.
+## The problem
 
-## What you get in this step
+Right now `/console/auth/sign-in` only has a sign-in form. The "Create a new deployment" button routes to a 4-step onboarding wizard that never actually creates a Supabase account, so there is **no way for a new user to get credentials** from the UI.
 
-1. **A new shell** (`ConsoleShell`) — left sidebar IA, top utility bar, content canvas. Same three themes (light parchment / dark warm-ink / onyx OLED), same design tokens, no changes to existing screens.
-2. **Real auth via Lovable Cloud** — email/password + Google, with a `user_roles` table (`admin`, `operator`, `viewer`) and a `has_role()` security-definer function. Routes under `/console/*` are gated.
-3. **C0 Sign-In screen** — split-pane layout, brand panel left, form right, with Email/Password, Google, "Forgot password", and a `redirect` search param so deep links survive the round-trip.
-4. **Console-specific tokens layered on the existing palette** — a thin extension to `src/styles.css` adds `--console-*` variables that resolve per-theme. No changes to `--policy-*` or shadcn semantics.
+## What we'll build
 
-## Information architecture (placeholder shell, ready for C1–C6)
+### 1. New Sign Up screen at `/console/auth/sign-up`
 
-```text
-/console                       → Workspace overview (C1 will fill this)
-/console/cohorts               → C2
-/console/programs              → C3
-/console/signals               → C4
-/console/methodology           → C5
-/console/settings              → C6 (admin-only sections gated)
-/console/auth/sign-in          → C0
-/console/auth/forgot           → password reset request
-/console/auth/reset-password   → recovery callback (public)
-```
+A new route file `src/routes/console.auth.sign-up.tsx` that mirrors the visual design of the sign-in screen (same dark-left / warm-white-right split, same operator-type panel) but with a sign-up form:
 
-The sidebar shows all sections; admin-only ones get a small "Admin" chip and are hidden for non-admins. The active country pill, theme switcher and account avatar live in the top utility bar (matching the Policy header language but with a Console accent).
+- Fields: **Work email**, **Password** (with show/hide toggle), **Confirm password**
+- Primary button: **"Create account"** → calls `supabase.auth.signUp({ email, password })`
+- On success → redirect straight to `/console` (auto-confirm enabled, see step 3)
+- Inline error handling + the same shake animation pattern used on sign-in
+- Footer link: **"Already have an account? Sign in"** → routes to `/console/auth/sign-in`
 
-## Visual language
+### 2. Add a "Sign up" link on the existing sign-in screen
 
-- **Same tokens, new accent**: Console uses a cool slate accent (`--console-accent`) so judges immediately read it as a separate surface from Policy's warm earth. Both still resolve through light/dark/onyx.
-- **Sidebar (240px)**: `--console-sidebar-bg` (slightly raised vs canvas), section labels in `--policy-fg-muted` equivalent, active item gets a 2px left rule in the accent + soft wash.
-- **Topbar (56px)**: brand mark, breadcrumb, country pill, theme switcher, avatar w/ role chip ("Admin" / "Operator" / "Viewer").
-- **Density**: tighter than Youth (closer to the Policy dashboards). 12/14/16px type scale, 8px grid.
-- **Motion**: reuses `--ease-precision` and `rise-in` for content swaps; sidebar items use a 120ms color crossfade.
+In `src/routes/console.auth.sign-in.tsx`:
+- Change the ghost **"Create a new deployment"** button to instead route to `/console/auth/sign-up` (the onboarding wizard stays available but is no longer the only path)
+- Add a small footer line: *"New here? Create an account"* with a link to `/console/auth/sign-up`
 
-## C0 — Sign-In screen
+### 3. Enable email auto-confirm (hackathon convenience)
 
-Two-column 1248px max layout:
+Use `supabase--configure_auth` to set `auto_confirm_email: true` so judges/testers don't need to check an inbox. Sign-up immediately gives them a working session.
 
-- **Left (brand panel, 5/12)** — full-bleed in `--console-accent-wash`, displays:
-  - Compass mark + "UNMAPPED Console" wordmark
-  - Single tagline ("Skills intelligence for ministries and partners")
-  - One-line attribution row (cached ILOSTAT/WDI snapshot indicator) so the institutional tone is set before login
-  - Footer: version + "Civic Compass · v0.1"
-- **Right (form, 7/12)** — `--card` surface, 400px wide:
-  - H1 "Sign in to Console"
-  - Sub "Use your work email or Google account"
-  - Email field, Password field (with show/hide), "Forgot password?" link
-  - Primary button "Sign in" (accent), secondary "Continue with Google" with G icon
-  - Inline error region (one line, `--signal-red`)
-  - Footer micro-copy: "By continuing you agree to UNMAPPED's data-use policy"
-- **States**: idle / loading (button disabled + spinner) / error (shake + inline message) / 2FA-not-yet (placeholder for later)
-- **Behavior**: On success, fetch the user's role from `user_roles`, then `navigate({ to: search.redirect ?? "/console" })`. Already-authenticated visits to `/console/auth/sign-in` redirect away.
+### 4. Auto-assign the `operator` role on signup
 
-## Auth + roles (Lovable Cloud)
+The `ConsoleGuard` and role-aware screens (C2–C6) check `user_roles` for `operator`. If signup doesn't insert a row there, the new user will be locked out of every console screen.
 
-- Enable Lovable Cloud (one click) and use email/password + Google.
-- New tables (with RLS):
-  - `app_role` enum: `admin`, `operator`, `viewer`
-  - `user_roles (id, user_id, role)` with `(user_id, role)` unique
-  - `has_role(_user_id uuid, _role app_role)` SECURITY DEFINER function
-- A pathless layout route `src/routes/_console_auth.tsx` runs `beforeLoad` to:
-  - Verify a session exists (redirect to `/console/auth/sign-in` with `redirect=<href>` if not)
-  - Hydrate `auth.role` into router context so child routes can gate admin-only views with `hasAnyRole(['admin'])`.
-- Role assignment for new signups defaults to `viewer`; admins promote via C6 Settings (built later).
+Add a Postgres migration that:
+- Creates a trigger on `auth.users` (insert) that adds a `('user_id', 'operator')` row into `public.user_roles` for every new signup
+- This makes any newly-signed-up user immediately able to use all console screens
 
-## Files I will create / touch (no existing screens modified)
+### 5. Demo credentials hint (optional polish)
 
-**New (Console foundation + C0):**
-- `src/components/unmapped/console/console-shell.tsx` — sidebar + topbar + outlet
-- `src/components/unmapped/console/console-sidebar.tsx`
-- `src/components/unmapped/console/console-topbar.tsx`
-- `src/components/unmapped/console/console-tokens.css` (imported from `styles.css`) — defines `--console-accent`, `--console-accent-wash`, `--console-sidebar-bg`, `--console-rule`, etc., with light/dark/onyx variants
-- `src/routes/console.tsx` — layout route (renders `ConsoleShell` + `Outlet`)
-- `src/routes/console.index.tsx` — temporary placeholder until C1
-- `src/routes/_console_auth.tsx` — auth gate (pathless)
-- `src/routes/console.auth.sign-in.tsx` — **C0**
-- `src/routes/console.auth.forgot.tsx` — request reset
-- `src/routes/reset-password.tsx` — public recovery callback (per platform requirement)
-- `src/integrations/supabase/auth-context.tsx` — exposes `auth` to router context (session + role)
-- Migration: `app_role` enum, `user_roles` table, RLS policies, `has_role()` function, trigger to auto-create `viewer` role on signup
-- `mem/design/console-tokens.md` + index update — so future agents apply the Console palette correctly
+On the sign-in screen, add a tiny dismissible hint card: *"Demo? Sign up with any email — instant access, no email verification needed."*
 
-**Touched (additive only, zero behavior change to existing screens):**
-- `src/styles.css` — `@import` the new console tokens block (additive)
-- `src/router.tsx` — add `auth` to router context type
-- `src/routes/__root.tsx` — wrap `AppShell` with `AuthProvider`; pass `auth` into router context
+## Technical notes
 
-The existing `AppShell`/`YouthShell`/`PolicyShell` logic is untouched — `AppShell` already short-circuits on `/policy/*`; we add the same short-circuit for `/console/*` so the Console renders its own shell and the Youth/Policy mode bridge is bypassed.
+- Uses existing `supabase.auth.signUp()` — no edge function needed
+- The sign-up screen reuses the same `Field` component pattern and inline styles already in `console.auth.sign-in.tsx` for visual consistency
+- The trigger uses `SECURITY DEFINER` to bypass RLS when inserting into `user_roles`
+- Auto-confirm is reversible — turn it off post-hackathon by re-running `configure_auth` with `auto_confirm_email: false`
+- No changes needed to `ConsoleAuthProvider` or `ConsoleGuard` — they already react to new sessions
 
-## Out of scope for this step
+## Files
 
-- C1–C6 content (will be built one-by-one as you send each prompt)
-- Admin user-management UI (lands in C6)
-- 2FA, magic links, SAML SSO (can be added later via Lovable Cloud)
+**Created**
+- `src/routes/console.auth.sign-up.tsx`
+- One DB migration for the auto-role trigger
 
-## Acceptance checklist
+**Modified**
+- `src/routes/console.auth.sign-in.tsx` (re-point ghost button + add footer sign-up link)
 
-- [ ] Visiting `/` and `/policy` is byte-identical to today (no regressions)
-- [ ] `/console` redirects to `/console/auth/sign-in?redirect=%2Fconsole` when logged out
-- [ ] C0 renders cleanly in light, dark, and onyx
-- [ ] Successful sign-in lands on `/console` (placeholder) with sidebar, topbar, role chip
-- [ ] Refresh on `/console` keeps the session (no flash of login screen — gate runs in `beforeLoad`)
-- [ ] `user_roles` + `has_role()` exist with RLS; new signups get `viewer` automatically
-- [ ] No hard-coded `#111009` / `rgba(255,255,255,*)` introduced — Console uses tokens only
+## After this lands
 
-Ready to ship the foundation + C0. After approval, send the C1 prompt and I'll drop it straight into `/console`.
+1. Open `/console/auth/sign-up`
+2. Enter any email + password (≥6 chars)
+3. Click "Create account" → instantly logged in, operator role assigned, redirected to `/console`
+4. All C2–C6 screens are accessible
