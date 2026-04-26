@@ -71,6 +71,27 @@ interface ContextRow {
   flag_emoji: string | null;
 }
 
+/* Per-kind unique constraints (must match the DB indexes). Used to dedupe
+ * rows before upserting so Postgres doesn't see two rows with the same
+ * conflict target in a single payload. */
+const UNIQUE_KEYS: Partial<Record<DatasetKind, string[]>> = {
+  taxonomy: ["dataset_id", "code"],
+  occupations: ["dataset_id", "code"],
+  labor: ["dataset_id", "indicator_code", "year", "sex", "age_band"],
+};
+
+function dedupeBy<T extends Record<string, unknown>>(
+  rows: T[],
+  keys: string[],
+): T[] {
+  const seen = new Map<string, T>();
+  for (const row of rows) {
+    const k = keys.map((c) => String(row[c] ?? "∅")).join("│");
+    seen.set(k, row); // last-wins
+  }
+  return Array.from(seen.values());
+}
+
 function DatasetsPage() {
   const { user } = useConsoleAuth();
   const [contexts, setContexts] = React.useState<ContextRow[] | null>(null);
