@@ -14,7 +14,7 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
       className="rounded-2xl p-5 md:p-6 space-y-5"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3">

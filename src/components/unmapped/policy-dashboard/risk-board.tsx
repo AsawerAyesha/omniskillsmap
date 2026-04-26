@@ -104,7 +104,7 @@ function ExposureSpectrum({
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-3 flex-wrap">
@@ -251,7 +251,7 @@ function ExposureSpectrum({
                   x2={x}
                   y1={PAD.t + innerH}
                   y2={PAD.t + innerH + 4}
-                  stroke="rgba(255,255,255,0.3)"
+                  stroke="var(--policy-grid-strong)"
                 />
                 <text
                   x={x}
@@ -407,7 +407,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
             >
               <span
                 className="inline-flex items-center gap-1.5 min-w-0"
-                style={{ color: "rgba(240,237,232,0.78)" }}
+                style={{ color: "var(--policy-fg)" }}
               >
                 <span
                   className="h-1.5 w-1.5 rounded-full shrink-0"
@@ -447,7 +447,7 @@ function OccupationDetail({ occ }: { occ: RiskOccupation }) {
       {/* Rationale */}
       <p
         className="mt-4 text-[12px] leading-relaxed"
-        style={{ color: "rgba(240,237,232,0.78)" }}
+        style={{ color: "var(--policy-fg)" }}
       >
         <span
           className="font-mono uppercase text-[10px] tracking-[0.08em] mr-2"
@@ -477,7 +477,7 @@ function Stat({
       ? "rgba(127,181,138,0.95)"
       : tone === "bad"
         ? "rgba(224,122,95,0.95)"
-        : "rgba(240,237,232,0.85)";
+        : "var(--policy-fg)";
   const Icon = tone === "good" ? TrendingDown : tone === "bad" ? TrendingUp : null;
   return (
     <div
@@ -517,7 +517,7 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-4">
@@ -541,7 +541,7 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
         style={{
           background: `${fromMeta.color}1f`,
           border: `1px solid ${fromMeta.ring}`,
-          color: var(--policy-fg),
+          color: "var(--policy-fg)",
         }}
       >
         <span
@@ -564,7 +564,7 @@ function PivotPathways({ occ }: { occ: RiskOccupation }) {
             className="rounded-lg p-3 flex items-center gap-3"
             style={{
               background: var(--policy-panel),
-              border: "1px solid rgba(255,255,255,0.06)",
+              border: "1px solid var(--policy-panel-strong)",
             }}
           >
             <span
@@ -631,7 +631,7 @@ function RiskRegister({
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
@@ -727,7 +727,7 @@ function RiskRegister({
                             ? "rgba(224,122,95,0.95)"
                             : r.trend5y < 0
                               ? "rgba(127,181,138,0.95)"
-                              : var(--policy-fg),
+                              : "var(--policy-fg)",
                       }}
                     >
                       {r.trend5y > 0 ? "+" : ""}
@@ -790,7 +790,7 @@ function Td({
     <td
       className={cn("px-2 py-2 align-middle", mono && "font-mono text-[11px]")}
       style={{
-        color: mono ? var(--policy-fg) : "rgba(240,237,232,0.85)",
+        color: mono ? "var(--policy-fg)" : "var(--policy-fg)",
         textAlign: align,
       }}
     >

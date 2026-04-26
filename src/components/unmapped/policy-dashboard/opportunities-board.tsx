@@ -70,7 +70,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-3">
@@ -139,7 +139,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
                 x2={x}
                 y1={20}
                 y2={H - 30}
-                stroke="rgba(255,255,255,0.1)"
+                stroke="var(--policy-grid)"
                 strokeDasharray="2 4"
               />
               <text
@@ -148,7 +148,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
                 textAnchor="middle"
                 fontSize="11"
                 fontFamily="ui-sans-serif, system-ui"
-                fill="rgba(240,237,232,0.85)"
+                fill="var(--policy-fg)"
               >
                 {p.count.toLocaleString()}
               </text>
@@ -225,7 +225,7 @@ function CategoryMix({
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-3 flex items-baseline justify-between gap-3">
@@ -340,7 +340,7 @@ function CategoryMix({
                     />
                     <span
                       className="text-[12px] truncate"
-                      style={{ color: "rgba(240,237,232,0.85)" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       {e.label}
                     </span>
@@ -387,7 +387,7 @@ function SectorFlowPanel({
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
@@ -447,7 +447,7 @@ function SectorFlowPanel({
                 <div
                   className="text-[13px] truncate"
                   style={{
-                    color: isActive ? var(--policy-fg) : "rgba(240,237,232,0.85)",
+                    color: isActive ? "var(--policy-fg)" : "var(--policy-fg)",
                   }}
                 >
                   {s.sector}
@@ -542,7 +542,7 @@ function ProgramInventory({
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
@@ -628,7 +628,7 @@ function ProgramInventory({
                   <Td align="right">
                     <div
                       className="text-[11px] font-mono tabular-nums"
-                      style={{ color: "rgba(240,237,232,0.85)" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       {p.filled}/{p.capacity}
                     </div>
@@ -673,7 +673,7 @@ function ProgramInventory({
                     <button
                       type="button"
                       className="inline-flex items-center gap-1 text-[11px] opacity-60 group-hover:opacity-100 transition-opacity"
-                      style={{ color: "rgba(240,237,232,0.85)" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       Open <ArrowRight size={12} strokeWidth={1.8} />
                     </button>
@@ -718,7 +718,7 @@ function Td({
     <td
       className={cn("px-2 py-2 align-middle", mono && "font-mono text-[11px]")}
       style={{
-        color: mono ? var(--policy-fg) : "rgba(240,237,232,0.85)",
+        color: mono ? "var(--policy-fg)" : "var(--policy-fg)",
         textAlign: align,
       }}
     >

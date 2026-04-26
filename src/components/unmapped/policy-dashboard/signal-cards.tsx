@@ -18,7 +18,7 @@ export function SignalCards({ signals }: { signals: SignalCard[] }) {
             className="rounded-2xl p-5 opacity-0 animate-rise-in"
             style={{
               background: var(--policy-panel),
-              border: "1px solid rgba(255,255,255,0.08)",
+              border: "1px solid var(--policy-panel-border)",
               borderLeft: `3px solid ${accent}`,
               animationDelay: `${i * 80}ms`,
               boxShadow: "0 1px 0 rgba(0,0,0,0.3)",
@@ -32,7 +32,7 @@ export function SignalCards({ signals }: { signals: SignalCard[] }) {
             </div>
             <div
               className="mt-2 tracking-tight leading-none"
-              style={{ color: var(--policy-fg), fontSize: "36px" }}
+              style={{ color: "var(--policy-fg)", fontSize: "36px" }}
             >
               {s.value}
             </div>
@@ -47,7 +47,7 @@ export function SignalCards({ signals }: { signals: SignalCard[] }) {
               style={{
                 background: var(--policy-panel),
                 color: var(--policy-fg-muted),
-                border: "1px solid rgba(255,255,255,0.06)",
+                border: "1px solid var(--policy-panel-strong)",
               }}
             >
               <span

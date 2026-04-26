@@ -97,7 +97,7 @@ function PolicyProjectionsPage() {
               className="rounded-2xl px-4 py-3 flex items-center gap-3"
               style={{
                 background: var(--policy-panel),
-                border: "1px solid rgba(255,255,255,0.08)",
+                border: "1px solid var(--policy-panel-border)",
               }}
             >
               <div

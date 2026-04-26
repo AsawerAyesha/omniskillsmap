@@ -105,7 +105,7 @@ function ScenarioControls({
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -128,7 +128,7 @@ function ScenarioControls({
           className="inline-flex rounded-lg p-1"
           style={{
             background: var(--policy-panel),
-            border: "1px solid rgba(255,255,255,0.08)",
+            border: "1px solid var(--policy-panel-border)",
           }}
           role="tablist"
           aria-label="Projection scenario"
@@ -201,7 +201,7 @@ function KpiTile({
       className="rounded-xl px-4 py-3"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.06)",
+        border: "1px solid var(--policy-panel-strong)",
       }}
     >
       <div
@@ -308,7 +308,7 @@ function DualCurveChart({
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-3 flex-wrap">
@@ -575,7 +575,7 @@ function DualCurveChart({
               style={{
                 background: visible
                   ? var(--policy-panel)
-                  : "rgba(255,255,255,0.015)",
+                  : "var(--policy-panel)",
                 border: `1px solid ${
                   visible ? var(--policy-panel-border) : var(--policy-panel)
                 }`,
@@ -684,7 +684,7 @@ function ClusterGapMatrix({
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-3 flex-wrap">
@@ -821,7 +821,7 @@ function ThSort({
         type="button"
         onClick={onClick}
         className="inline-flex items-center gap-1 hover:text-[color:var(--policy-fg)] transition-colors"
-        style={{ color: active ? var(--policy-fg) : undefined }}
+        style={{ color: active ? "var(--policy-fg)" : undefined }}
       >
         {children}
         <span
@@ -857,7 +857,7 @@ function AttainmentTrajectoryPanel({
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-4">
@@ -937,7 +937,7 @@ function AttainmentTrajectoryPanel({
         className="mt-5 pt-4 border-t flex flex-wrap items-center gap-3 text-[11px]"
         style={{
           borderColor: var(--policy-panel-border),
-          color: var(--policy-fg),
+          color: "var(--policy-fg)",
         }}
       >
         {segments.map((s) => (

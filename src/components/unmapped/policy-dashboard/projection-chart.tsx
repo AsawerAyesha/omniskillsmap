@@ -50,7 +50,7 @@ export function ProjectionChart({ points, nowYear = 2026 }: Props) {
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-3">

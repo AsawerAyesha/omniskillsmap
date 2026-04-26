@@ -49,7 +49,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
       className="rounded-2xl"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <button
@@ -123,7 +123,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                   style={{
                     background:
                       i % 2 === 0
-                        ? "rgba(255,255,255,0)"
+                        ? "transparent"
                         : var(--policy-panel),
                   }}
                 >
@@ -134,9 +134,9 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                         key={c.key}
                         className={`px-4 py-2.5 text-[12px] ${c.mono ? "font-mono tabular-nums" : ""}`}
                         style={{
-                          color: "rgba(240,237,232,0.85)",
+                          color: "var(--policy-fg)",
                           textAlign: c.align ?? "left",
-                          borderTop: "1px solid rgba(255,255,255,0.04)",
+                          borderTop: "1px solid var(--policy-panel)",
                         }}
                       >
                         {c.key === "automationRisk" ? `${v}%` : v}

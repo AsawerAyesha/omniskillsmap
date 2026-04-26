@@ -20,7 +20,7 @@ export function SkillsHeatmap({ rows }: Props) {
       className="rounded-2xl p-5 md:p-6"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
@@ -68,7 +68,7 @@ export function SkillsHeatmap({ rows }: Props) {
                 <th
                   scope="row"
                   className="text-[12px] font-medium pr-3 text-left"
-                  style={{ color: "rgba(240,237,232,0.85)" }}
+                  style={{ color: "var(--policy-fg)" }}
                 >
                   {r.cluster}
                 </th>
@@ -86,7 +86,7 @@ export function SkillsHeatmap({ rows }: Props) {
                           background: `color-mix(in oklab, var(--earth) ${
                             10 + intensity * 85
                           }%, transparent)`,
-                          border: "1px solid rgba(255,255,255,0.04)",
+                          border: "1px solid var(--policy-panel)",
                         }}
                       >
                         <span
@@ -95,7 +95,7 @@ export function SkillsHeatmap({ rows }: Props) {
                             color:
                               intensity > 0.45
                                 ? "rgba(20,18,15,0.85)"
-                                : var(--policy-fg),
+                                : "var(--policy-fg)",
                           }}
                         >
                           {v}

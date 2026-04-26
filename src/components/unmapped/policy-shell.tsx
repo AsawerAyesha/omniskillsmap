@@ -71,7 +71,7 @@ function getHeaderPalette(theme: "light" | "dark" | "onyx"): HeaderPalette {
   // dark + onyx share the inky topbar so analytical surfaces stay calm
   return {
     bg: theme === "onyx" ? "#0A0908" : "#1C1A16",
-    fg: var(--policy-fg),
+    fg: "var(--policy-fg)",
     fgMuted: "#9C9890",
     fgInactive: "#9C9890",
     border: var(--policy-panel-border),
@@ -82,7 +82,7 @@ function getHeaderPalette(theme: "light" | "dark" | "onyx"): HeaderPalette {
     badgeBgActive: "rgba(196,168,130,0.25)",
     badgeFgActive: "#C4A882",
     menuBg: theme === "onyx" ? "#15130F" : "#23201B",
-    menuFg: var(--policy-fg),
+    menuFg: "var(--policy-fg)",
     menuActiveFg: "#C4A882",
     avatarBg: "rgba(196,168,130,0.2)",
     avatarFg: "#C4A882",

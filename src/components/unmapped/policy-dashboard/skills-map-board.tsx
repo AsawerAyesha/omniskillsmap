@@ -44,7 +44,7 @@ export function SkillsMapBoard({ data }: Props) {
           className="rounded-2xl px-4 py-3 flex flex-wrap items-center gap-x-5 gap-y-3"
           style={{
             background: var(--policy-panel),
-            border: "1px solid rgba(255,255,255,0.08)",
+            border: "1px solid var(--policy-panel-border)",
           }}
         >
           {/* Region chips */}
@@ -72,7 +72,7 @@ export function SkillsMapBoard({ data }: Props) {
                     background: active
                       ? "rgba(196,168,130,0.18)"
                       : var(--policy-panel),
-                    color: active ? var(--policy-fg) : var(--policy-fg),
+                    color: active ? "var(--policy-fg)" : "var(--policy-fg)",
                   }}
                 >
                   {r}
@@ -114,7 +114,7 @@ export function SkillsMapBoard({ data }: Props) {
                       border: `1px solid ${
                         active ? meta?.ring ?? var(--policy-grid-strong) : "transparent"
                       }`,
-                      color: active ? var(--policy-fg) : var(--policy-fg),
+                      color: active ? "var(--policy-fg)" : "var(--policy-fg)",
                     }}
                   >
                     {meta && (
@@ -148,7 +148,7 @@ export function SkillsMapBoard({ data }: Props) {
               className="sm:col-span-2 rounded-2xl px-5 py-10 text-center text-[13px]"
               style={{
                 background: var(--policy-panel),
-                border: "1px dashed rgba(255,255,255,0.12)",
+                border: "1px dashed var(--policy-grid)",
                 color: var(--policy-fg-muted),
               }}
             >
@@ -261,7 +261,7 @@ function ClusterCard({
               className="text-[11px] px-2 py-0.5 rounded"
               style={{
                 background: var(--policy-panel),
-                color: "rgba(240,237,232,0.78)",
+                color: "var(--policy-fg)",
               }}
             >
               {o}
@@ -284,7 +284,7 @@ function ClusterCard({
           </div>
           <div
             className="text-[11px] font-mono mt-0.5 truncate"
-            style={{ color: "rgba(240,237,232,0.78)" }}
+            style={{ color: "var(--policy-fg)" }}
           >
             {cluster.topRegions.join("  ·  ")}
           </div>
@@ -324,7 +324,7 @@ function BarRow({
         </span>
         <span
           className="text-[11px] font-mono tabular-nums"
-          style={{ color: "rgba(240,237,232,0.78)" }}
+          style={{ color: "var(--policy-fg)" }}
         >
           {display}
         </span>
@@ -377,7 +377,7 @@ function SupplyDemandQuadrant({
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
         background: var(--policy-panel),
-        border: "1px solid rgba(255,255,255,0.08)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-3">
