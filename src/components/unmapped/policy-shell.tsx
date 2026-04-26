@@ -285,7 +285,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
         <div className="u-container flex items-center gap-4 lg:gap-6 py-3">
           {/* Brand cluster — fixed-width, never shrinks */}
           <div className="flex items-center gap-3 shrink-0">
-            <img src={omniskillMark} alt="" aria-hidden="true" width={20} height={20} className="rounded-sm" />
+            <img src={omniskillMark} alt="" aria-hidden="true" width={32} height={32} className="rounded-md" />
             <span className="font-display text-base tracking-tight">OmniSkill</span>
             <span
               className="hidden lg:inline-block text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 rounded-full whitespace-nowrap"

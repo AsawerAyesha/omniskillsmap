@@ -63,7 +63,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
         >
           {!collapsed && (
             <span className="inline-flex items-center gap-2 font-display text-lg tracking-tight">
-              <img src={omniskillMark} alt="" aria-hidden="true" width={22} height={22} className="rounded-sm" />
+              <img src={omniskillMark} alt="" aria-hidden="true" width={36} height={36} className="rounded-md" />
               OmniSkill
             </span>
           )}
@@ -184,7 +184,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
         {/* Mobile topbar */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-subtle bg-[var(--surface-raised)]">
           <span className="inline-flex items-center gap-2 font-display text-base tracking-tight">
-            <img src={omniskillMark} alt="" aria-hidden="true" width={20} height={20} className="rounded-sm" />
+            <img src={omniskillMark} alt="" aria-hidden="true" width={32} height={32} className="rounded-md" />
             OmniSkill
           </span>
           <div className="flex items-center gap-2">

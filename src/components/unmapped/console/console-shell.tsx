@@ -92,9 +92,9 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
             src={omniskillMark}
             alt=""
             aria-hidden="true"
-            width={20}
-            height={20}
-            className="rounded-sm"
+            width={32}
+            height={32}
+            className="rounded-md"
           />
           <span className="font-display text-base tracking-tight">OmniSkill</span>
           <span

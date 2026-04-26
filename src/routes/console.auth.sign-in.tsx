@@ -127,9 +127,9 @@ function ConsoleLanding() {
           <img
             src={omniskillMark}
             alt="OmniSkill"
-            width={56}
-            height={56}
-            className="mb-4 rounded-md"
+            width={120}
+            height={120}
+            className="mb-6 rounded-lg shadow-lg"
             style={{ display: "block" }}
           />
           <div
