@@ -21,16 +21,42 @@ function isPolicyPath(pathname: string): boolean {
   return pathname === "/policy" || pathname.startsWith("/policy/");
 }
 
+/* /console/* is a fully separate top-level surface — it brings its own
+ * shell (ConsoleShell) so we short-circuit AppShell entirely and just
+ * render the route outlet. The reset-password route is also outside the
+ * Youth/Policy shells. */
+function isConsolePath(pathname: string): boolean {
+  return (
+    pathname === "/console" ||
+    pathname.startsWith("/console/") ||
+    pathname === "/reset-password"
+  );
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const { mode, setMode } = useUnmappedMode();
   const policyView = isPolicyPath(pathname);
+  const consoleView = isConsolePath(pathname);
   const Shell = policyView ? PolicyShell : YouthShell;
 
   React.useEffect(() => {
+    if (consoleView) return; // Console manages its own state; don't fight it.
     const next = policyView ? "policy" : "youth";
     if (next !== mode) setMode(next);
-  }, [policyView, mode, setMode]);
+  }, [policyView, consoleView, mode, setMode]);
+
+  // Console + reset-password render bare — they ship their own shell.
+  if (consoleView) {
+    return (
+      <ContextConfigProvider>
+        <SkipLink />
+        <OfflineBanner />
+        {children}
+        <BrandToaster />
+      </ContextConfigProvider>
+    );
+  }
 
   return (
     <ContextConfigProvider>
