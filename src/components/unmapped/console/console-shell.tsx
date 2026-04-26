@@ -164,7 +164,7 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={async () => {
                 await signOut();
-                void navigate({ to: "/console/auth/sign-in" });
+                void navigate({ to: "/console/auth/sign-in", search: { redirect: "/console" } });
               }}
               aria-label="Sign out"
               className="p-1.5 rounded-md transition-colors"
