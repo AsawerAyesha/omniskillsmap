@@ -1,51 +1,176 @@
-import { createFileRoute } from "@tanstack/react-router";
+import * as React from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Plus, Globe2, Database, Rocket, ArrowRight } from "lucide-react";
 import { ConsoleGuard } from "@/components/unmapped/console/console-guard";
+import { supabase } from "@/integrations/supabase/client";
+import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
 
 export const Route = createFileRoute("/console/")({
-  component: ConsoleHome,
+  component: () => (
+    <ConsoleGuard>
+      <ConsoleHome />
+    </ConsoleGuard>
+  ),
 });
 
 function ConsoleHome() {
+  const { user } = useConsoleAuth();
+  const [counts, setCounts] = React.useState<{
+    total: number;
+    active: number;
+    draft: number;
+  } | null>(null);
+
+  React.useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    void (async () => {
+      const { data } = await supabase.from("contexts").select("status");
+      if (cancelled) return;
+      const rows = data ?? [];
+      setCounts({
+        total: rows.length,
+        active: rows.filter((r) => r.status === "active").length,
+        draft: rows.filter((r) => r.status === "draft").length,
+      });
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
   return (
-    <ConsoleGuard>
-      <div className="px-8 py-10 max-w-5xl">
-        <h1 className="font-display text-3xl tracking-tight">Workspace</h1>
+    <div className="px-6 lg:px-10 py-8 max-w-5xl">
+      <header className="mb-8">
+        <h1
+          className="font-display tracking-tight"
+          style={{ fontSize: 28, color: "var(--console-fg)" }}
+        >
+          Workspace
+        </h1>
         <p
           className="mt-2 text-sm max-w-prose"
           style={{ color: "var(--console-fg-muted)" }}
         >
-          Console foundation is live. Send the C1 prompt and this surface will be
-          replaced with the Workspace overview — cohorts, programs, signal
-          health, and quick actions.
+          OmniSkill is a protocol layer. Configure a context, ingest local
+          data, and publish — your dataset will drive the public dashboard.
         </p>
+      </header>
 
-        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { label: "Cohorts", hint: "Reserved for C2" },
-            { label: "Programs", hint: "Reserved for C3" },
-            { label: "Signals", hint: "Reserved for C4" },
-            { label: "Methodology", hint: "Reserved for C5" },
-            { label: "Settings", hint: "Reserved for C6 · admin" },
-          ].map((card) => (
-            <div
-              key={card.label}
-              className="rounded-lg border p-4"
-              style={{
-                background: "var(--console-canvas)",
-                borderColor: "var(--console-border)",
-              }}
-            >
-              <div className="text-sm font-medium">{card.label}</div>
-              <div
-                className="mt-1 text-xs"
-                style={{ color: "var(--console-fg-faint)" }}
-              >
-                {card.hint}
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className="grid sm:grid-cols-3 gap-3 mb-8">
+        <StatCard label="Contexts" value={counts?.total} hint="Total" />
+        <StatCard label="Active" value={counts?.active} hint="Live to public" />
+        <StatCard label="Drafts" value={counts?.draft} hint="Not yet published" />
       </div>
-    </ConsoleGuard>
+
+      <div className="grid sm:grid-cols-3 gap-4">
+        <ActionCard
+          to="/console/contexts/new"
+          icon={<Plus size={16} />}
+          title="Create a context"
+          desc="Country, calibration, taxonomy, languages."
+        />
+        <ActionCard
+          to="/console/contexts"
+          icon={<Globe2 size={16} />}
+          title="Manage contexts"
+          desc="View and edit your existing contexts."
+        />
+        <ActionCard
+          to="/console/taxonomy"
+          icon={<Database size={16} />}
+          title="Taxonomy & data"
+          desc="Import ESCO/ONET, occupations, indicators."
+        />
+        <ActionCard
+          to="/console/deploy"
+          icon={<Rocket size={16} />}
+          title="Publish a dataset"
+          desc="Promote a draft dataset to live."
+        />
+        <ActionCard
+          to="/console/monitor"
+          icon={<ArrowRight size={16} />}
+          title="Monitor"
+          desc="Ingestion runs and dataset health."
+        />
+      </div>
+    </div>
+  );
+}
+
+function StatCard({
+  label,
+  value,
+  hint,
+}: {
+  label: string;
+  value: number | undefined;
+  hint: string;
+}) {
+  return (
+    <div
+      className="rounded-lg border p-4"
+      style={{
+        background: "var(--console-canvas)",
+        borderColor: "var(--console-border)",
+      }}
+    >
+      <div
+        className="text-xs uppercase tracking-wider"
+        style={{ color: "var(--console-fg-faint)" }}
+      >
+        {label}
+      </div>
+      <div
+        className="mt-1 font-display tracking-tight"
+        style={{ fontSize: 28, color: "var(--console-fg)" }}
+      >
+        {value ?? "—"}
+      </div>
+      <div
+        className="text-xs mt-0.5"
+        style={{ color: "var(--console-fg-muted)" }}
+      >
+        {hint}
+      </div>
+    </div>
+  );
+}
+
+function ActionCard({
+  to,
+  icon,
+  title,
+  desc,
+}: {
+  to: string;
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="group rounded-lg border p-4 transition-colors block"
+      style={{
+        background: "var(--console-canvas)",
+        borderColor: "var(--console-border)",
+      }}
+    >
+      <div
+        className="flex items-center gap-2 text-sm font-medium"
+        style={{ color: "var(--console-fg)" }}
+      >
+        <span style={{ color: "var(--console-accent)" }}>{icon}</span>
+        {title}
+      </div>
+      <div
+        className="mt-1 text-xs"
+        style={{ color: "var(--console-fg-muted)" }}
+      >
+        {desc}
+      </div>
+    </Link>
   );
 }
