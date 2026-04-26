@@ -134,7 +134,7 @@ function DatasetsPage() {
         status: "draft",
         notes: `Uploaded ${fileName}`,
         created_by: user.id,
-      })
+      } as never)
       .select("id, version")
       .single();
 
@@ -175,7 +175,7 @@ function DatasetsPage() {
       rows_ok: result.ok.length,
       rows_err: result.errors.length,
       errors: result.errors.slice(0, 50) as never,
-    });
+    } as never);
 
     setCommitted({
       dataset_id: ds.id,
