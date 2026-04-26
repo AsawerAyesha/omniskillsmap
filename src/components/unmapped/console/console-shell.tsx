@@ -10,6 +10,7 @@ import {
   LogOut,
   Compass,
   Layers,
+  Database,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "../theme-switcher";
@@ -33,6 +34,7 @@ interface NavItem {
 const NAV: NavItem[] = [
   { to: "/console", label: "Workspace", icon: LayoutDashboard },
   { to: "/console/contexts", label: "Contexts", icon: Layers },
+  { to: "/console/connections", label: "Connections", icon: Database },
   { to: "/console/cohorts", label: "Cohorts", icon: Users },
   { to: "/console/programs", label: "Programs", icon: BookOpen },
   { to: "/console/signals", label: "Signals", icon: Activity },
@@ -162,7 +164,7 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={async () => {
                 await signOut();
-                void navigate({ to: "/console/auth/sign-in" });
+                void navigate({ to: "/console/auth/sign-in", search: { redirect: "/console" } });
               }}
               aria-label="Sign out"
               className="p-1.5 rounded-md transition-colors"

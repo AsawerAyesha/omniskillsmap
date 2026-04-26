@@ -171,7 +171,7 @@ function OnboardingPage() {
 
   const onBack = () => {
     if (step === 1) {
-      void navigate({ to: "/console/auth/sign-in" });
+      void navigate({ to: "/console/auth/sign-in", search: { redirect: "/console" } });
       return;
     }
     setStep((s) => Math.max(1, s - 1));
