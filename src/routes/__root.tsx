@@ -5,6 +5,7 @@ import appCss from "../styles.css?url";
 import { UnmappedModeProvider } from "../components/unmapped/mode-context";
 import { AppShell } from "../components/unmapped/app-shell";
 import { ThemeProvider } from "../components/unmapped/theme-context";
+import { ConsoleAuthProvider } from "../components/unmapped/console/auth-context";
 
 function NotFoundComponent() {
   return (
@@ -75,11 +76,13 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   return (
     <ThemeProvider>
-      <UnmappedModeProvider>
-        <AppShell>
-          <Outlet />
-        </AppShell>
-      </UnmappedModeProvider>
+      <ConsoleAuthProvider>
+        <UnmappedModeProvider>
+          <AppShell>
+            <Outlet />
+          </AppShell>
+        </UnmappedModeProvider>
+      </ConsoleAuthProvider>
     </ThemeProvider>
   );
 }
