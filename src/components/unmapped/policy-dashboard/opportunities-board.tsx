@@ -69,20 +69,20 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
     <section
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--policy-panel)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-3">
         <h2
           className="text-[12px] uppercase tracking-[0.08em] font-medium"
-          style={{ color: "rgba(240,237,232,0.55)" }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Placement pipeline
         </h2>
         <p
           className="mt-1 text-[11px]"
-          style={{ color: "rgba(240,237,232,0.45)" }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           Discovered → Matched → Applied → Placed (last 90 days)
         </p>
@@ -105,7 +105,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
         {/* Funnel polygon */}
         <polygon
           fill="url(#funnelFill)"
-          stroke="rgba(255,255,255,0.12)"
+          stroke="var(--policy-grid)"
           points={pipeline
             .map((p, i) => {
               const x = PAD + i * stepW + stepW / 2;
@@ -139,7 +139,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
                 x2={x}
                 y1={20}
                 y2={H - 30}
-                stroke="rgba(255,255,255,0.1)"
+                stroke="var(--policy-grid)"
                 strokeDasharray="2 4"
               />
               <text
@@ -148,7 +148,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
                 textAnchor="middle"
                 fontSize="11"
                 fontFamily="ui-sans-serif, system-ui"
-                fill="rgba(240,237,232,0.85)"
+                fill="var(--policy-fg)"
               >
                 {p.count.toLocaleString()}
               </text>
@@ -158,7 +158,7 @@ function PipelineFunnel({ pipeline }: { pipeline: OppDataset["pipeline"] }) {
                 textAnchor="middle"
                 fontSize="10"
                 fontFamily="ui-monospace, monospace"
-                fill="rgba(240,237,232,0.55)"
+                fill="var(--policy-fg-muted)"
               >
                 {p.stage}
               </text>
@@ -224,21 +224,21 @@ function CategoryMix({
     <section
       className="rounded-2xl p-5 md:p-6 h-full"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--policy-panel)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="mb-3 flex items-baseline justify-between gap-3">
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: "rgba(240,237,232,0.55)" }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Opportunity mix
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: "rgba(240,237,232,0.45)" }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Click a segment to filter the board
           </p>
@@ -248,7 +248,7 @@ function CategoryMix({
             type="button"
             onClick={() => onChange("all")}
             className="text-[11px] underline"
-            style={{ color: "rgba(240,237,232,0.7)" }}
+            style={{ color: "var(--policy-fg)" }}
           >
             Clear
           </button>
@@ -267,7 +267,7 @@ function CategoryMix({
             cy={SIZE / 2}
             r={R}
             fill="none"
-            stroke="rgba(255,255,255,0.06)"
+            stroke="var(--policy-panel-border)"
             strokeWidth={STROKE}
           />
           {arcs.map((a) => {
@@ -300,7 +300,7 @@ function CategoryMix({
             textAnchor="middle"
             fontSize="22"
             fontFamily="ui-sans-serif, system-ui"
-            fill="#F0EDE8"
+            fill="var(--policy-fg)"
           >
             {total.toLocaleString()}
           </text>
@@ -310,7 +310,7 @@ function CategoryMix({
             textAnchor="middle"
             fontSize="10"
             fontFamily="ui-monospace, monospace"
-            fill="rgba(240,237,232,0.55)"
+            fill="var(--policy-fg-muted)"
           >
             opportunities
           </text>
@@ -329,7 +329,7 @@ function CategoryMix({
                     "w-full flex items-center justify-between gap-3 rounded-md px-2 py-1.5 text-left transition-colors",
                   )}
                   style={{
-                    background: isActive ? "rgba(255,255,255,0.05)" : "transparent",
+                    background: isActive ? "var(--policy-panel-strong)" : "transparent",
                     border: `1px solid ${isActive ? CATEGORY_META[e.key].ring : "transparent"}`,
                   }}
                 >
@@ -340,14 +340,14 @@ function CategoryMix({
                     />
                     <span
                       className="text-[12px] truncate"
-                      style={{ color: "rgba(240,237,232,0.85)" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       {e.label}
                     </span>
                   </span>
                   <span
                     className="text-[11px] font-mono tabular-nums whitespace-nowrap"
-                    style={{ color: "rgba(240,237,232,0.65)" }}
+                    style={{ color: "var(--policy-fg-muted)" }}
                   >
                     {e.value.toLocaleString()} · {pct}%
                   </span>
@@ -386,21 +386,21 @@ function SectorFlowPanel({
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--policy-panel)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: "rgba(240,237,232,0.55)" }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Sector flow
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: "rgba(240,237,232,0.45)" }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Stacked by category. Bar length = opportunities
             {category !== "all" ? ` (${CATEGORY_META[category].label})` : ""}.
@@ -412,7 +412,7 @@ function SectorFlowPanel({
             <span
               key={k}
               className="inline-flex items-center gap-1.5 text-[11px]"
-              style={{ color: "rgba(240,237,232,0.7)" }}
+              style={{ color: "var(--policy-fg)" }}
             >
               <span
                 className="h-2 w-2 rounded-full"
@@ -447,14 +447,14 @@ function SectorFlowPanel({
                 <div
                   className="text-[13px] truncate"
                   style={{
-                    color: isActive ? "#F0EDE8" : "rgba(240,237,232,0.85)",
+                    color: isActive ? "var(--policy-fg)" : "var(--policy-fg)",
                   }}
                 >
                   {s.sector}
                 </div>
                 <div
                   className="text-[10px] font-mono mt-0.5"
-                  style={{ color: "rgba(240,237,232,0.45)" }}
+                  style={{ color: "var(--policy-fg-faint)" }}
                 >
                   {s.matchedYouth.toLocaleString()} matched · +{s.weeklyDelta}/wk
                 </div>
@@ -464,7 +464,7 @@ function SectorFlowPanel({
                 <div
                   className="h-7 w-full rounded-md flex overflow-hidden"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
+                    background: "var(--policy-panel)",
                     width: `${Math.max(8, pct)}%`,
                     minWidth: 80,
                     transition: "width 500ms cubic-bezier(0.16,1,0.3,1)",
@@ -541,28 +541,28 @@ function ProgramInventory({
     <section
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--policy-panel)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
         <div>
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: "rgba(240,237,232,0.55)" }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             Partner program inventory
           </h2>
           <p
             className="mt-1 text-[11px]"
-            style={{ color: "rgba(240,237,232,0.45)" }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             Live capacity vs. enrolment, by sector and region.
           </p>
         </div>
         <span
           className="text-[11px] font-mono"
-          style={{ color: "rgba(240,237,232,0.55)" }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           {filtered.length} of {programs.length} shown
         </span>
@@ -571,7 +571,7 @@ function ProgramInventory({
       <div className="overflow-x-auto -mx-1 px-1">
         <table className="w-full text-left border-separate border-spacing-y-1.5 min-w-[760px]">
           <thead>
-            <tr style={{ color: "rgba(240,237,232,0.55)" }}>
+            <tr style={{ color: "var(--policy-fg-muted)" }}>
               <Th>Program ID</Th>
               <Th>Program</Th>
               <Th>Category</Th>
@@ -590,19 +590,19 @@ function ProgramInventory({
                 <tr
                   key={p.id}
                   className="group"
-                  style={{ background: "rgba(255,255,255,0.025)" }}
+                  style={{ background: "var(--policy-panel)" }}
                 >
                   <Td mono>{p.id}</Td>
                   <Td>
                     <div
                       className="text-[13px]"
-                      style={{ color: "#F0EDE8" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       {p.name}
                     </div>
                     <div
                       className="text-[10px] font-mono"
-                      style={{ color: "rgba(240,237,232,0.45)" }}
+                      style={{ color: "var(--policy-fg-faint)" }}
                     >
                       {p.partner}
                     </div>
@@ -628,14 +628,14 @@ function ProgramInventory({
                   <Td align="right">
                     <div
                       className="text-[11px] font-mono tabular-nums"
-                      style={{ color: "rgba(240,237,232,0.85)" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       {p.filled}/{p.capacity}
                     </div>
                     <div
                       className="mt-1 h-1 rounded-full overflow-hidden"
                       style={{
-                        background: "rgba(255,255,255,0.06)",
+                        background: "var(--policy-panel-border)",
                         width: 100,
                         marginLeft: "auto",
                       }}
@@ -663,7 +663,7 @@ function ProgramInventory({
                             ? "rgba(127,181,138,0.95)"
                             : p.status === "Onboarding"
                               ? "rgba(196,168,130,0.95)"
-                              : "rgba(240,237,232,0.45)",
+                              : "var(--policy-fg-faint)",
                       }}
                     >
                       ● {p.status}
@@ -673,7 +673,7 @@ function ProgramInventory({
                     <button
                       type="button"
                       className="inline-flex items-center gap-1 text-[11px] opacity-60 group-hover:opacity-100 transition-opacity"
-                      style={{ color: "rgba(240,237,232,0.85)" }}
+                      style={{ color: "var(--policy-fg)" }}
                     >
                       Open <ArrowRight size={12} strokeWidth={1.8} />
                     </button>
@@ -718,7 +718,7 @@ function Td({
     <td
       className={cn("px-2 py-2 align-middle", mono && "font-mono text-[11px]")}
       style={{
-        color: mono ? "rgba(240,237,232,0.7)" : "rgba(240,237,232,0.85)",
+        color: mono ? "var(--policy-fg)" : "var(--policy-fg)",
         textAlign: align,
       }}
     >

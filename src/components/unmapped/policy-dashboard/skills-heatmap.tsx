@@ -19,20 +19,20 @@ export function SkillsHeatmap({ rows }: Props) {
     <div
       className="rounded-2xl p-5 md:p-6"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--policy-panel)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <header className="flex items-baseline justify-between gap-3 mb-4">
         <h2
           className="text-[12px] uppercase tracking-[0.08em] font-medium"
-          style={{ color: "rgba(240,237,232,0.55)" }}
+          style={{ color: "var(--policy-fg-muted)" }}
         >
           Skills gap by occupation cluster
         </h2>
         <span
           className="text-[10px] uppercase tracking-[0.08em] font-mono"
-          style={{ color: "rgba(240,237,232,0.45)" }}
+          style={{ color: "var(--policy-fg-faint)" }}
         >
           Demand quintile →
         </span>
@@ -48,7 +48,7 @@ export function SkillsHeatmap({ rows }: Props) {
                   key={q}
                   scope="col"
                   className="text-[11px] font-medium pb-2 text-center"
-                  style={{ color: "rgba(240,237,232,0.55)" }}
+                  style={{ color: "var(--policy-fg-muted)" }}
                 >
                   {q}
                 </th>
@@ -56,7 +56,7 @@ export function SkillsHeatmap({ rows }: Props) {
               <th
                 scope="col"
                 className="text-[11px] font-mono uppercase tracking-[0.06em] pb-2 text-right pr-1"
-                style={{ color: "rgba(240,237,232,0.45)" }}
+                style={{ color: "var(--policy-fg-faint)" }}
               >
                 Total
               </th>
@@ -68,7 +68,7 @@ export function SkillsHeatmap({ rows }: Props) {
                 <th
                   scope="row"
                   className="text-[12px] font-medium pr-3 text-left"
-                  style={{ color: "rgba(240,237,232,0.85)" }}
+                  style={{ color: "var(--policy-fg)" }}
                 >
                   {r.cluster}
                 </th>
@@ -86,7 +86,7 @@ export function SkillsHeatmap({ rows }: Props) {
                           background: `color-mix(in oklab, var(--earth) ${
                             10 + intensity * 85
                           }%, transparent)`,
-                          border: "1px solid rgba(255,255,255,0.04)",
+                          border: "1px solid var(--policy-panel)",
                         }}
                       >
                         <span
@@ -95,7 +95,7 @@ export function SkillsHeatmap({ rows }: Props) {
                             color:
                               intensity > 0.45
                                 ? "rgba(20,18,15,0.85)"
-                                : "rgba(240,237,232,0.7)",
+                                : "var(--policy-fg)",
                           }}
                         >
                           {v}
@@ -106,7 +106,7 @@ export function SkillsHeatmap({ rows }: Props) {
                 })}
                 <td
                   className="text-right pr-1 text-[12px] font-mono tabular-nums"
-                  style={{ color: "rgba(240,237,232,0.7)" }}
+                  style={{ color: "var(--policy-fg)" }}
                 >
                   {totals[ri]}
                 </td>
@@ -118,7 +118,7 @@ export function SkillsHeatmap({ rows }: Props) {
 
       <p
         className="mt-3 text-[11px]"
-        style={{ color: "rgba(240,237,232,0.45)" }}
+        style={{ color: "var(--policy-fg-faint)" }}
       >
         Cells show profile counts. Colour intensity scales to the maximum cell
         in this view. Hover for details.

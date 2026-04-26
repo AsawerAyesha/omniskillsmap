@@ -17,8 +17,8 @@ export function SignalCards({ signals }: { signals: SignalCard[] }) {
             key={s.label}
             className="rounded-2xl p-5 opacity-0 animate-rise-in"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "var(--policy-panel)",
+              border: "1px solid var(--policy-panel-border)",
               borderLeft: `3px solid ${accent}`,
               animationDelay: `${i * 80}ms`,
               boxShadow: "0 1px 0 rgba(0,0,0,0.3)",
@@ -26,28 +26,28 @@ export function SignalCards({ signals }: { signals: SignalCard[] }) {
           >
             <div
               className="text-[11px] uppercase tracking-[0.08em] font-medium"
-              style={{ color: "rgba(240,237,232,0.55)" }}
+              style={{ color: "var(--policy-fg-muted)" }}
             >
               {s.label}
             </div>
             <div
               className="mt-2 tracking-tight leading-none"
-              style={{ color: "#F0EDE8", fontSize: "36px" }}
+              style={{ color: "var(--policy-fg)", fontSize: "36px" }}
             >
               {s.value}
             </div>
             <p
               className="mt-2 text-[12px] leading-snug"
-              style={{ color: "rgba(240,237,232,0.7)" }}
+              style={{ color: "var(--policy-fg)" }}
             >
               {s.caption}
             </p>
             <div
               className="mt-3 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.08em] font-mono rounded-full px-2 py-0.5"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                color: "rgba(240,237,232,0.55)",
-                border: "1px solid rgba(255,255,255,0.06)",
+                background: "var(--policy-panel)",
+                color: "var(--policy-fg-muted)",
+                border: "1px solid var(--policy-panel-strong)",
               }}
             >
               <span

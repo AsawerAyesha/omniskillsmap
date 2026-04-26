@@ -48,8 +48,8 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
       aria-label="Raw profile data"
       className="rounded-2xl"
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--policy-panel)",
+        border: "1px solid var(--policy-panel-border)",
       }}
     >
       <button
@@ -61,13 +61,13 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
         <div className="flex items-baseline gap-3">
           <h2
             className="text-[12px] uppercase tracking-[0.08em] font-medium"
-            style={{ color: "rgba(240,237,232,0.55)" }}
+            style={{ color: "var(--policy-fg-muted)" }}
           >
             View raw profile data
           </h2>
           <span
             className="text-[11px] font-mono tabular-nums"
-            style={{ color: "rgba(240,237,232,0.45)" }}
+            style={{ color: "var(--policy-fg-faint)" }}
           >
             {rows.length} rows
           </span>
@@ -75,7 +75,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
         <ChevronDown
           size={16}
           className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          style={{ color: "rgba(240,237,232,0.55)" }}
+          style={{ color: "var(--policy-fg-muted)" }}
         />
       </button>
 
@@ -99,7 +99,7 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                       style={{
                         color: active
                           ? "var(--earth)"
-                          : "rgba(240,237,232,0.55)",
+                          : "var(--policy-fg-muted)",
                         textAlign: c.align ?? "left",
                       }}
                     >
@@ -123,8 +123,8 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                   style={{
                     background:
                       i % 2 === 0
-                        ? "rgba(255,255,255,0)"
-                        : "rgba(255,255,255,0.025)",
+                        ? "transparent"
+                        : "var(--policy-panel)",
                   }}
                 >
                   {COLUMNS.map((c) => {
@@ -134,9 +134,9 @@ export function RawProfilesTable({ rows }: { rows: RawProfile[] }) {
                         key={c.key}
                         className={`px-4 py-2.5 text-[12px] ${c.mono ? "font-mono tabular-nums" : ""}`}
                         style={{
-                          color: "rgba(240,237,232,0.85)",
+                          color: "var(--policy-fg)",
                           textAlign: c.align ?? "left",
-                          borderTop: "1px solid rgba(255,255,255,0.04)",
+                          borderTop: "1px solid var(--policy-panel)",
                         }}
                       >
                         {c.key === "automationRisk" ? `${v}%` : v}
