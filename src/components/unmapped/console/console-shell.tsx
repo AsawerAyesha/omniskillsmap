@@ -8,7 +8,6 @@ import {
   FileText,
   Settings,
   LogOut,
-  Compass,
   Layers,
   Database,
   Network,
@@ -18,6 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "../theme-switcher";
 import { useConsoleAuth, type AppRole } from "./auth-context";
+import omniskillMark from "@/assets/omniskill-mark.svg";
 
 /* Console shell — left sidebar + top utility bar.
  *
@@ -88,7 +88,14 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
           className="px-5 h-14 flex items-center gap-2.5 border-b"
           style={{ borderColor: "var(--console-border)" }}
         >
-          <Compass size={18} strokeWidth={1.5} style={{ color: "var(--console-accent)" }} />
+          <img
+            src={omniskillMark}
+            alt=""
+            aria-hidden="true"
+            width={20}
+            height={20}
+            className="rounded-sm"
+          />
           <span className="font-display text-base tracking-tight">OmniSkill</span>
           <span
             className="ml-auto text-[10px] uppercase tracking-[0.12em] px-1.5 py-0.5 rounded-full"
