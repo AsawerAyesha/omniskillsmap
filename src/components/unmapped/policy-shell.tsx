@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
 import { useContextConfig } from "./context-config/context-config-store";
 import { ThemeSwitcher } from "./theme-switcher";
-import { useTheme } from "./theme-context";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -203,22 +202,6 @@ function ResponsiveNav({
 export function PolicyShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const { active, openDrawer } = useContextConfig();
-  const { theme, setTheme } = useTheme();
-
-  /* Policy is an analytical context that wants a dark-family palette by
-   * default — but we now respect the user's explicit choice. If the user
-   * has selected "light" (only meaningful in the youth shell), we promote
-   * them to "dark" while the policy shell is mounted, then restore their
-   * preference on unmount so toggling back to youth never leaves them
-   * stranded in a dark theme they didn't ask for. Onyx is honored as-is. */
-  React.useEffect(() => {
-    const previous = theme;
-    if (theme === "light") setTheme("dark");
-    return () => {
-      if (previous === "light") setTheme("light");
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--surface)] text-[var(--ink)]">
