@@ -668,6 +668,16 @@ function ContextWizard() {
                 {Object.keys(errors).length === 1 ? "" : "s"} need attention
               </span>
             )}
+            {submitError && (
+              <span
+                className="inline-flex items-center gap-1.5 text-xs max-w-[320px] truncate"
+                style={{ color: "var(--console-danger)" }}
+                title={submitError}
+              >
+                <AlertCircle size={13} />
+                {submitError}
+              </span>
+            )}
             <button
               type="button"
               onClick={onSubmit}
