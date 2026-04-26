@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Download, MoreHorizontal } from "lucide-react";
+import { Download, MoreHorizontal, Terminal } from "lucide-react";
 import omniskillMark from "@/assets/omniskill-mark.svg";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
