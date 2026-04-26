@@ -42,7 +42,7 @@ export function AutomationList({ rows }: { rows: AutomationRow[] }) {
               <div className="flex items-baseline justify-between gap-2 mb-1.5">
                 <span
                   className="text-[13px]"
-                  style={{ color: "rgba(240,237,232,0.9)" }}
+                  style={{ color: "var(--policy-fg)" }}
                 >
                   {r.occupation}
                 </span>

@@ -491,7 +491,7 @@ function SupplyDemandQuadrant({
           >
             High leverage
           </text>
-          <text x={PAD.l + 6} y={PAD.t + innerH - 6} fontSize="10" fill=var(--policy-fg-faint)>
+          <text x={PAD.l + 6} y={PAD.t + innerH - 6} fontSize="10" fill="var(--policy-fg-faint)">
             Low priority
           </text>
           <text
