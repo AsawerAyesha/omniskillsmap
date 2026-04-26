@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Terminal } from "lucide-react";
 import { SkillsConstellation } from "../components/unmapped/landing/skills-constellation";
 import { RegionPills } from "../components/unmapped/landing/region-pills";
 
@@ -90,6 +90,14 @@ function Landing() {
               >
                 View for policymakers
               </Link>
+
+              <Link
+                to="/console"
+                className="inline-flex h-12 items-center gap-2 rounded-full px-5 text-[14px] font-medium text-ink-secondary transition-colors hover:text-ink hover:bg-surface-sunken"
+              >
+                <Terminal size={15} strokeWidth={1.75} />
+                Operator console
+              </Link>
             </div>
 
             {/* Stat chips */}
@@ -139,6 +147,21 @@ function Landing() {
               )}
             </span>
           ))}
+          <span className="ml-auto inline-flex items-center gap-3">
+            <Link
+              to="/policy"
+              className="hover:text-ink transition-colors"
+            >
+              Policymakers
+            </Link>
+            <span aria-hidden className="text-ink-tertiary/60">·</span>
+            <Link
+              to="/console"
+              className="hover:text-ink transition-colors"
+            >
+              Operator console
+            </Link>
+          </span>
         </div>
       </footer>
     </div>
