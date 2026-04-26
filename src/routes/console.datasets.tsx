@@ -612,7 +612,15 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <FieldImpl label={label}>{children}</FieldImpl>
+    <div>
+      <div
+        className="text-xs uppercase tracking-wider mb-1.5"
+        style={{ color: "var(--console-fg-faint)" }}
+      >
+        {label}
+      </div>
+      {children}
+    </div>
   );
 }
 
@@ -626,40 +634,27 @@ function ProgressBar({
   return (
     <div
       className="h-1.5 w-full rounded-full overflow-hidden"
-      style={{ background: "var(--console-panel)", border: "1px solid var(--console-border)" }}
+      style={{
+        background: "var(--console-panel)",
+        border: "1px solid var(--console-border)",
+      }}
       role="progressbar"
       aria-valuenow={indeterminate ? undefined : pct}
       aria-valuemin={0}
       aria-valuemax={100}
     >
       <div
-        className={indeterminate ? "h-full animate-pulse" : "h-full transition-all duration-200 ease-out"}
+        className={
+          indeterminate
+            ? "h-full animate-pulse"
+            : "h-full transition-all duration-200 ease-out"
+        }
         style={{
           width: indeterminate ? "100%" : `${Math.max(2, pct)}%`,
           background: "var(--earth-dark, var(--console-accent))",
           opacity: indeterminate ? 0.5 : 1,
         }}
       />
-    </div>
-  );
-}
-
-function FieldImpl({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div
-        className="text-xs uppercase tracking-wider mb-1.5"
-        style={{ color: "var(--console-fg-faint)" }}
-      >
-        {label}
-      </div>
-      {children}
     </div>
   );
 }
