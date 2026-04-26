@@ -294,7 +294,7 @@ function DatasetsPage() {
             <select
               value={contextId}
               onChange={(e) => setContextId(e.target.value)}
-              className="w-full rounded-md px-3 h-9 text-sm"
+              className="w-full rounded-md px-3 h-9 text-sm [&>option]:bg-[var(--console-panel)] [&>option]:text-[var(--console-fg)]"
               style={{
                 background: "var(--console-panel)",
                 color: "var(--console-fg)",
@@ -314,7 +314,7 @@ function DatasetsPage() {
           <select
             value={kind}
             onChange={(e) => setKind(e.target.value as DatasetKind)}
-            className="w-full rounded-md px-3 h-9 text-sm"
+            className="w-full rounded-md px-3 h-9 text-sm [&>option]:bg-[var(--console-panel)] [&>option]:text-[var(--console-fg)]"
             style={{
               background: "var(--console-panel)",
               color: "var(--console-fg)",
