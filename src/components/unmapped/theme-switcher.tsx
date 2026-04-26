@@ -2,6 +2,11 @@ import * as React from "react";
 import { Sun, Moon, Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme, type ThemeName } from "./theme-context";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 /* Three-state segmented control. The "thumb" slides under the active option
  * for a tactile, premium feel — matched to the precision easing curve used
@@ -10,7 +15,7 @@ import { useTheme, type ThemeName } from "./theme-context";
  *  - "compact" : icon-only, fits in dense headers (policy topbar)
  *  - "stacked" : vertical icon column, used in the collapsed sidebar rail
  */
-type Variant = "full" | "compact" | "stacked";
+type Variant = "full" | "compact" | "stacked" | "popover";
 
 interface Option {
   value: ThemeName;
@@ -33,6 +38,83 @@ export function ThemeSwitcher({
   className?: string;
 }) {
   const { theme, setTheme } = useTheme();
+
+  if (variant === "popover") {
+    const current = OPTIONS.find((o) => o.value === theme) ?? OPTIONS[0];
+    return (
+      <Popover>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            aria-label={`Theme: ${current.label}. Click to change.`}
+            title={`Theme · ${current.label}`}
+            className={cn(
+              "inline-flex items-center justify-center h-8 w-8 rounded-full transition-colors",
+              "border",
+              className,
+            )}
+            style={{
+              background: "rgba(255,255,255,0.06)",
+              borderColor: "rgba(255,255,255,0.12)",
+              color: "#F0EDE8",
+            }}
+          >
+            <ThumbIcon option={current} active />
+          </button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="end"
+          sideOffset={10}
+          className="w-56 p-2 border-border-subtle"
+          style={{ background: "var(--surface-raised)", color: "var(--ink)" }}
+        >
+          <div className="px-2 pt-1 pb-2">
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--ink-tertiary)]">
+              Appearance
+            </p>
+          </div>
+          <div role="radiogroup" aria-label="Theme" className="flex flex-col gap-0.5">
+            {OPTIONS.map((o) => {
+              const active = theme === o.value;
+              return (
+                <button
+                  key={o.value}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => setTheme(o.value)}
+                  className={cn(
+                    "flex items-center gap-3 px-2 py-2 rounded-md text-left transition-colors",
+                    active
+                      ? "bg-[var(--surface-sunken)]"
+                      : "hover:bg-[var(--surface-sunken)]/60",
+                  )}
+                >
+                  <span className="inline-flex items-center justify-center h-7 w-7 rounded-md bg-[var(--surface-sunken)]">
+                    <ThumbIcon option={o} active={active} />
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-sm leading-none text-[var(--ink)]">
+                      {o.label}
+                    </span>
+                    <span className="block text-[11px] mt-1 text-[var(--ink-tertiary)] truncate">
+                      {o.hint}
+                    </span>
+                  </span>
+                  {active && (
+                    <span
+                      aria-hidden
+                      className="h-1.5 w-1.5 rounded-full bg-[var(--earth)]"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </PopoverContent>
+      </Popover>
+    );
+  }
 
   if (variant === "stacked") {
     return (
