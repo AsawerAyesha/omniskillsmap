@@ -10,6 +10,7 @@ import {
   PanelLeftOpen,
   ArrowLeftRight,
   ShieldAlert,
+  Terminal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
@@ -122,6 +123,21 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
               </Link>
             );
           })}
+          {/* Persistent prominent link to Operator Console */}
+          <Link
+            to="/console"
+            title={collapsed ? "Operator Console" : undefined}
+            aria-label="Operator Console"
+            className={cn(
+              "mt-2 flex items-center rounded-lg text-sm transition-colors border border-border-subtle bg-[var(--surface-sunken)] hover:bg-[var(--earth-light)] hover:text-[var(--earth-dark)] text-[var(--ink-secondary)]",
+              collapsed
+                ? "h-10 w-10 mx-auto justify-center"
+                : "gap-3 px-3 py-2.5",
+            )}
+          >
+            <Terminal size={20} strokeWidth={1.5} className="shrink-0" />
+            {!collapsed && <span className="truncate font-medium">Operator Console</span>}
+          </Link>
         </nav>
 
         <div
@@ -190,6 +206,13 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <ThemeSwitcher variant="compact" />
             <SwitchContextButton />
+            <Link
+              to="/console"
+              aria-label="Operator Console"
+              className="p-2 rounded-full hover:bg-[var(--surface-sunken)] transition-colors"
+            >
+              <Terminal size={18} strokeWidth={1.5} className="text-[var(--ink-secondary)]" />
+            </Link>
             <button
               aria-label="Notifications"
               className="p-2 rounded-full hover:bg-[var(--surface-sunken)] transition-colors"

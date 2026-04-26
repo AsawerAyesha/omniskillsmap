@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Download, MoreHorizontal } from "lucide-react";
+import { Download, MoreHorizontal, Terminal } from "lucide-react";
 import omniskillMark from "@/assets/omniskill-mark.svg";
 import { cn } from "@/lib/utils";
 import { ModeSwitcher } from "./mode-switcher";
@@ -332,6 +332,21 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
               <Download size={14} strokeWidth={1.5} />
               <span className="hidden lg:inline">Export</span>
             </button>
+
+            <Link
+              to="/console"
+              className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors"
+              style={{
+                background: palette.pill,
+                color: palette.fg,
+                border: `1px solid ${palette.pillBorder}`,
+              }}
+              aria-label="Open Operator Console"
+              title="Operator Console"
+            >
+              <Terminal size={14} strokeWidth={1.5} />
+              <span className="hidden lg:inline">Console</span>
+            </Link>
 
             <div
               aria-label="Account"
