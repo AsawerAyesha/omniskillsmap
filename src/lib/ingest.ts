@@ -171,11 +171,7 @@ export const KIND_META: Record<
     label: "Labor indicators (employment / wages)",
     table: "labor_indicators",
     schema: laborRow,
-    headers: [
-      "indicator_code, year, value, age_band, sex",
-      "— OR ILOSTAT raw —",
-      "ref_area, source, indicator, sex, classif1, classif2, time, obs_value, obs_status, note_classif, note_indicator, note_source",
-    ],
+    headers: ["indicator_code", "year", "value", "age_band", "sex"],
     example:
       "ref_area,source,indicator,sex,classif1,classif2,time,obs_value,obs_status,note_classif,note_indicator,note_source\nPAK,XA:2080,SDG_0111_SEX_AGE_RT,SEX_T,AGE_YTHADULT_YGE15,,2025,15.096,A,,,\nPAK,XA:2080,SDG_0111_SEX_AGE_RT,SEX_M,AGE_YTHADULT_Y15-24,,2023,15.154,A,,,\n",
   },
