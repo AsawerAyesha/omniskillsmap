@@ -21,7 +21,7 @@ type KindTable =
 const KIND_TABLE: Record<string, { table: KindTable; cols: string }> = {
   taxonomy:      { table: "taxonomy_skills",  cols: "code, label, parent_code, level, source" },
   occupations:   { table: "occupations",      cols: "code, title, isco_major, automation_risk" },
-  labor:         { table: "labor_indicators", cols: "indicator_code, year, sex, age_band, value" },
+  labor:         { table: "labor_indicators", cols: "indicator_code, year, sex, age_band, value, ref_area, source_code, classif1, classif2, obs_status, note_classif, note_indicator, note_source" },
   opportunities: { table: "opportunities",    cols: "title, employer, sector, region, remote, skills, url" },
   learning:      { table: "learning_resources", cols: "title, provider, url, language, duration_h, cost, skill_codes" },
 };
