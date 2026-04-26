@@ -25,6 +25,7 @@ import { Route as PolicyProjectionsRouteImport } from './routes/policy.projectio
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
+import { Route as ConsoleContextsNewRouteImport } from './routes/console.contexts.new'
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
 
@@ -108,6 +109,11 @@ const ConsoleContextsRoute = ConsoleContextsRouteImport.update({
   path: '/contexts',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleContextsNewRoute = ConsoleContextsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => ConsoleContextsRoute,
+} as any)
 const ConsoleAuthSignInRoute = ConsoleAuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
@@ -128,7 +134,7 @@ export interface FileRoutesByFullPath {
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/console/contexts': typeof ConsoleContextsRoute
+  '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/policy/': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
+  '/console/contexts/new': typeof ConsoleContextsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -146,7 +153,7 @@ export interface FileRoutesByTo {
   '/opportunities': typeof OpportunitiesRoute
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/console/contexts': typeof ConsoleContextsRoute
+  '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/policy': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
+  '/console/contexts/new': typeof ConsoleContextsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -167,7 +175,7 @@ export interface FileRoutesById {
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/console/contexts': typeof ConsoleContextsRoute
+  '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/policy/': typeof PolicyIndexRoute
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
+  '/console/contexts/new': typeof ConsoleContextsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -199,6 +208,7 @@ export interface FileRouteTypes {
     | '/policy/'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
+    | '/console/contexts/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/policy'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
+    | '/console/contexts/new'
   id:
     | '__root__'
     | '/'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/policy/'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
+    | '/console/contexts/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -364,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleContextsRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/contexts/new': {
+      id: '/console/contexts/new'
+      path: '/new'
+      fullPath: '/console/contexts/new'
+      preLoaderRoute: typeof ConsoleContextsNewRouteImport
+      parentRoute: typeof ConsoleContextsRoute
+    }
     '/console/auth/sign-in': {
       id: '/console/auth/sign-in'
       path: '/auth/sign-in'
@@ -381,8 +400,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ConsoleContextsRouteChildren {
+  ConsoleContextsNewRoute: typeof ConsoleContextsNewRoute
+}
+
+const ConsoleContextsRouteChildren: ConsoleContextsRouteChildren = {
+  ConsoleContextsNewRoute: ConsoleContextsNewRoute,
+}
+
+const ConsoleContextsRouteWithChildren = ConsoleContextsRoute._addFileChildren(
+  ConsoleContextsRouteChildren,
+)
+
 interface ConsoleRouteChildren {
-  ConsoleContextsRoute: typeof ConsoleContextsRoute
+  ConsoleContextsRoute: typeof ConsoleContextsRouteWithChildren
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
   ConsoleAuthForgotRoute: typeof ConsoleAuthForgotRoute
@@ -390,7 +421,7 @@ interface ConsoleRouteChildren {
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
-  ConsoleContextsRoute: ConsoleContextsRoute,
+  ConsoleContextsRoute: ConsoleContextsRouteWithChildren,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
   ConsoleAuthForgotRoute: ConsoleAuthForgotRoute,
