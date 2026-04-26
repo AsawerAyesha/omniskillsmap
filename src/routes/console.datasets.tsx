@@ -279,7 +279,7 @@ function DatasetsPage() {
     });
     if (droppedDuplicates > 0) {
       setCommitError(
-        `Note: ${droppedDuplicates} duplicate row${droppedDuplicates === 1 ? "" : "s"} were collapsed (same ${conflictCols!.filter((c) => c !== "dataset_id").join(" + ")}).`,
+        `Note: ${droppedDuplicates} duplicate row${droppedDuplicates === 1 ? "" : "s"} were collapsed (same ${conflictCols!.filter((c: string) => c !== "dataset_id").join(" + ")}).`,
       );
     }
     setCommitting(false);
