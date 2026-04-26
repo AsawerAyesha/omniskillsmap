@@ -17,13 +17,21 @@ export function ConsoleGuard({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     if (!loading && !session) {
+      // Only preserve a console deep-link target. Never use location.href
+      // (which may already contain a redirect param) or paths outside
+      // /console — that produces nested ?redirect=?redirect=… loops.
+      const path = location.pathname;
+      const safeRedirect =
+        path.startsWith("/console") && !path.startsWith("/console/auth")
+          ? path
+          : "/console";
       void navigate({
         to: "/console/auth/sign-in",
-        search: { redirect: location.href },
+        search: { redirect: safeRedirect },
         replace: true,
       });
     }
-  }, [loading, session, navigate, location.href]);
+  }, [loading, session, navigate, location.pathname]);
 
   if (loading || !session) {
     return (
