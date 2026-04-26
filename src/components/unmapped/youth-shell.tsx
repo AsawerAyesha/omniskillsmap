@@ -206,6 +206,13 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <ThemeSwitcher variant="compact" />
             <SwitchContextButton />
+            <Link
+              to="/console"
+              aria-label="Operator Console"
+              className="p-2 rounded-full hover:bg-[var(--surface-sunken)] transition-colors"
+            >
+              <Terminal size={18} strokeWidth={1.5} className="text-[var(--ink-secondary)]" />
+            </Link>
             <button
               aria-label="Notifications"
               className="p-2 rounded-full hover:bg-[var(--surface-sunken)] transition-colors"
