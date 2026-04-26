@@ -285,7 +285,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
           {/* Brand cluster — fixed-width, never shrinks */}
           <div className="flex items-center gap-3 shrink-0">
             <Compass size={18} strokeWidth={1.5} style={{ color: "#C4A882" }} />
-            <span className="font-display text-base tracking-tight">UNMAPPED</span>
+            <span className="font-display text-base tracking-tight">OmniSkill</span>
             <span
               className="hidden lg:inline-block text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 rounded-full whitespace-nowrap"
               style={{

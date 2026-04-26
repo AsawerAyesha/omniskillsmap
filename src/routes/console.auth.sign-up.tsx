@@ -92,7 +92,7 @@ function ConsoleSignUp() {
             className="font-display tracking-tight"
             style={{ fontSize: "32px", color: "#F0EDE8", lineHeight: 1.1 }}
           >
-            UNMAPPED
+            OmniSkill
           </div>
           <div
             className="uppercase tracking-[0.18em]"
@@ -154,7 +154,7 @@ function ConsoleSignUp() {
           className="max-w-md leading-relaxed"
           style={{ fontSize: "12px", color: "#6B6560" }}
         >
-          UNMAPPED is open infrastructure. No vendor lock-in. Your data stays
+          OmniSkill is open infrastructure. No vendor lock-in. Your data stays
           yours.
         </p>
       </aside>

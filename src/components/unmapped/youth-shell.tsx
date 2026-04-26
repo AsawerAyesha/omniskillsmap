@@ -61,7 +61,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
           )}
         >
           {!collapsed && (
-            <span className="font-display text-lg tracking-tight">UNMAPPED</span>
+            <span className="font-display text-lg tracking-tight">OmniSkill</span>
           )}
           <button
             type="button"
@@ -179,7 +179,7 @@ export function YouthShell({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile topbar */}
         <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border-subtle bg-[var(--surface-raised)]">
-          <span className="font-display text-base tracking-tight">UNMAPPED</span>
+          <span className="font-display text-base tracking-tight">OmniSkill</span>
           <div className="flex items-center gap-2">
             <ThemeSwitcher variant="compact" />
             <SwitchContextButton />

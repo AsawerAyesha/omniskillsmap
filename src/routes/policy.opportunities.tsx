@@ -8,13 +8,13 @@ import { getOppDataset } from "@/components/unmapped/policy-dashboard/opportunit
 export const Route = createFileRoute("/policy/opportunities")({
   head: () => ({
     meta: [
-      { title: "Opportunities — UNMAPPED Policy" },
+      { title: "Opportunities — OmniSkill Policy" },
       {
         name: "description",
         content:
           "Aggregate opportunity flows: open programs, fill rates, sector demand, the placement pipeline and partner program inventory.",
       },
-      { property: "og:title", content: "Opportunities — UNMAPPED Policy" },
+      { property: "og:title", content: "Opportunities — OmniSkill Policy" },
       {
         property: "og:description",
         content:

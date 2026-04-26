@@ -8,13 +8,13 @@ import { getProjectionsDataset } from "@/components/unmapped/policy-dashboard/pr
 export const Route = createFileRoute("/policy/projections")({
   head: () => ({
     meta: [
-      { title: "Projections — UNMAPPED Policy" },
+      { title: "Projections — OmniSkill Policy" },
       {
         name: "description",
         content:
           "Forward labour-market projections by scenario: cohort supply, demand index, attainment trajectories and cluster gaps.",
       },
-      { property: "og:title", content: "Projections — UNMAPPED Policy" },
+      { property: "og:title", content: "Projections — OmniSkill Policy" },
       {
         property: "og:description",
         content:

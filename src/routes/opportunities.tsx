@@ -25,13 +25,13 @@ import { COUNTRY_INDEX } from "@/components/unmapped/context-config/types";
 export const Route = createFileRoute("/opportunities")({
   head: () => ({
     meta: [
-      { title: "Your opportunities — UNMAPPED" },
+      { title: "Your opportunities — OmniSkill" },
       {
         name: "description",
         content:
           "Honest, reachable opportunity matches for your skills profile, with real ILO and World Bank labour market signals.",
       },
-      { property: "og:title", content: "Your opportunities — UNMAPPED" },
+      { property: "og:title", content: "Your opportunities — OmniSkill" },
       {
         property: "og:description",
         content:

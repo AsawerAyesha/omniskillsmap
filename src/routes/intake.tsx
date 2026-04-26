@@ -14,13 +14,13 @@ import {
 export const Route = createFileRoute("/intake")({
   head: () => ({
     meta: [
-      { title: "Map your skills — UNMAPPED" },
+      { title: "Map your skills — OmniSkill" },
       {
         name: "description",
         content:
           "A short, respectful intake to build your skills profile from your real experience.",
       },
-      { property: "og:title", content: "Map your skills — UNMAPPED" },
+      { property: "og:title", content: "Map your skills — OmniSkill" },
       {
         property: "og:description",
         content:

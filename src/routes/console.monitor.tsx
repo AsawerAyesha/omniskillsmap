@@ -174,7 +174,7 @@ function MonitorScreen() {
               Live monitor
             </h1>
             <p className="mt-1.5 text-sm" style={{ color: T.fgMuted }}>
-              Operational health of your UNMAPPED deployments. Auto-refreshes every 60s.
+              Operational health of your OmniSkill deployments. Auto-refreshes every 60s.
             </p>
           </div>
           <div className="flex items-center gap-2">

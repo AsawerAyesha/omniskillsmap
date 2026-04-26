@@ -8,13 +8,13 @@ import { RiskBoard } from "@/components/unmapped/policy-dashboard/risk-board";
 export const Route = createFileRoute("/policy/risk")({
   head: () => ({
     meta: [
-      { title: "Automation Risk — UNMAPPED Policy" },
+      { title: "Automation Risk — OmniSkill Policy" },
       {
         name: "description",
         content:
           "LMIC-calibrated automation exposure by occupation, task decomposition and adjacent low-risk pivots.",
       },
-      { property: "og:title", content: "Automation Risk — UNMAPPED Policy" },
+      { property: "og:title", content: "Automation Risk — OmniSkill Policy" },
       {
         property: "og:description",
         content:

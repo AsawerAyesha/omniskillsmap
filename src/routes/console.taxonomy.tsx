@@ -505,7 +505,7 @@ function OccupationsSection({
       <SectionTitle>Local job titles → ISCO-08 codes</SectionTitle>
 
       <p className="text-sm max-w-[760px]" style={{ color: "var(--console-fg-muted)" }}>
-        When users describe their work, UNMAPPED needs to translate informal job
+        When users describe their work, OmniSkill needs to translate informal job
         descriptions into ISCO-08 codes. Add the most common job titles in your
         context below.
       </p>

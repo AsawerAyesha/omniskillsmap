@@ -17,13 +17,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/ai-readiness")({
   head: () => ({
     meta: [
-      { title: "AI Readiness & Displacement Risk — UNMAPPED" },
+      { title: "AI Readiness & Displacement Risk — OmniSkill" },
       {
         name: "description",
         content:
           "Personal AI displacement risk and regional labour-market projections, calibrated for low- and middle-income economies using Frey-Osborne, ILO, Wittgenstein and World Bank data.",
       },
-      { property: "og:title", content: "AI Readiness & Displacement Risk — UNMAPPED" },
+      { property: "og:title", content: "AI Readiness & Displacement Risk — OmniSkill" },
       {
         property: "og:description",
         content:

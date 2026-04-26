@@ -91,7 +91,7 @@ function DeployScreen() {
           className="mt-1 text-sm"
           style={{ color: "var(--console-fg-muted)" }}
         >
-          Publish <span style={{ color: "var(--console-fg)" }} className="font-medium">Ghana Urban 2024</span> and get the integration artifacts to embed UNMAPPED.
+          Publish <span style={{ color: "var(--console-fg)" }} className="font-medium">Ghana Urban 2024</span> and get the integration artifacts to embed OmniSkill.
         </p>
       </header>
 
@@ -599,7 +599,7 @@ function TabEmbed() {
   return (
     <div className="space-y-4">
       <p className="text-sm" style={{ color: "var(--console-fg-muted)" }}>
-        Add UNMAPPED directly into your own website or portal. The embed
+        Add OmniSkill directly into your own website or portal. The embed
         inherits your context configuration automatically.
       </p>
 

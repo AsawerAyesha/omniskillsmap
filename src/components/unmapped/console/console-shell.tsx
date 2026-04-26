@@ -89,7 +89,7 @@ export function ConsoleShell({ children }: { children: React.ReactNode }) {
           style={{ borderColor: "var(--console-border)" }}
         >
           <Compass size={18} strokeWidth={1.5} style={{ color: "var(--console-accent)" }} />
-          <span className="font-display text-base tracking-tight">UNMAPPED</span>
+          <span className="font-display text-base tracking-tight">OmniSkill</span>
           <span
             className="ml-auto text-[10px] uppercase tracking-[0.12em] px-1.5 py-0.5 rounded-full"
             style={{

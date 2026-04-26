@@ -17,13 +17,13 @@ import { COUNTRY_INDEX } from "@/components/unmapped/context-config/types";
 export const Route = createFileRoute("/policy/")({
   head: () => ({
     meta: [
-      { title: "Policy Dashboard — UNMAPPED" },
+      { title: "Policy Dashboard — OmniSkill" },
       {
         name: "description",
         content:
           "Aggregate cohort skills gaps, real ILO and World Bank signals, automation risk and education projections — for program officers and government analysts.",
       },
-      { property: "og:title", content: "Policy Dashboard — UNMAPPED" },
+      { property: "og:title", content: "Policy Dashboard — OmniSkill" },
       {
         property: "og:description",
         content:

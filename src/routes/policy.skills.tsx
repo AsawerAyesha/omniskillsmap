@@ -8,13 +8,13 @@ import { getSkillsMapDataset } from "@/components/unmapped/policy-dashboard/skil
 export const Route = createFileRoute("/policy/skills")({
   head: () => ({
     meta: [
-      { title: "Skills Map — UNMAPPED Policy" },
+      { title: "Skills Map — OmniSkill Policy" },
       {
         name: "description",
         content:
           "National skills map by ISCO occupation cluster — supply, demand, regional concentration and tier classification.",
       },
-      { property: "og:title", content: "Skills Map — UNMAPPED Policy" },
+      { property: "og:title", content: "Skills Map — OmniSkill Policy" },
       {
         property: "og:description",
         content:

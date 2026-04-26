@@ -30,7 +30,7 @@ export const sampleProfile = {
   initials: "A",
   name: "Amara Mensah",
   location: "Accra, Ghana · Urban",
-  profileId: "UNMAPPED-GHA-2026-08441",
+  profileId: "OmniSkill-GHA-2026-08441",
   occupations: [
     {
       iscoCode: "ISCO 7421",
