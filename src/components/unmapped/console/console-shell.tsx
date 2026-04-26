@@ -11,6 +11,7 @@ import {
   Compass,
   Layers,
   Database,
+  Network,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "../theme-switcher";
@@ -35,6 +36,7 @@ const NAV: NavItem[] = [
   { to: "/console", label: "Workspace", icon: LayoutDashboard },
   { to: "/console/contexts", label: "Contexts", icon: Layers },
   { to: "/console/connections", label: "Connections", icon: Database },
+  { to: "/console/taxonomy", label: "Taxonomy", icon: Network },
   { to: "/console/cohorts", label: "Cohorts", icon: Users },
   { to: "/console/programs", label: "Programs", icon: BookOpen },
   { to: "/console/signals", label: "Signals", icon: Activity },
