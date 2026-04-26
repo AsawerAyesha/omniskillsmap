@@ -220,6 +220,26 @@
   --policy-grid:         rgba(28,26,22,0.08);          /* chart gridlines */
   --policy-grid-strong:  rgba(28,26,22,0.18);          /* axis baseline */
   --policy-accent-ink:   #1A1814;                      /* foreground on earth pill */
+
+  /* === Console palette (light) ===
+   * Console is the operator/admin surface. Same three-theme system, but a
+   * cool slate accent so judges read it as a different tool from Policy. */
+  --console-bg:           #FAF7F1;
+  --console-canvas:       #FFFFFF;
+  --console-sidebar-bg:   #F2EDE3;
+  --console-panel:        rgba(28,26,22,0.04);
+  --console-panel-strong: rgba(28,26,22,0.07);
+  --console-border:       rgba(28,26,22,0.10);
+  --console-rule:         rgba(28,26,22,0.06);
+  --console-fg:           #1C1A16;
+  --console-fg-muted:     rgba(28,26,22,0.65);
+  --console-fg-faint:     rgba(28,26,22,0.45);
+  --console-accent:       #3B5266;
+  --console-accent-hover: #2F4356;
+  --console-accent-fg:    #F5F7FA;
+  --console-accent-wash:  linear-gradient(160deg, #3B5266 0%, #25384B 100%);
+  --console-success:      #2D7A4F;
+  --console-danger:       #C0392B;
 }
 
 .dark {
