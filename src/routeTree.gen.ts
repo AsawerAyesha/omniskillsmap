@@ -25,6 +25,7 @@ import { Route as PolicyProjectionsRouteImport } from './routes/policy.projectio
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
 import { Route as ConsoleTaxonomyRouteImport } from './routes/console.taxonomy'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
+import { Route as ConsoleDeployRouteImport } from './routes/console.deploy'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
 import { Route as ConsoleContextsNewRouteImport } from './routes/console.contexts.new'
@@ -111,6 +112,11 @@ const ConsoleOnboardingRoute = ConsoleOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleDeployRoute = ConsoleDeployRouteImport.update({
+  id: '/deploy',
+  path: '/deploy',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleContextsRoute = ConsoleContextsRouteImport.update({
   id: '/contexts',
   path: '/contexts',
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
+  '/console/deploy': typeof ConsoleDeployRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
+  '/console/deploy': typeof ConsoleDeployRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
+  '/console/deploy': typeof ConsoleDeployRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
+    | '/console/deploy'
     | '/console/onboarding'
     | '/console/taxonomy'
     | '/policy/opportunities'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
+    | '/console/deploy'
     | '/console/onboarding'
     | '/console/taxonomy'
     | '/policy/opportunities'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
+    | '/console/deploy'
     | '/console/onboarding'
     | '/console/taxonomy'
     | '/policy/opportunities'
@@ -400,6 +412,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleOnboardingRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/deploy': {
+      id: '/console/deploy'
+      path: '/deploy'
+      fullPath: '/console/deploy'
+      preLoaderRoute: typeof ConsoleDeployRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/contexts': {
       id: '/console/contexts'
       path: '/contexts'
@@ -453,6 +472,7 @@ const ConsoleContextsRouteWithChildren = ConsoleContextsRoute._addFileChildren(
 interface ConsoleRouteChildren {
   ConsoleConnectionsRoute: typeof ConsoleConnectionsRoute
   ConsoleContextsRoute: typeof ConsoleContextsRouteWithChildren
+  ConsoleDeployRoute: typeof ConsoleDeployRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleTaxonomyRoute: typeof ConsoleTaxonomyRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
@@ -463,6 +483,7 @@ interface ConsoleRouteChildren {
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleConnectionsRoute: ConsoleConnectionsRoute,
   ConsoleContextsRoute: ConsoleContextsRouteWithChildren,
+  ConsoleDeployRoute: ConsoleDeployRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleTaxonomyRoute: ConsoleTaxonomyRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
