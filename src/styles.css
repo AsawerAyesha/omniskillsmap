@@ -200,6 +200,26 @@
   --shadow-sm: 0 1px 3px rgba(26,24,20,0.08), 0 1px 2px rgba(26,24,20,0.04);
   --shadow-md: 0 4px 16px rgba(26,24,20,0.08), 0 2px 6px rgba(26,24,20,0.06);
   --shadow-lg: 0 12px 40px rgba(26,24,20,0.12);
+
+  /* === Policy mode palette ===
+   * The policy dashboard was originally painted with hard-coded ink colors
+   * (#111009 page, rgba(255,255,255,0.03) panels, rgba(240,237,232,0.55) text)
+   * which meant the Light/Dark/Onyx theme switch only reskinned the header.
+   * These tokens give every policy surface a single source of truth that
+   * tracks the active theme — Light gets a parchment skin, Dark stays inky,
+   * Onyx goes pure obsidian. Components consume them as
+   * `var(--policy-bg)` / `var(--policy-panel)` / `var(--policy-fg-muted)` etc.
+   */
+  --policy-bg:           #F4EFE6;                      /* page canvas */
+  --policy-panel:        rgba(28,26,22,0.04);          /* card / chip wash */
+  --policy-panel-strong: rgba(28,26,22,0.07);          /* hover / active */
+  --policy-panel-border: rgba(28,26,22,0.12);          /* hairline */
+  --policy-fg:           #1C1A16;                      /* primary text */
+  --policy-fg-muted:     rgba(28,26,22,0.65);          /* labels */
+  --policy-fg-faint:     rgba(28,26,22,0.45);          /* axis ticks, hints */
+  --policy-grid:         rgba(28,26,22,0.08);          /* chart gridlines */
+  --policy-grid-strong:  rgba(28,26,22,0.18);          /* axis baseline */
+  --policy-accent-ink:   #1A1814;                      /* foreground on earth pill */
 }
 
 .dark {
@@ -262,6 +282,18 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 16px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3);
   --shadow-lg: 0 12px 40px rgba(0,0,0,0.55);
+
+  /* Policy palette — inky (warm charcoal) for dashboards */
+  --policy-bg:           #111009;
+  --policy-panel:        rgba(255,255,255,0.03);
+  --policy-panel-strong: rgba(255,255,255,0.06);
+  --policy-panel-border: rgba(255,255,255,0.08);
+  --policy-fg:           #F0EDE8;
+  --policy-fg-muted:     rgba(240,237,232,0.65);
+  --policy-fg-faint:     rgba(240,237,232,0.45);
+  --policy-grid:         rgba(255,255,255,0.06);
+  --policy-grid-strong:  rgba(255,255,255,0.18);
+  --policy-accent-ink:   #1A1814;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -349,6 +381,18 @@
   --shadow-lg: 0 1px 0 rgba(255,255,255,0.05) inset, 0 24px 60px rgba(0,0,0,0.85);
 
   color-scheme: dark;
+
+  /* Policy palette — pure black, faint hairlines */
+  --policy-bg:           #000000;
+  --policy-panel:        rgba(255,255,255,0.025);
+  --policy-panel-strong: rgba(255,255,255,0.05);
+  --policy-panel-border: rgba(255,255,255,0.07);
+  --policy-fg:           #FAFAF9;
+  --policy-fg-muted:     rgba(250,250,249,0.62);
+  --policy-fg-faint:     rgba(250,250,249,0.40);
+  --policy-grid:         rgba(255,255,255,0.05);
+  --policy-grid-strong:  rgba(255,255,255,0.16);
+  --policy-accent-ink:   #0A0908;
 }
 
 /* Smooth global cross-fade when switching themes — only animates colors,
