@@ -30,6 +30,7 @@ import { Route as ConsoleMonitorRouteImport } from './routes/console.monitor'
 import { Route as ConsoleDeployRouteImport } from './routes/console.deploy'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
+import { Route as ConsoleContextsIndexRouteImport } from './routes/console.contexts.index'
 import { Route as ConsoleContextsNewRouteImport } from './routes/console.contexts.new'
 import { Route as ConsoleAuthSignUpRouteImport } from './routes/console.auth.sign-up'
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
@@ -140,6 +141,11 @@ const ConsoleConnectionsRoute = ConsoleConnectionsRouteImport.update({
   path: '/connections',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleContextsIndexRoute = ConsoleContextsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsoleContextsRoute,
+} as any)
 const ConsoleContextsNewRoute = ConsoleContextsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/console/contexts/': typeof ConsoleContextsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -197,7 +204,6 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
-  '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
@@ -212,6 +218,7 @@ export interface FileRoutesByTo {
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/console/contexts': typeof ConsoleContextsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -240,6 +247,7 @@ export interface FileRoutesById {
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/console/contexts/': typeof ConsoleContextsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -269,6 +277,7 @@ export interface FileRouteTypes {
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/console/contexts/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -279,7 +288,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reset-password'
     | '/console/connections'
-    | '/console/contexts'
     | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
@@ -294,6 +302,7 @@ export interface FileRouteTypes {
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/console/contexts'
   id:
     | '__root__'
     | '/'
@@ -321,6 +330,7 @@ export interface FileRouteTypes {
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/console/contexts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -484,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleConnectionsRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/contexts/': {
+      id: '/console/contexts/'
+      path: '/'
+      fullPath: '/console/contexts/'
+      preLoaderRoute: typeof ConsoleContextsIndexRouteImport
+      parentRoute: typeof ConsoleContextsRoute
+    }
     '/console/contexts/new': {
       id: '/console/contexts/new'
       path: '/new'
@@ -517,10 +534,12 @@ declare module '@tanstack/react-router' {
 
 interface ConsoleContextsRouteChildren {
   ConsoleContextsNewRoute: typeof ConsoleContextsNewRoute
+  ConsoleContextsIndexRoute: typeof ConsoleContextsIndexRoute
 }
 
 const ConsoleContextsRouteChildren: ConsoleContextsRouteChildren = {
   ConsoleContextsNewRoute: ConsoleContextsNewRoute,
+  ConsoleContextsIndexRoute: ConsoleContextsIndexRoute,
 }
 
 const ConsoleContextsRouteWithChildren = ConsoleContextsRoute._addFileChildren(
