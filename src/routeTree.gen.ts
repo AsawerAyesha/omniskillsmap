@@ -28,6 +28,7 @@ import { Route as ConsoleTaxonomyRouteImport } from './routes/console.taxonomy'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
 import { Route as ConsoleMonitorRouteImport } from './routes/console.monitor'
 import { Route as ConsoleDeployRouteImport } from './routes/console.deploy'
+import { Route as ConsoleDatasetsRouteImport } from './routes/console.datasets'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
 import { Route as ConsoleContextsIndexRouteImport } from './routes/console.contexts.index'
@@ -131,6 +132,11 @@ const ConsoleDeployRoute = ConsoleDeployRouteImport.update({
   path: '/deploy',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleDatasetsRoute = ConsoleDatasetsRouteImport.update({
+  id: '/datasets',
+  path: '/datasets',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ConsoleContextsRoute = ConsoleContextsRouteImport.update({
   id: '/contexts',
   path: '/contexts',
@@ -179,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
+  '/console/datasets': typeof ConsoleDatasetsRoute
   '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
@@ -204,6 +211,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
+  '/console/datasets': typeof ConsoleDatasetsRoute
   '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
@@ -233,6 +241,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
+  '/console/datasets': typeof ConsoleDatasetsRoute
   '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
@@ -263,6 +272,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
+    | '/console/datasets'
     | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
@@ -288,6 +298,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reset-password'
     | '/console/connections'
+    | '/console/datasets'
     | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
@@ -316,6 +327,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console/connections'
     | '/console/contexts'
+    | '/console/datasets'
     | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
@@ -480,6 +492,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleDeployRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/datasets': {
+      id: '/console/datasets'
+      path: '/datasets'
+      fullPath: '/console/datasets'
+      preLoaderRoute: typeof ConsoleDatasetsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/console/contexts': {
       id: '/console/contexts'
       path: '/contexts'
@@ -549,6 +568,7 @@ const ConsoleContextsRouteWithChildren = ConsoleContextsRoute._addFileChildren(
 interface ConsoleRouteChildren {
   ConsoleConnectionsRoute: typeof ConsoleConnectionsRoute
   ConsoleContextsRoute: typeof ConsoleContextsRouteWithChildren
+  ConsoleDatasetsRoute: typeof ConsoleDatasetsRoute
   ConsoleDeployRoute: typeof ConsoleDeployRoute
   ConsoleMonitorRoute: typeof ConsoleMonitorRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
@@ -562,6 +582,7 @@ interface ConsoleRouteChildren {
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleConnectionsRoute: ConsoleConnectionsRoute,
   ConsoleContextsRoute: ConsoleContextsRouteWithChildren,
+  ConsoleDatasetsRoute: ConsoleDatasetsRoute,
   ConsoleDeployRoute: ConsoleDeployRoute,
   ConsoleMonitorRoute: ConsoleMonitorRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
