@@ -27,7 +27,6 @@ import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportu
 import { Route as ConsoleTaxonomyRouteImport } from './routes/console.taxonomy'
 import { Route as ConsoleOnboardingRouteImport } from './routes/console.onboarding'
 import { Route as ConsoleMonitorRouteImport } from './routes/console.monitor'
-import { Route as ConsoleDeployRouteImport } from './routes/console.deploy'
 import { Route as ConsoleDatasetsRouteImport } from './routes/console.datasets'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
@@ -127,11 +126,6 @@ const ConsoleMonitorRoute = ConsoleMonitorRouteImport.update({
   path: '/monitor',
   getParentRoute: () => ConsoleRoute,
 } as any)
-const ConsoleDeployRoute = ConsoleDeployRouteImport.update({
-  id: '/deploy',
-  path: '/deploy',
-  getParentRoute: () => ConsoleRoute,
-} as any)
 const ConsoleDatasetsRoute = ConsoleDatasetsRouteImport.update({
   id: '/datasets',
   path: '/datasets',
@@ -186,7 +180,6 @@ export interface FileRoutesByFullPath {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/datasets': typeof ConsoleDatasetsRoute
-  '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
@@ -212,7 +205,6 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/datasets': typeof ConsoleDatasetsRoute
-  '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
@@ -242,7 +234,6 @@ export interface FileRoutesById {
   '/console/connections': typeof ConsoleConnectionsRoute
   '/console/contexts': typeof ConsoleContextsRouteWithChildren
   '/console/datasets': typeof ConsoleDatasetsRoute
-  '/console/deploy': typeof ConsoleDeployRoute
   '/console/monitor': typeof ConsoleMonitorRoute
   '/console/onboarding': typeof ConsoleOnboardingRoute
   '/console/taxonomy': typeof ConsoleTaxonomyRoute
@@ -273,7 +264,6 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/datasets'
-    | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
     | '/console/taxonomy'
@@ -299,7 +289,6 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console/connections'
     | '/console/datasets'
-    | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
     | '/console/taxonomy'
@@ -328,7 +317,6 @@ export interface FileRouteTypes {
     | '/console/connections'
     | '/console/contexts'
     | '/console/datasets'
-    | '/console/deploy'
     | '/console/monitor'
     | '/console/onboarding'
     | '/console/taxonomy'
@@ -485,13 +473,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleMonitorRouteImport
       parentRoute: typeof ConsoleRoute
     }
-    '/console/deploy': {
-      id: '/console/deploy'
-      path: '/deploy'
-      fullPath: '/console/deploy'
-      preLoaderRoute: typeof ConsoleDeployRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
     '/console/datasets': {
       id: '/console/datasets'
       path: '/datasets'
@@ -569,7 +550,6 @@ interface ConsoleRouteChildren {
   ConsoleConnectionsRoute: typeof ConsoleConnectionsRoute
   ConsoleContextsRoute: typeof ConsoleContextsRouteWithChildren
   ConsoleDatasetsRoute: typeof ConsoleDatasetsRoute
-  ConsoleDeployRoute: typeof ConsoleDeployRoute
   ConsoleMonitorRoute: typeof ConsoleMonitorRoute
   ConsoleOnboardingRoute: typeof ConsoleOnboardingRoute
   ConsoleTaxonomyRoute: typeof ConsoleTaxonomyRoute
@@ -583,7 +563,6 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleConnectionsRoute: ConsoleConnectionsRoute,
   ConsoleContextsRoute: ConsoleContextsRouteWithChildren,
   ConsoleDatasetsRoute: ConsoleDatasetsRoute,
-  ConsoleDeployRoute: ConsoleDeployRoute,
   ConsoleMonitorRoute: ConsoleMonitorRoute,
   ConsoleOnboardingRoute: ConsoleOnboardingRoute,
   ConsoleTaxonomyRoute: ConsoleTaxonomyRoute,
