@@ -97,6 +97,7 @@ function ForgotPage() {
 
         <Link
           to="/console/auth/sign-in"
+          search={{ redirect: "/console" }}
           className="mt-6 inline-block text-xs underline-offset-2 hover:underline"
           style={{ color: "var(--console-fg-muted)" }}
         >
