@@ -1,0 +1,90 @@
+{
+  "iso3": "BGD",
+  "country": "Bangladesh",
+  "region": "South Asia",
+  "contextLabel": "Rural agricultural · Khulna",
+  "currency": "BDT",
+  "headline": {
+    "sectorGrowth": {
+      "value": 6.8,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_TEMP_SEX_ECO_NB · ISIC C13–C14",
+      "vintage": 2024,
+      "unit": "% YoY",
+      "note": "Sector employment growth, garment & textile manufacturing, 2023→2024."
+    },
+    "avgEntryWage": {
+      "value": "BDT 12,500",
+      "source": "World Bank WDI · ILO modelled",
+      "dataset": "EAR_4MTH_SEX_OCU_CUR_NB",
+      "vintage": 2023,
+      "unit": "/ month",
+      "note": "Statutory minimum wage for entry-level garment workers (RMG sector floor)."
+    },
+    "youthNeet": {
+      "value": 27.4,
+      "source": "ILO ILOSTAT",
+      "dataset": "SDG_0861_SEX_RT",
+      "vintage": 2023,
+      "unit": "% of youth 15–24",
+      "note": "Share of youth not in education, employment or training."
+    },
+    "employmentToPop": {
+      "value": 56.7,
+      "source": "World Bank WDI · ILO modelled",
+      "dataset": "SL.EMP.TOTL.SP.ZS",
+      "vintage": 2023,
+      "unit": "%",
+      "note": "Employment to population ratio, ages 15+."
+    },
+    "informalShare": {
+      "value": 84.9,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_NIFL_SEX_ECO_NB",
+      "vintage": 2023,
+      "unit": "% non-agri",
+      "note": "Informal share of non-agricultural employment."
+    },
+    "mobileBroadband": {
+      "value": 41.2,
+      "source": "ITU Digital Development",
+      "dataset": "MobileBroadband_per100",
+      "vintage": 2023,
+      "unit": "/ 100 people",
+      "note": "Active mobile broadband subscriptions per 100 inhabitants — far below Ghana, drives offline-first calibration."
+    }
+  },
+  "focalSector": {
+    "iscoGroup": "ISCO 75 — Food, wood, garment & related",
+    "localLabel": "Garment & textile",
+    "employmentShare": {
+      "value": 13.2,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_TEMP_SEX_OCU_NB",
+      "vintage": 2023,
+      "unit": "% of total"
+    },
+    "yoyGrowth": {
+      "value": 6.8,
+      "source": "ILO ILOSTAT",
+      "dataset": "EMP_TEMP_SEX_ECO_NB",
+      "vintage": 2024,
+      "unit": "% YoY"
+    },
+    "entryWageMonthly": {
+      "value": "BDT 12,500–18,000",
+      "source": "World Bank WDI · ILO modelled",
+      "dataset": "EAR_4MTH_SEX_OCU_CUR_NB",
+      "vintage": 2023,
+      "unit": "/ month"
+    },
+    "automationExposure": {
+      "value": 0.58,
+      "source": "Frey-Osborne · LMIC-calibrated",
+      "dataset": "FreyOsborne_2017_LMIC_adj_v2",
+      "vintage": 2024,
+      "unit": "probability",
+      "note": "RMG line-work has high routine task content; calibration kept above the urban-informal Ghana benchmark."
+    }
+  }
+}
