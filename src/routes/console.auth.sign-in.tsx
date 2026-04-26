@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff, Loader2, Building2, HeartHandshake, Briefcase, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
+import omniskillMark from "@/assets/omniskill-mark.svg";
 
 /* C1 Screen A — Console Landing.
  *
@@ -124,7 +125,7 @@ function ConsoleLanding() {
       >
         <div className="space-y-1.5">
           <img
-            src="/src/assets/omniskill-mark.svg"
+            src={omniskillMark}
             alt="OmniSkill"
             width={56}
             height={56}
