@@ -22,6 +22,7 @@ import { Route as PolicySkillsRouteImport } from './routes/policy.skills'
 import { Route as PolicyRiskRouteImport } from './routes/policy.risk'
 import { Route as PolicyProjectionsRouteImport } from './routes/policy.projections'
 import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportunities'
+import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
@@ -88,6 +89,11 @@ const PolicyOpportunitiesRoute = PolicyOpportunitiesRouteImport.update({
   path: '/opportunities',
   getParentRoute: () => PolicyRoute,
 } as any)
+const ConsoleAuthSignInRoute = ConsoleAuthSignInRouteImport.update({
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/policy/skills': typeof PolicySkillsRoute
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
+  '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/policy/skills': typeof PolicySkillsRoute
   '/console': typeof ConsoleIndexRoute
   '/policy': typeof PolicyIndexRoute
+  '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/policy/skills': typeof PolicySkillsRoute
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
+  '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console/'
     | '/policy/'
+    | '/console/auth/sign-in'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console'
     | '/policy'
+    | '/console/auth/sign-in'
   id:
     | '__root__'
     | '/'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console/'
     | '/policy/'
+    | '/console/auth/sign-in'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -282,15 +294,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PolicyOpportunitiesRouteImport
       parentRoute: typeof PolicyRoute
     }
+    '/console/auth/sign-in': {
+      id: '/console/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/console/auth/sign-in'
+      preLoaderRoute: typeof ConsoleAuthSignInRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
   }
 }
 
 interface ConsoleRouteChildren {
   ConsoleIndexRoute: typeof ConsoleIndexRoute
+  ConsoleAuthSignInRoute: typeof ConsoleAuthSignInRoute
 }
 
 const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleIndexRoute: ConsoleIndexRoute,
+  ConsoleAuthSignInRoute: ConsoleAuthSignInRoute,
 }
 
 const ConsoleRouteWithChildren =
