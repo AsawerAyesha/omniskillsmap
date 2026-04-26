@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import { ConsoleGuard } from "@/components/unmapped/console/console-guard";
 import { JsonPreview } from "@/components/unmapped/console/json-preview";
+import { supabase } from "@/integrations/supabase/client";
+import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
 
 /* C2 — Context Wizard.
  *
@@ -385,10 +387,12 @@ function initialState(): WizardState {
 
 function ContextWizard() {
   const navigate = useNavigate();
+  const { user } = useConsoleAuth();
   const [state, setState] = React.useState<WizardState>(initialState);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
   const [submitting, setSubmitting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const country = COUNTRIES.find((c) => c.iso3 === state.countryIso3);
 
@@ -470,11 +474,16 @@ function ContextWizard() {
   const onSubmit = async () => {
     const e = validate();
     setErrors(e);
+    setSubmitError(null);
     if (Object.keys(e).length) {
       // scroll to first error
       const first = Object.keys(e)[0];
       const el = document.getElementById(`section-${first}`);
       el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (!user) {
+      setSubmitError("You must be signed in to create a context.");
       return;
     }
     setSubmitting(true);
@@ -497,7 +506,28 @@ function ContextWizard() {
           )
         : Promise.resolve(),
     ]);
+
+    // Persist to public.contexts.
+    const { error: insertError } = await supabase.from("contexts").insert({
+      code: state.contextId,
+      name: state.displayName,
+      owner_org: country?.name ?? null,
+      currency: "USD",
+      locale: state.primaryLang || "en",
+      flag_emoji: country?.flag ?? null,
+      status: "draft",
+      calibration: config as never,
+      created_by: user.id,
+    });
     setSubmitting(false);
+    if (insertError) {
+      setSubmitError(
+        insertError.code === "23505"
+          ? "A context with this ID already exists. Pick a different Context ID."
+          : insertError.message,
+      );
+      return;
+    }
     void navigate({ to: "/console/contexts" });
   };
 
