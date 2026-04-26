@@ -32,10 +32,15 @@ import { Route as ConsoleDatasetsRouteImport } from './routes/console.datasets'
 import { Route as ConsoleContextsRouteImport } from './routes/console.contexts'
 import { Route as ConsoleConnectionsRouteImport } from './routes/console.connections'
 import { Route as ConsoleContextsIndexRouteImport } from './routes/console.contexts.index'
+import { Route as ApiV1IndexRouteImport } from './routes/api/v1/index'
 import { Route as ConsoleContextsNewRouteImport } from './routes/console.contexts.new'
 import { Route as ConsoleAuthSignUpRouteImport } from './routes/console.auth.sign-up'
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
+import { Route as ApiV1ContextsRouteImport } from './routes/api/v1/contexts'
+import { Route as ApiV1ContextsCodeRouteImport } from './routes/api/v1/contexts.$code'
+import { Route as ApiV1ContextsCodeDatasetsRouteImport } from './routes/api/v1/contexts.$code.datasets'
+import { Route as ApiV1ContextsCodeDatasetsKindRouteImport } from './routes/api/v1/contexts.$code.datasets.$kind'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -152,6 +157,11 @@ const ConsoleContextsIndexRoute = ConsoleContextsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ConsoleContextsRoute,
 } as any)
+const ApiV1IndexRoute = ApiV1IndexRouteImport.update({
+  id: '/api/v1/',
+  path: '/api/v1/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConsoleContextsNewRoute = ConsoleContextsNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -172,6 +182,28 @@ const ConsoleAuthForgotRoute = ConsoleAuthForgotRouteImport.update({
   path: '/auth/forgot',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ApiV1ContextsRoute = ApiV1ContextsRouteImport.update({
+  id: '/api/v1/contexts',
+  path: '/api/v1/contexts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1ContextsCodeRoute = ApiV1ContextsCodeRouteImport.update({
+  id: '/$code',
+  path: '/$code',
+  getParentRoute: () => ApiV1ContextsRoute,
+} as any)
+const ApiV1ContextsCodeDatasetsRoute =
+  ApiV1ContextsCodeDatasetsRouteImport.update({
+    id: '/datasets',
+    path: '/datasets',
+    getParentRoute: () => ApiV1ContextsCodeRoute,
+  } as any)
+const ApiV1ContextsCodeDatasetsKindRoute =
+  ApiV1ContextsCodeDatasetsKindRouteImport.update({
+    id: '/$kind',
+    path: '/$kind',
+    getParentRoute: () => ApiV1ContextsCodeDatasetsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -196,11 +228,16 @@ export interface FileRoutesByFullPath {
   '/policy/skills': typeof PolicySkillsRoute
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
+  '/api/v1/contexts': typeof ApiV1ContextsRouteWithChildren
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/api/v1/': typeof ApiV1IndexRoute
   '/console/contexts/': typeof ConsoleContextsIndexRoute
+  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRouteWithChildren
+  '/api/v1/contexts/$code/datasets': typeof ApiV1ContextsCodeDatasetsRouteWithChildren
+  '/api/v1/contexts/$code/datasets/$kind': typeof ApiV1ContextsCodeDatasetsKindRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -222,11 +259,16 @@ export interface FileRoutesByTo {
   '/policy/skills': typeof PolicySkillsRoute
   '/console': typeof ConsoleIndexRoute
   '/policy': typeof PolicyIndexRoute
+  '/api/v1/contexts': typeof ApiV1ContextsRouteWithChildren
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/api/v1': typeof ApiV1IndexRoute
   '/console/contexts': typeof ConsoleContextsIndexRoute
+  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRouteWithChildren
+  '/api/v1/contexts/$code/datasets': typeof ApiV1ContextsCodeDatasetsRouteWithChildren
+  '/api/v1/contexts/$code/datasets/$kind': typeof ApiV1ContextsCodeDatasetsKindRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -252,11 +294,16 @@ export interface FileRoutesById {
   '/policy/skills': typeof PolicySkillsRoute
   '/console/': typeof ConsoleIndexRoute
   '/policy/': typeof PolicyIndexRoute
+  '/api/v1/contexts': typeof ApiV1ContextsRouteWithChildren
   '/console/auth/forgot': typeof ConsoleAuthForgotRoute
   '/console/auth/sign-in': typeof ConsoleAuthSignInRoute
   '/console/auth/sign-up': typeof ConsoleAuthSignUpRoute
   '/console/contexts/new': typeof ConsoleContextsNewRoute
+  '/api/v1/': typeof ApiV1IndexRoute
   '/console/contexts/': typeof ConsoleContextsIndexRoute
+  '/api/v1/contexts/$code': typeof ApiV1ContextsCodeRouteWithChildren
+  '/api/v1/contexts/$code/datasets': typeof ApiV1ContextsCodeDatasetsRouteWithChildren
+  '/api/v1/contexts/$code/datasets/$kind': typeof ApiV1ContextsCodeDatasetsKindRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -283,11 +330,16 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console/'
     | '/policy/'
+    | '/api/v1/contexts'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/api/v1/'
     | '/console/contexts/'
+    | '/api/v1/contexts/$code'
+    | '/api/v1/contexts/$code/datasets'
+    | '/api/v1/contexts/$code/datasets/$kind'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -309,11 +361,16 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console'
     | '/policy'
+    | '/api/v1/contexts'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/api/v1'
     | '/console/contexts'
+    | '/api/v1/contexts/$code'
+    | '/api/v1/contexts/$code/datasets'
+    | '/api/v1/contexts/$code/datasets/$kind'
   id:
     | '__root__'
     | '/'
@@ -338,11 +395,16 @@ export interface FileRouteTypes {
     | '/policy/skills'
     | '/console/'
     | '/policy/'
+    | '/api/v1/contexts'
     | '/console/auth/forgot'
     | '/console/auth/sign-in'
     | '/console/auth/sign-up'
     | '/console/contexts/new'
+    | '/api/v1/'
     | '/console/contexts/'
+    | '/api/v1/contexts/$code'
+    | '/api/v1/contexts/$code/datasets'
+    | '/api/v1/contexts/$code/datasets/$kind'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -355,6 +417,8 @@ export interface RootRouteChildren {
   PolicyRoute: typeof PolicyRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiV1ContextsRoute: typeof ApiV1ContextsRouteWithChildren
+  ApiV1IndexRoute: typeof ApiV1IndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -520,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleContextsIndexRouteImport
       parentRoute: typeof ConsoleContextsRoute
     }
+    '/api/v1/': {
+      id: '/api/v1/'
+      path: '/api/v1'
+      fullPath: '/api/v1/'
+      preLoaderRoute: typeof ApiV1IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/console/contexts/new': {
       id: '/console/contexts/new'
       path: '/new'
@@ -547,6 +618,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/console/auth/forgot'
       preLoaderRoute: typeof ConsoleAuthForgotRouteImport
       parentRoute: typeof ConsoleRoute
+    }
+    '/api/v1/contexts': {
+      id: '/api/v1/contexts'
+      path: '/api/v1/contexts'
+      fullPath: '/api/v1/contexts'
+      preLoaderRoute: typeof ApiV1ContextsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/contexts/$code': {
+      id: '/api/v1/contexts/$code'
+      path: '/$code'
+      fullPath: '/api/v1/contexts/$code'
+      preLoaderRoute: typeof ApiV1ContextsCodeRouteImport
+      parentRoute: typeof ApiV1ContextsRoute
+    }
+    '/api/v1/contexts/$code/datasets': {
+      id: '/api/v1/contexts/$code/datasets'
+      path: '/datasets'
+      fullPath: '/api/v1/contexts/$code/datasets'
+      preLoaderRoute: typeof ApiV1ContextsCodeDatasetsRouteImport
+      parentRoute: typeof ApiV1ContextsCodeRoute
+    }
+    '/api/v1/contexts/$code/datasets/$kind': {
+      id: '/api/v1/contexts/$code/datasets/$kind'
+      path: '/$kind'
+      fullPath: '/api/v1/contexts/$code/datasets/$kind'
+      preLoaderRoute: typeof ApiV1ContextsCodeDatasetsKindRouteImport
+      parentRoute: typeof ApiV1ContextsCodeDatasetsRoute
     }
   }
 }
@@ -615,6 +714,43 @@ const PolicyRouteChildren: PolicyRouteChildren = {
 const PolicyRouteWithChildren =
   PolicyRoute._addFileChildren(PolicyRouteChildren)
 
+interface ApiV1ContextsCodeDatasetsRouteChildren {
+  ApiV1ContextsCodeDatasetsKindRoute: typeof ApiV1ContextsCodeDatasetsKindRoute
+}
+
+const ApiV1ContextsCodeDatasetsRouteChildren: ApiV1ContextsCodeDatasetsRouteChildren =
+  {
+    ApiV1ContextsCodeDatasetsKindRoute: ApiV1ContextsCodeDatasetsKindRoute,
+  }
+
+const ApiV1ContextsCodeDatasetsRouteWithChildren =
+  ApiV1ContextsCodeDatasetsRoute._addFileChildren(
+    ApiV1ContextsCodeDatasetsRouteChildren,
+  )
+
+interface ApiV1ContextsCodeRouteChildren {
+  ApiV1ContextsCodeDatasetsRoute: typeof ApiV1ContextsCodeDatasetsRouteWithChildren
+}
+
+const ApiV1ContextsCodeRouteChildren: ApiV1ContextsCodeRouteChildren = {
+  ApiV1ContextsCodeDatasetsRoute: ApiV1ContextsCodeDatasetsRouteWithChildren,
+}
+
+const ApiV1ContextsCodeRouteWithChildren =
+  ApiV1ContextsCodeRoute._addFileChildren(ApiV1ContextsCodeRouteChildren)
+
+interface ApiV1ContextsRouteChildren {
+  ApiV1ContextsCodeRoute: typeof ApiV1ContextsCodeRouteWithChildren
+}
+
+const ApiV1ContextsRouteChildren: ApiV1ContextsRouteChildren = {
+  ApiV1ContextsCodeRoute: ApiV1ContextsCodeRouteWithChildren,
+}
+
+const ApiV1ContextsRouteWithChildren = ApiV1ContextsRoute._addFileChildren(
+  ApiV1ContextsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiReadinessRoute: AiReadinessRoute,
@@ -625,6 +761,8 @@ const rootRouteChildren: RootRouteChildren = {
   PolicyRoute: PolicyRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiV1ContextsRoute: ApiV1ContextsRouteWithChildren,
+  ApiV1IndexRoute: ApiV1IndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

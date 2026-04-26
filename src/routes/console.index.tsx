@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Plus, Globe2, Database, Rocket, Upload, ArrowRight } from "lucide-react";
+import { Plus, Globe2, Database, Rocket, Upload, ArrowRight, Code } from "lucide-react";
 import { ConsoleGuard } from "@/components/unmapped/console/console-guard";
 import { supabase } from "@/integrations/supabase/client";
 import { useConsoleAuth } from "@/components/unmapped/console/auth-context";
@@ -100,6 +100,61 @@ function ConsoleHome() {
           title="Monitor"
           desc="Ingestion runs and dataset health."
         />
+      </div>
+
+      <div
+        className="mt-8 rounded-lg border p-5"
+        style={{
+          background: "var(--console-canvas)",
+          borderColor: "var(--console-border)",
+        }}
+      >
+        <div
+          className="flex items-center gap-2 text-sm font-medium mb-1"
+          style={{ color: "var(--console-fg)" }}
+        >
+          <Code size={14} style={{ color: "var(--console-accent)" }} />
+          Public protocol API
+        </div>
+        <p
+          className="text-xs mb-3"
+          style={{ color: "var(--console-fg-muted)" }}
+        >
+          Any active context exposes its live data over a read-only JSON API.
+          External systems plug in here.
+        </p>
+        <div className="space-y-1.5">
+          <code
+            className="block text-[11px] px-2.5 py-1.5 rounded font-mono"
+            style={{
+              background: "var(--console-elev, rgba(0,0,0,0.04))",
+              color: "var(--console-fg)",
+              border: "1px solid var(--console-border)",
+            }}
+          >
+            GET /api/v1
+          </code>
+          <code
+            className="block text-[11px] px-2.5 py-1.5 rounded font-mono"
+            style={{
+              background: "var(--console-elev, rgba(0,0,0,0.04))",
+              color: "var(--console-fg)",
+              border: "1px solid var(--console-border)",
+            }}
+          >
+            GET /api/v1/contexts
+          </code>
+          <code
+            className="block text-[11px] px-2.5 py-1.5 rounded font-mono"
+            style={{
+              background: "var(--console-elev, rgba(0,0,0,0.04))",
+              color: "var(--console-fg)",
+              border: "1px solid var(--console-border)",
+            }}
+          >
+            GET /api/v1/contexts/&#123;code&#125;/datasets/&#123;kind&#125;?limit=500&amp;offset=0
+          </code>
+        </div>
       </div>
     </div>
   );
