@@ -23,6 +23,72 @@ const LINKS = [
 
 type NavLink = (typeof LINKS)[number];
 
+/* Header palette — switches with the active theme. Policy uses a warm
+ * earth-toned skin: dark+onyx get an inky charcoal bar; light gets a
+ * parchment bar so the user's "Light" choice actually takes effect.
+ * The accent (C4A882) and brand cream/charcoal stay consistent across
+ * modes. */
+interface HeaderPalette {
+  bg: string;
+  fg: string;
+  fgMuted: string;
+  fgInactive: string;
+  border: string;
+  pill: string;
+  pillBorder: string;
+  pillHover: string;
+  badgeBg: string;
+  badgeBgActive: string;
+  badgeFgActive: string;
+  menuBg: string;
+  menuFg: string;
+  menuActiveFg: string;
+  avatarBg: string;
+  avatarFg: string;
+}
+
+function getHeaderPalette(theme: "light" | "dark" | "onyx"): HeaderPalette {
+  if (theme === "light") {
+    return {
+      bg: "#F4EFE6", // parchment
+      fg: "#1C1A16",
+      fgMuted: "#5A5249",
+      fgInactive: "#7A7268",
+      border: "rgba(28,26,22,0.12)",
+      pill: "rgba(28,26,22,0.04)",
+      pillBorder: "rgba(28,26,22,0.12)",
+      pillHover: "rgba(28,26,22,0.08)",
+      badgeBg: "rgba(28,26,22,0.06)",
+      badgeBgActive: "rgba(140,108,72,0.18)",
+      badgeFgActive: "#8C6C48",
+      menuBg: "#FBF8F2",
+      menuFg: "#1C1A16",
+      menuActiveFg: "#8C6C48",
+      avatarBg: "rgba(140,108,72,0.16)",
+      avatarFg: "#8C6C48",
+    };
+  }
+  // dark + onyx share the inky topbar so analytical surfaces stay calm
+  return {
+    bg: theme === "onyx" ? "#0A0908" : "#1C1A16",
+    fg: "#F0EDE8",
+    fgMuted: "#9C9890",
+    fgInactive: "#9C9890",
+    border: "rgba(255,255,255,0.08)",
+    pill: "rgba(255,255,255,0.06)",
+    pillBorder: "rgba(255,255,255,0.12)",
+    pillHover: "rgba(255,255,255,0.10)",
+    badgeBg: "rgba(255,255,255,0.08)",
+    badgeBgActive: "rgba(196,168,130,0.25)",
+    badgeFgActive: "#C4A882",
+    menuBg: theme === "onyx" ? "#15130F" : "#23201B",
+    menuFg: "#F0EDE8",
+    menuActiveFg: "#C4A882",
+    avatarBg: "rgba(196,168,130,0.2)",
+    avatarFg: "#C4A882",
+  };
+}
+
 /* ResponsiveNav — measures the available width and the natural width of each
  * link, then renders only the ones that fit on a single line. Anything that
  * would overflow is collapsed into a "More" dropdown so policy users never
@@ -32,9 +98,11 @@ type NavLink = (typeof LINKS)[number];
 function ResponsiveNav({
   links,
   pathname,
+  palette,
 }: {
   links: readonly NavLink[];
   pathname: string;
+  palette: HeaderPalette;
 }) {
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const ghostRef = React.useRef<HTMLDivElement | null>(null);
@@ -126,7 +194,7 @@ function ResponsiveNav({
               "text-sm pb-1 border-b transition-colors whitespace-nowrap shrink-0",
               isActive ? "border-[#C4A882]" : "border-transparent hover:opacity-100",
             )}
-            style={{ color: isActive ? "#F0EDE8" : "#9C9890" }}
+            style={{ color: isActive ? palette.fg : palette.fgInactive }}
           >
             {l.label}
           </Link>
@@ -144,17 +212,15 @@ function ResponsiveNav({
                 "inline-flex items-center gap-1 text-sm pb-1 border-b transition-colors whitespace-nowrap shrink-0 outline-none",
                 overflowHasActive ? "border-[#C4A882]" : "border-transparent",
               )}
-              style={{ color: overflowHasActive ? "#F0EDE8" : "#9C9890" }}
+              style={{ color: overflowHasActive ? palette.fg : palette.fgInactive }}
             >
               <span>More</span>
               <MoreHorizontal size={14} strokeWidth={1.75} />
               <span
                 className="ml-1 inline-flex items-center justify-center text-[10px] font-medium rounded-full px-1.5 min-w-[18px] h-[18px]"
                 style={{
-                  background: overflowHasActive
-                    ? "rgba(196,168,130,0.25)"
-                    : "rgba(255,255,255,0.08)",
-                  color: overflowHasActive ? "#C4A882" : "#9C9890",
+                  background: overflowHasActive ? palette.badgeBgActive : palette.badgeBg,
+                  color: overflowHasActive ? palette.badgeFgActive : palette.fgInactive,
                 }}
               >
                 {overflow.length}
@@ -165,7 +231,7 @@ function ResponsiveNav({
             align="start"
             sideOffset={8}
             className="min-w-[200px] border-border-subtle"
-            style={{ background: "#23201B", color: "#F0EDE8" }}
+            style={{ background: palette.menuBg, color: palette.menuFg }}
           >
             {overflow.map((l) => {
               const isActive = pathname === l.to;
@@ -178,7 +244,7 @@ function ResponsiveNav({
                       isActive && "font-medium",
                     )}
                     style={{
-                      color: isActive ? "#C4A882" : "#F0EDE8",
+                      color: isActive ? palette.menuActiveFg : palette.menuFg,
                     }}
                   >
                     {l.label}
@@ -203,26 +269,15 @@ function ResponsiveNav({
 export function PolicyShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
   const { active, openDrawer } = useContextConfig();
-  const { theme, setTheme } = useTheme();
-
-  /* Policy is an analytical context that wants a dark-family palette by
-   * default — but we now respect the user's explicit choice. If the user
-   * has selected "light" (only meaningful in the youth shell), we promote
-   * them to "dark" while the policy shell is mounted, then restore their
-   * preference on unmount so toggling back to youth never leaves them
-   * stranded in a dark theme they didn't ask for. Onyx is honored as-is. */
-  React.useEffect(() => {
-    const previous = theme;
-    if (theme === "light") setTheme("dark");
-    return () => {
-      if (previous === "light") setTheme("light");
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { theme } = useTheme();
+  const palette = React.useMemo(() => getHeaderPalette(theme), [theme]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--surface)] text-[var(--ink)]">
-      <header className="w-full" style={{ background: "#1C1A16", color: "#F0EDE8" }}>
+      <header
+        className="w-full transition-colors duration-300 ease-precision border-b"
+        style={{ background: palette.bg, color: palette.fg, borderColor: palette.border }}
+      >
         <div className="u-container flex items-center gap-4 lg:gap-6 py-3">
           {/* Brand cluster — fixed-width, never shrinks */}
           <div className="flex items-center gap-3 shrink-0">
@@ -231,9 +286,9 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
             <span
               className="hidden lg:inline-block text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 rounded-full whitespace-nowrap"
               style={{
-                background: "rgba(196,168,130,0.15)",
-                color: "#C4A882",
-                border: "1px solid rgba(196,168,130,0.25)",
+                background: palette.badgeBgActive,
+                color: palette.badgeFgActive,
+                border: `1px solid ${palette.badgeBgActive}`,
               }}
             >
               Policy View
@@ -243,7 +298,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
           {/* Primary nav — overflow-aware. Items that would push the right
            * cluster off the row collapse into a "More" dropdown so nothing
            * is hidden behind a horizontal scroll. */}
-          <ResponsiveNav links={LINKS} pathname={pathname} />
+          <ResponsiveNav links={LINKS} pathname={pathname} palette={palette} />
 
           {/* Right cluster — never wraps, never shrinks. We removed the
            * duplicate SwitchContextButton so the country pill is the single
@@ -254,9 +309,9 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
               onClick={openDrawer}
               className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap"
               style={{
-                background: "rgba(255,255,255,0.06)",
-                color: "#F0EDE8",
-                border: "1px solid rgba(255,255,255,0.12)",
+                background: palette.pill,
+                color: palette.fg,
+                border: `1px solid ${palette.pillBorder}`,
               }}
               aria-label={`Active context: ${active.country}. Click to switch.`}
             >
@@ -277,7 +332,7 @@ export function PolicyShell({ children }: { children: React.ReactNode }) {
             <div
               aria-label="Account"
               className="h-8 w-8 shrink-0 rounded-full flex items-center justify-center text-xs font-medium"
-              style={{ background: "rgba(196,168,130,0.2)", color: "#C4A882" }}
+              style={{ background: palette.avatarBg, color: palette.avatarFg }}
             >
               MA
             </div>

@@ -50,14 +50,9 @@ export function ThemeSwitcher({
             title={`Theme · ${current.label}`}
             className={cn(
               "inline-flex items-center justify-center h-8 w-8 rounded-full transition-colors",
-              "border",
+              "border border-border-subtle bg-[var(--surface-sunken)] text-[var(--ink)] hover:bg-[var(--surface-raised)]",
               className,
             )}
-            style={{
-              background: "rgba(255,255,255,0.06)",
-              borderColor: "rgba(255,255,255,0.12)",
-              color: "#F0EDE8",
-            }}
           >
             <ThumbIcon option={current} active />
           </button>
