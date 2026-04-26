@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PolicyRouteImport } from './routes/policy'
 import { Route as OpportunitiesRouteImport } from './routes/opportunities'
@@ -25,6 +26,11 @@ import { Route as PolicyOpportunitiesRouteImport } from './routes/policy.opportu
 import { Route as ConsoleAuthSignInRouteImport } from './routes/console.auth.sign-in'
 import { Route as ConsoleAuthForgotRouteImport } from './routes/console.auth.forgot'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnRoute
   '/opportunities': typeof OpportunitiesRoute
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/opportunities': typeof OpportunitiesRoute
   '/policy': typeof PolicyRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/policy/opportunities': typeof PolicyOpportunitiesRoute
   '/policy/projections': typeof PolicyProjectionsRoute
   '/policy/risk': typeof PolicyRiskRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/reset-password'
     | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/learn'
     | '/opportunities'
     | '/profile'
+    | '/reset-password'
     | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/opportunities'
     | '/policy'
     | '/profile'
+    | '/reset-password'
     | '/policy/opportunities'
     | '/policy/projections'
     | '/policy/risk'
@@ -211,10 +223,18 @@ export interface RootRouteChildren {
   OpportunitiesRoute: typeof OpportunitiesRoute
   PolicyRoute: typeof PolicyRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
@@ -365,6 +385,7 @@ const rootRouteChildren: RootRouteChildren = {
   OpportunitiesRoute: OpportunitiesRoute,
   PolicyRoute: PolicyRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
